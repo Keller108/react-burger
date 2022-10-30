@@ -1,7 +1,17 @@
 .container {
     width: 50%;
     max-width: 600px;
-    max-height: 50vh;
+    /* Вычислим высоту секции на основе отступов: марджинов и паддингов родительских контейнеров  */
+    max-height: calc(100vh - 80px - 88px - 40px);
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    max-height: calc(100vh - 80px - 88px - 40px - 90px - 60px);
+    overflow-y: scroll;
 }
 
 .cards {
