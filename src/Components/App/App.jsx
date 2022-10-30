@@ -45,7 +45,11 @@ export function App() {
                     sauces={sauces}
                     main={main}
                 />
-                <BurgerConstructor />
+                <BurgerConstructor
+                    buns={buns}
+                    sauces={sauces}
+                    main={main}
+                />
             </main>
         </div>
     );
