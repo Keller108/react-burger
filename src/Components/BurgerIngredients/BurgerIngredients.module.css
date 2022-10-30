@@ -1,13 +1,13 @@
 .container {
     width: 50%;
     max-width: 600px;
+    max-height: 50vh;
 }
 
 .cards {
-    padding: 0;
-    margin: 0;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(208px, 1fr));
-    /* gap: 24px; */
+    gap: 24px;
+    margin: 0;
 }

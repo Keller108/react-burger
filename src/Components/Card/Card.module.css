@@ -6,9 +6,10 @@
     align-items: center;
     justify-content: center;
     color: white;
+    text-align: center;
 }
 
-.amount {
+.quantity {
     position: absolute;
     top: 0;
     right: -30px;
@@ -27,4 +28,10 @@
     object-fit: cover;
     object-position: center;
     font-size: 0;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
