@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
 import { Tabs } from '../Tabs/Tabs';
 import ingredientsStyle from './BurgerIngredients.module.css';
+import { ingredientPropType } from '../../shared/const/ingredientPropType';
 
 export function BurgerIngredients({
     types,
@@ -45,7 +47,13 @@ export function BurgerIngredients({
                     </ul>
                 </>}
             </div>
-
         </section>
     )
+}
+
+BurgerIngredients.propTypes = {
+    types: PropTypes.arrayOf(PropTypes.string).isRequired,
+    buns: PropTypes.arrayOf(ingredientPropType).isRequired,
+    sauces: PropTypes.arrayOf(ingredientPropType).isRequired,
+    main: PropTypes.arrayOf(ingredientPropType).isRequired
 }

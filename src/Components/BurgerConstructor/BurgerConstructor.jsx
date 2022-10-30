@@ -1,5 +1,11 @@
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { Button,
+    ConstructorElement,
+    CurrencyIcon,
+    DragIcon
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
+import { ingredientPropType } from '../../shared/const/ingredientPropType';
 
 export function BurgerConstructor({ buns, sauces, main }) {
     let allIngredients = [...buns, ...sauces, ...main];
@@ -11,11 +17,12 @@ export function BurgerConstructor({ buns, sauces, main }) {
             <ul className={`${contructorStyles.items} pr-2`}>
                 {allIngredients.map(item => {
                     if (allIngredients.indexOf(item) !== 0 && allIngredients.indexOf(item) !== allIngredients.length - 1) {
-                        return <li className={contructorStyles.constructorItem}>
+                        return <li key={item._id} className={contructorStyles.constructorItem}>
                             <div className="mr-2">
                                 <DragIcon type="primary" />
                             </div>
                             <ConstructorElement
+                                key={item._id}
                                 type={allIngredients.indexOf(item) === 0
                                     ? "top" : allIngredients.indexOf(item) === allIngredients.length - 1
                                         ? "bottom" : null}
@@ -28,8 +35,9 @@ export function BurgerConstructor({ buns, sauces, main }) {
                             />
                         </li>
                     } else {
-                        return <li className={`${contructorStyles.constructorItem} pl-8`} style={{cursor: 'default'}}>
+                        return <li key={item._id} className={`${contructorStyles.constructorItem} pl-8`} style={{cursor: 'default'}}>
                             <ConstructorElement
+                                key={item._id}
                                 type={allIngredients.indexOf(item) === 0
                                     ? "top" : allIngredients.indexOf(item) === allIngredients.length - 1
                                         ? "bottom" : null}
@@ -55,4 +63,10 @@ export function BurgerConstructor({ buns, sauces, main }) {
             </div>
         </section>
     )
+}
+
+BurgerConstructor.propTypes = {
+    buns: PropTypes.arrayOf(ingredientPropType).isRequired,
+    sauces: PropTypes.arrayOf(ingredientPropType).isRequired,
+    main: PropTypes.arrayOf(ingredientPropType).isRequired
 }
