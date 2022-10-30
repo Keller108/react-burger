@@ -4,6 +4,8 @@ import contructorStyles from './BurgerConstructor.module.css';
 export function BurgerConstructor({ buns, sauces, main }) {
     let allIngredients = [...buns, ...sauces, ...main];
 
+    /** На текущем этапе вывел на компонент все ингридиенты, чтобы проверить верстку.
+     * В дальнейшем сюда будут добавляться добавленные в конструктор элементы */
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
