@@ -11,7 +11,7 @@
     align-items: stretch;
     justify-content: flex-start;
     max-height: calc(100vh - 80px - 88px - 40px - 90px - 60px);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .cards {
