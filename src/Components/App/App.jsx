@@ -1,12 +1,21 @@
 import appStyles from './App.module.css';
 import { AppHeader } from '../AppHeader/AppHeader';
-import { Main } from '../Main/Main';
+import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
+import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
+import data from '../../shared/data/data.json';
 
 export function App() {
     return (
         <div className={appStyles.app}>
             <AppHeader />
-            <Main />
+            <main className={appStyles.main}>
+                <BurgerIngredients
+                    data={data}
+                />
+                <BurgerConstructor
+                    ingredients={data}
+                />
+            </main>
         </div>
     );
 }

@@ -5,6 +5,10 @@
     max-height: calc(100vh - 80px - 88px - 40px);
 }
 
+.tabsContainer {
+    display: flex;
+}
+
 .ingredients {
     display: flex;
     flex-direction: column;
@@ -12,12 +16,4 @@
     justify-content: flex-start;
     max-height: calc(100vh - 80px - 88px - 40px - 90px - 60px);
     overflow-y: auto;
-}
-
-.cards {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(208px, 1fr));
-    gap: 24px;
-    margin: 0;
 }

@@ -1,24 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card } from '../Card/Card';
-import { Tabs } from '../Tabs/Tabs';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { ingredientPropType } from '../../shared/const/ingredientPropType';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 
 export function BurgerIngredients({
-    types,
-    buns,
-    sauces,
-    main
+    data
 }) {
-    const [currentTab, setCurrentTab] = useState(null);
+    const [types,] = useState(['bun', 'sauce', 'main']);
+    const [currentTab, setCurrentTab] = useState('bun');
 
-    useEffect(() => {
-        setCurrentTab(types[0])
-    }, [types])
+    const handleSwitchTab = (type) => {
+        setCurrentTab(type)
+    };
 
-    const handlePickTab = (type) => {
-        setCurrentTab(type);
+    const buns = data.filter((item) => item.type === 'bun');
+    const sauces = data.filter((item) => item.type === 'sauce');
+    const main = data.filter((item) => item.type === 'main');
+
+    const tabsText = {
+        bun: "Булки",
+        sauce: "Соусы",
+        main: "начинка"
     };
 
     return (
@@ -26,34 +30,25 @@ export function BurgerIngredients({
             <h1 className="text text_type_main-large pb-5">
                 Соберите бургер
             </h1>
-            <Tabs currentTab={currentTab} setCurrentTab={handlePickTab} types={types} />
+            <div className={`${ingredientsStyle.tabsContainer} pb-10`}>
+                {types.map((type) => <Tab
+                    key={type}
+                    value={type}
+                    active={currentTab === type}
+                    onClick={handleSwitchTab}
+                >
+                    {tabsText[type]}
+                </Tab>)}
+            </div>
             <div className={`${ingredientsStyle.ingredients}`}>
-                {currentTab === 'bun' && <>
-                    <h2 className="text text_type_main-medium">Булки</h2>
-                    <ul className={`${ingredientsStyle.cards} pt-6 pl-4 pb-10 m-0`}>
-                        {buns.map((bun) => <Card key={bun._id} {...bun}/>)}
-                    </ul>
-                </>}
-                {currentTab === 'sauce' && <>
-                    <h2 className="text text_type_main-medium">Соусы</h2>
-                    <ul className={`${ingredientsStyle.cards} pt-6 pl-4 pb-10 m-0`}>
-                        {sauces.map((sauce) => <Card key={sauce._id} {...sauce}/>)}
-                    </ul>
-                </>}
-                {currentTab === 'main' && <>
-                    <h2 className="text text_type_main-medium">Начинка</h2>
-                    <ul className={`${ingredientsStyle.cards} pt-6 pl-4 pb-10 m-0`}>
-                        {main.map((main) => <Card key={main._id} {...main}/>)}
-                    </ul>
-                </>}
+                <IngredientsCategory title="Булки" category={buns} />
+                <IngredientsCategory title="Соусы" category={sauces} />
+                <IngredientsCategory title="Начинка" category={main} />
             </div>
         </section>
     )
 }
 
 BurgerIngredients.propTypes = {
-    types: PropTypes.arrayOf(PropTypes.string).isRequired,
-    buns: PropTypes.arrayOf(ingredientPropType).isRequired,
-    sauces: PropTypes.arrayOf(ingredientPropType).isRequired,
-    main: PropTypes.arrayOf(ingredientPropType).isRequired
+    data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 }

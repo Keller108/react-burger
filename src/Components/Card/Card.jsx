@@ -1,7 +1,9 @@
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientPropType } from '../../shared/const/ingredientPropType';
 
-export function Card({ image, name, price }) {
+export function Card({ cardData }) {
+    const { image, price, name } = cardData;
     return (
         <li className={cardStyle.card}>
             <span className={`${cardStyle.quantity} "text text_type_main-medium"`}>1</span>
@@ -19,4 +21,8 @@ export function Card({ image, name, price }) {
             <p className="text text_type_main-default">{name}</p>
         </li>
     )
+}
+
+Card.propTypes = {
+    cardData: ingredientPropType.isRequired
 }

@@ -30,7 +30,6 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 40px;
-    /* border: 1px dashed #4C4CFF; */
     background-color: transparent;
     outline: none;
     border: none;
@@ -38,9 +37,10 @@
     cursor: pointer;
     line-height: 1;
     box-sizing: content-box;
+    text-decoration: none;
 }
 
-.navigationItem:hover {
+.navigationItem_active {
     color: white;
 }
 
