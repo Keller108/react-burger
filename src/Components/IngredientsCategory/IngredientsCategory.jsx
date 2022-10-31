@@ -16,5 +16,5 @@ export function IngredientsCategory({ title, category }) {
 
 IngredientsCategory.propTypes = {
     title: PropTypes.string.isRequired,
-    category: ingredientPropType.isRequired
+    category: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
 }

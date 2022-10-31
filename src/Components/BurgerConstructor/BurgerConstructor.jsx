@@ -16,7 +16,6 @@ export function BurgerConstructor({ ingredients }) {
             <ul className={`${contructorStyles.items} pr-2`}>
                 <li key={bun._id}
                     className={`${contructorStyles.constructorItem} pl-8`}
-                    style={{cursor: 'default'}}
                 >
                     <ConstructorElement
                         key={bun._id}
@@ -29,7 +28,8 @@ export function BurgerConstructor({ ingredients }) {
                 </li>
                 <div className={contructorStyles.itemWrapper}>
                     {otherIngredients.map((item) => <li key={item._id}
-                        className={`${contructorStyles.constructorItem} mb-4`}>
+                        className={`${contructorStyles.constructorItem}
+                        ${contructorStyles.constructorItem_dragable} mb-4`}>
                             <div className="mr-2">
                                 <DragIcon type="primary" />
                             </div>
@@ -45,7 +45,6 @@ export function BurgerConstructor({ ingredients }) {
                 </div>
                 <li key={bun._id+1}
                     className={`${contructorStyles.constructorItem} pl-8`}
-                    style={{cursor: 'default'}}
                 >
                     <ConstructorElement
                         key={bun._id}
