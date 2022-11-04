@@ -1,4 +1,5 @@
 import orderDetailsStyle from './OrderDetails.module.css';
+import IMG_SUCCESS_PATH from './assets/img-done.png';
 
 export function OrderDetails() {
     return (
@@ -10,8 +11,9 @@ export function OrderDetails() {
             <p className={`text text_type_main-medium mt-0 mb-15`}>
                 идентификатор заказа
             </p>
-            <div className={`${orderDetailsStyle.statusImg}
-                mt-0 mb-15`}></div>
+            <img className={`${orderDetailsStyle.statusImg} mt-0 mb-15`}
+                src={IMG_SUCCESS_PATH} alt="Success"
+            />
             <p
                 className={`text text_type_main-default mt-0 mb-2`}
             >

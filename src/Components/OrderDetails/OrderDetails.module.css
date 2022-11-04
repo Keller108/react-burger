@@ -14,7 +14,8 @@
 
 .statusImg {
     width: 120px;
-    height: 120px;
-    background-color: grey;
-    border-radius: 240px;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    font-size: 0;
 }
