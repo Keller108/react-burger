@@ -1,5 +1,5 @@
 # Проект React Burger
-## sprint-1/step-1
+## sprint-1/step-2
 
 ![Превью проекта](https://user-images.githubusercontent.com/34595724/198962576-b6e78580-e9c8-459a-aaad-9ba14c0e04ca.png)
 
