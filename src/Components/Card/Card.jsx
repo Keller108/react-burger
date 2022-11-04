@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../shared/types/commonTypes';
@@ -33,5 +34,6 @@ export function Card({ cardData, setModalState }) {
 }
 
 Card.propTypes = {
-    cardData: ingredientPropType.isRequired
+    cardData: ingredientPropType.isRequired,
+    setModalState: PropTypes.func.isRequired
 }

@@ -20,5 +20,6 @@ export function IngredientsCategory({ title, category, setModalState }) {
 
 IngredientsCategory.propTypes = {
     title: PropTypes.string.isRequired,
-    category: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+    category: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    setModalState: PropTypes.func.isRequired
 }

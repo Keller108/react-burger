@@ -7,8 +7,9 @@ import { Button,
 import contructorStyles from './BurgerConstructor.module.css';
 import { ingredientPropType } from '../../shared/types/commonTypes';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { Preloader } from '../Preloader/Preloader';
 
-export function BurgerConstructor({ ingredients, setModalState }) {
+export function BurgerConstructor({ ingredients, setModalState, isLoading }) {
     const handleModalState = () => {
         setModalState({
             isActive: true,
@@ -22,7 +23,8 @@ export function BurgerConstructor({ ingredients, setModalState }) {
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                {buns.map(bun => buns.indexOf(bun) === 0 && <li key={bun._id}
+                {isLoading ? <Preloader /> : buns.map(bun => buns
+                    .indexOf(bun) === 0 && <li key={bun._id}
                         className={`${contructorStyles.constructorItem} pl-8`}
                     >
                         <ConstructorElement
@@ -86,4 +88,6 @@ export function BurgerConstructor({ ingredients, setModalState }) {
 
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    setModalState: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired
 }

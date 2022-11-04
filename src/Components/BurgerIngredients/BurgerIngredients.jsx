@@ -4,10 +4,12 @@ import ingredientsStyle from './BurgerIngredients.module.css';
 import { ingredientPropType } from '../../shared/types/commonTypes';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
+import { Preloader } from '../Preloader/Preloader';
 
 export function BurgerIngredients({
     data,
-    setModalState
+    setModalState,
+    isLoading
 }) {
     const [types,] = useState(['bun', 'sauce', 'main']);
     const [currentTab, setCurrentTab] = useState('bun');
@@ -42,26 +44,30 @@ export function BurgerIngredients({
                 </Tab>)}
             </div>
             <div className={`${ingredientsStyle.ingredients}`}>
-                <IngredientsCategory
-                    title="Булки"
-                    category={buns}
-                    setModalState={setModalState}
-                />
-                <IngredientsCategory
-                    title="Соусы"
-                    category={sauces}
-                    setModalState={setModalState}
-                />
-                <IngredientsCategory
-                    title="Начинка"
-                    category={main}
-                    setModalState={setModalState}
-                />
+                {isLoading ? <Preloader /> : <>
+                    <IngredientsCategory
+                        title="Булки"
+                        category={buns}
+                        setModalState={setModalState}
+                    />
+                    <IngredientsCategory
+                        title="Соусы"
+                        category={sauces}
+                        setModalState={setModalState}
+                    />
+                    <IngredientsCategory
+                        title="Начинка"
+                        category={main}
+                        setModalState={setModalState}
+                    />
+                </>}
             </div>
         </section>
     )
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+    data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    setModalState: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired
 }
