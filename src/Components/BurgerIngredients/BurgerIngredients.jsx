@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ingredientsStyle from './BurgerIngredients.module.css';
-import { ingredientPropType } from '../../shared/const/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/ingredientPropType';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 
 export function BurgerIngredients({
-    data
+    data,
+    setModalState
 }) {
     const [types,] = useState(['bun', 'sauce', 'main']);
     const [currentTab, setCurrentTab] = useState('bun');
-
-    const handleSwitchTab = (type) => {
-        setCurrentTab(type)
-    };
 
     const buns = data.filter((item) => item.type === 'bun');
     const sauces = data.filter((item) => item.type === 'sauce');
@@ -24,6 +21,10 @@ export function BurgerIngredients({
         sauce: "Соусы",
         main: "Начинка"
     };
+
+    const handleSwitchTab = (type) => {
+        setCurrentTab(type)
+    }
 
     return (
         <section className={`${ingredientsStyle.container} pt-10`}>
@@ -41,9 +42,21 @@ export function BurgerIngredients({
                 </Tab>)}
             </div>
             <div className={`${ingredientsStyle.ingredients}`}>
-                <IngredientsCategory title="Булки" category={buns} />
-                <IngredientsCategory title="Соусы" category={sauces} />
-                <IngredientsCategory title="Начинка" category={main} />
+                <IngredientsCategory
+                    title="Булки"
+                    category={buns}
+                    setModalState={setModalState}
+                />
+                <IngredientsCategory
+                    title="Соусы"
+                    category={sauces}
+                    setModalState={setModalState}
+                />
+                <IngredientsCategory
+                    title="Начинка"
+                    category={main}
+                    setModalState={setModalState}
+                />
             </div>
         </section>
     )

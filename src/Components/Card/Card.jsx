@@ -1,11 +1,20 @@
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType } from '../../shared/const/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/ingredientPropType';
+import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 
-export function Card({ cardData }) {
+export function Card({ cardData, setModalState }) {
     const { image, price, name } = cardData;
+
+    const handleModalState = () => {
+        setModalState({
+            isActive: true,
+            content: <IngredientDetails />
+        })
+    }
+
     return (
-        <li className={cardStyle.card}>
+        <li onClick={handleModalState} className={cardStyle.card}>
             <span className={`${cardStyle.quantity} "text text_type_main-medium"`}>1</span>
             <img
                 className={image}

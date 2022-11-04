@@ -5,9 +5,16 @@ import { Button,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { ingredientPropType } from '../../shared/const/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/ingredientPropType';
+import { OrderDetails } from '../OrderDetails/OrderDetails';
 
-export function BurgerConstructor({ ingredients }) {
+export function BurgerConstructor({ ingredients, setModalState }) {
+    const handleModalState = () => {
+        setModalState({
+            isActive: true,
+            content: <OrderDetails />
+        })
+    }
     const buns = ingredients.filter(ingredient => ingredient.type === 'bun');
     const otherIngredients = ingredients
         .filter(ingredient => ingredient.type !== 'bun');
@@ -31,8 +38,9 @@ export function BurgerConstructor({ ingredients }) {
 
                 <div className={contructorStyles.itemWrapper}>
                     {otherIngredients.map((item) => <li key={item._id}
-                        className={`${contructorStyles.constructorItem}
-                        ${contructorStyles.constructorItem_dragable} mb-4`}>
+                            className={`${contructorStyles.constructorItem}
+                            ${contructorStyles.constructorItem_dragable} mb-4`}
+                        >
                             <div className="mr-2">
                                 <DragIcon type="primary" />
                             </div>
@@ -46,8 +54,8 @@ export function BurgerConstructor({ ingredients }) {
                         </li>)
                     }
                 </div>
-                {
-                    buns.map((bun) => buns.indexOf(bun) === 1 && <li key={bun._id+1}
+                {buns.map((bun) => buns
+                    .indexOf(bun) === 1 && <li key={bun._id+1}
                         className={`${contructorStyles.constructorItem} pl-8`}
                     >
                         <ConstructorElement
@@ -58,16 +66,18 @@ export function BurgerConstructor({ ingredients }) {
                             price={bun.price}
                             thumbnail={bun.image}
                         />
-                    </li>)
-                }
-
+                    </li>)}
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
                 <span className={`${contructorStyles.price} mr-10`}>
                     <p className="text text_type_main-large mr-3">610</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button htmlType="button" type="primary" size="large">
+                <Button onClick={handleModalState}
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                >
                     Оформить заказ
                 </Button>
             </div>
