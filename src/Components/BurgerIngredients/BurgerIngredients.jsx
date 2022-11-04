@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ingredientsStyle from './BurgerIngredients.module.css';
-import { ingredientPropType } from '../../shared/types/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 

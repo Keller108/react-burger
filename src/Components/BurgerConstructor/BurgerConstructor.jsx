@@ -5,7 +5,7 @@ import { Button,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { ingredientPropType } from '../../shared/types/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 
 export function BurgerConstructor({ ingredients, setModalState }) {
@@ -35,7 +35,6 @@ export function BurgerConstructor({ ingredients, setModalState }) {
                         />
                     </li>)
                 }
-
                 <div className={contructorStyles.itemWrapper}>
                     {otherIngredients.map((item) => <li key={item._id}
                             className={`${contructorStyles.constructorItem}

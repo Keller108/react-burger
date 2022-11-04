@@ -1,6 +1,6 @@
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType } from '../../shared/types/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 
 export function Card({ cardData, setModalState }) {

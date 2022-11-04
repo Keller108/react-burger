@@ -14,3 +14,8 @@ export const ingredientPropType = PropTypes.shape({
     __v: PropTypes.number.isRequired,
     _id: PropTypes.string.isRequired,
 });
+
+export const modalPropType = {
+    children: PropTypes.element.isRequired,
+    closeModal: PropTypes.func.isRequired
+}

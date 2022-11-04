@@ -1,7 +1,7 @@
 import categoryStyle from './IngredientsCategory.module.css';
 import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
-import { ingredientPropType } from '../../shared/types/ingredientPropType';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 
 export function IngredientsCategory({ title, category, setModalState }) {
     return (

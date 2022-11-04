@@ -13,6 +13,22 @@ export const App = () => {
         content: null
     });
 
+    const handleCloseModal = () => {
+        setModalState({
+            isActive: false,
+            content: null
+        });
+    }
+
+    const closeModalByEsc = (evt) => {
+        if (evt.key === 'Escape') {
+            setModalState({
+                isActive: false,
+                content: null
+            })
+        }
+    }
+
     useEffect(() => {
         const getData = async () => {
             try {
@@ -26,12 +42,12 @@ export const App = () => {
         getData();
     }, [])
 
-    const handleCloseModal = () => {
-        setModalState({
-            isActive: false,
-            content: null
-        });
-    }
+    useEffect(() => {
+        document.addEventListener('keydown', closeModalByEsc)
+        return () => {
+            document.removeEventListener('keydown', closeModalByEsc)
+        }
+    }, [])
 
     return (
         <div className={appStyles.app}>
