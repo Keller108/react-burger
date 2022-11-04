@@ -9,7 +9,7 @@ export function Card({ cardData, setModalState }) {
     const handleModalState = () => {
         setModalState({
             isActive: true,
-            content: <IngredientDetails />
+            content: <IngredientDetails data={cardData} />
         })
     }
 
