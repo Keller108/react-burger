@@ -8,4 +8,13 @@
     left: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.6);
+    overflow: hidden;
+    visibility: hidden;
+    transition: all .3s;
+    opacity: 0;
+}
+
+.overlay_active {
+    visibility: visible;
+    opacity: 1;
 }

@@ -78,7 +78,8 @@ export const App = () => {
                     setModalState={setModalState}
                     isLoading={data.isLoading}
                 />
-                {modalState.isActive && <ModalOverlay
+                {<ModalOverlay
+                    isActive={modalState.isActive}
                     children={modalState.content}
                     closeModal={handleCloseModal}
                 />}

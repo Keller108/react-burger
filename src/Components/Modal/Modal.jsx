@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
-import { modalPropType } from '../../shared/types/commonTypes';
 
 export function Modal({ children, closeModal }) {
     return (
@@ -13,4 +13,7 @@ export function Modal({ children, closeModal }) {
     )
 }
 
-Modal.propTypes = modalPropType.isRequired;
+Modal.propTypes = {
+    children: PropTypes.element.isRequired,
+    closeModal: PropTypes.func.isRequired
+}
