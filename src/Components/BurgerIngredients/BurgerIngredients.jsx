@@ -22,7 +22,7 @@ export function BurgerIngredients({
     const tabsText = {
         bun: "Булки",
         sauce: "Соусы",
-        main: "начинка"
+        main: "Начинка"
     };
 
     return (
