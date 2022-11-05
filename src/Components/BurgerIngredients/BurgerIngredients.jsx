@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ingredientsStyle from './BurgerIngredients.module.css';
-import { ingredientPropType } from '../../shared/types/commonTypes';
+import { ingredientPropType } from '../../utils/types/commonTypes';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 import { Preloader } from '../Preloader/Preloader';
+import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 
 export function BurgerIngredients({
     data,
@@ -14,9 +15,9 @@ export function BurgerIngredients({
     const [types,] = useState(['bun', 'sauce', 'main']);
     const [currentTab, setCurrentTab] = useState('bun');
 
-    const buns = data.filter((item) => item.type === 'bun');
-    const sauces = data.filter((item) => item.type === 'sauce');
-    const main = data.filter((item) => item.type === 'main');
+    const buns = useMemo(() => data.filter((item) => item.type === 'bun'), [data]);
+    const sauces = useMemo(() => data.filter((item) => item.type === 'sauce'), [data]);
+    const main = useMemo(() => data.filter((item) => item.type === 'main'), [data]);
 
     const tabsText = {
         bun: "Булки",
@@ -26,6 +27,13 @@ export function BurgerIngredients({
 
     const handleSwitchTab = (type) => {
         setCurrentTab(type)
+    }
+
+    const renderModal = (cardData) => {
+        setModalState({
+            isActive: true,
+            content: <IngredientDetails data={cardData} />
+        })
     }
 
     return (
@@ -48,17 +56,17 @@ export function BurgerIngredients({
                     <IngredientsCategory
                         title="Булки"
                         category={buns}
-                        setModalState={setModalState}
+                        renderModal={renderModal}
                     />
                     <IngredientsCategory
                         title="Соусы"
                         category={sauces}
-                        setModalState={setModalState}
+                        renderModal={renderModal}
                     />
                     <IngredientsCategory
                         title="Начинка"
                         category={main}
-                        setModalState={setModalState}
+                        renderModal={renderModal}
                     />
                 </>}
             </div>

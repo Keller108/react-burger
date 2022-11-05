@@ -1,5 +1,5 @@
 import ingredientsDetailsStyle from './IngredientDetails.module.css';
-import { ingredientPropType } from '../../shared/types/commonTypes';
+import { ingredientPropType } from '../../utils/types/commonTypes';
 
 export function IngredientDetails({ data }) {
     return (

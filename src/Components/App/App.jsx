@@ -3,11 +3,11 @@ import { AppHeader } from '../AppHeader/AppHeader';
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
 import { useEffect, useState } from 'react';
-import { BASE_API_URL } from '../../shared/const/const';
-import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
+import { Modal } from '../Modal/Modal';
+import { fetchIngredients } from '../../utils/burger-api';
 
 export const App = () => {
-    const [data, setData] = useState({
+    const [appData, setAppData] = useState({
         ingredients: [],
         isLoading: false,
         hasError: false
@@ -17,71 +17,38 @@ export const App = () => {
         content: null
     });
 
-    const handleCloseModal = () => {
-        setModalState({
-            isActive: false,
-            content: null
-        });
-    }
-
-    const closeModalByEsc = (evt) => {
-        if (evt.key === 'Escape') {
-            setModalState({
-                isActive: false,
-                content: null
-            })
-        }
-    }
-
     useEffect(() => {
-        const getData = async () => {
-            try {
-                setData({
-                    ...data,
-                    isLoading: true
-                })
-                const res = await fetch(BASE_API_URL);
-                const result = await res.json();
-                setData({
-                    ingredients: result.data,
-                    isLoading: false,
-                });
-            } catch (error) {
-                setData({
-                    ...data,
-                    hasError: true,
-                });
-                alert(`Ошибка при обращении к ресурсу ${BASE_API_URL}:`, error.message);
-            }
-        }
-        getData();
-    }, [])
-
-    useEffect(() => {
-        document.addEventListener('keydown', closeModalByEsc)
-        return () => {
-            document.removeEventListener('keydown', closeModalByEsc)
-        }
+        setAppData({ ...appData, isLoading: true });
+        fetchIngredients()
+            .then(res => setAppData({
+                ...appData,
+                ingredients: res.data
+            }))
+            .catch(error => setAppData({
+                ...appData,
+                hasError: true,
+                isLoading: false
+            }))
     }, [])
 
     return (
         <div className={appStyles.app}>
             <AppHeader />
             <main className={appStyles.main}>
-                <BurgerIngredients
-                    data={data.ingredients}
+                {!appData.hasError ? <>
+                        <BurgerIngredients
+                            data={appData.ingredients}
+                            setModalState={setModalState}
+                            isLoading={appData.isLoading}
+                        />
+                        <BurgerConstructor
+                            ingredients={appData.ingredients}
+                            setModalState={setModalState}
+                        />
+                    </> : "Произошла ошибка"}
+                {modalState.isActive && <Modal
                     setModalState={setModalState}
-                    isLoading={data.isLoading}
-                />
-                <BurgerConstructor
-                    ingredients={data.ingredients}
-                    setModalState={setModalState}
-                    isLoading={data.isLoading}
-                />
-                {<ModalOverlay
-                    isActive={modalState.isActive}
                     children={modalState.content}
-                    closeModal={handleCloseModal}
                 />}
             </main>
         </div>
