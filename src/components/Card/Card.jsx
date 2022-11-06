@@ -3,15 +3,11 @@ import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/types/commonTypes';
 
-export function Card({ cardData, renderModal }) {
+export function Card({ cardData, onCardClick }) {
     const { image, price, name } = cardData;
 
-    const handleClickIngredient = (ingredient) => {
-        renderModal(ingredient);
-    }
-
     return (
-        <li onClick={() => handleClickIngredient(cardData)} className={cardStyle.card}>
+        <li onClick={onCardClick} className={cardStyle.card}>
             <span className={`${cardStyle.quantity} "text text_type_main-medium"`}>1</span>
             <img
                 className={image}
@@ -31,5 +27,5 @@ export function Card({ cardData, renderModal }) {
 
 Card.propTypes = {
     cardData: ingredientPropType.isRequired,
-    renderModal: PropTypes.func.isRequired
+    onCardClick: PropTypes.func.isRequired
 }

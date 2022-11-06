@@ -18,16 +18,15 @@ export const App = () => {
     });
 
     useEffect(() => {
-        setAppData({ ...appData, isLoading: true });
+        setAppData(prevState => {
+            return { ...prevState, isLoading: true };
+        });
         fetchIngredients()
-            .then(res => setAppData({
-                ...appData,
-                ingredients: res.data
+            .then(res => setAppData(prevState => {
+                return { ...prevState, ingredients: res.data, isLoading: false };
             }))
-            .catch(error => setAppData({
-                ...appData,
-                hasError: true,
-                isLoading: false
+            .catch(error => setAppData(prevState => {
+                return { ...prevState, hasError: true, isLoading: false };
             }))
     }, [])
 

@@ -2,8 +2,16 @@ import categoryStyle from './IngredientsCategory.module.css';
 import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
 import { ingredientPropType } from '../../utils/types/commonTypes';
+import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 
-export function IngredientsCategory({ title, category, renderModal }) {
+export function IngredientsCategory({ title, category, setModalState }) {
+    const renderModal = (cardData) => {
+        setModalState({
+            isActive: true,
+            content: <IngredientDetails data={cardData} />
+        })
+    }
+
     return (
         <>
             <h2 className="text text_type_main-medium">{title}</h2>
@@ -11,7 +19,7 @@ export function IngredientsCategory({ title, category, renderModal }) {
                 {category.map((item) => <Card
                     key={item._id}
                     cardData={item}
-                    renderModal={renderModal}
+                    onCardClick={() => renderModal(item)}
                 />)}
             </ul>
         </>
@@ -21,5 +29,5 @@ export function IngredientsCategory({ title, category, renderModal }) {
 IngredientsCategory.propTypes = {
     title: PropTypes.string.isRequired,
     category: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-    renderModal: PropTypes.func.isRequired
+    setModalState: PropTypes.func.isRequired
 }

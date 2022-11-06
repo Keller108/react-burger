@@ -5,7 +5,6 @@ import { ingredientPropType } from '../../utils/types/commonTypes';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 import { Preloader } from '../Preloader/Preloader';
-import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
 
 export function BurgerIngredients({
     data,
@@ -29,13 +28,6 @@ export function BurgerIngredients({
         setCurrentTab(type)
     }
 
-    const renderModal = (cardData) => {
-        setModalState({
-            isActive: true,
-            content: <IngredientDetails data={cardData} />
-        })
-    }
-
     return (
         <section className={`${ingredientsStyle.container} pt-10`}>
             <h1 className="text text_type_main-large pb-5">
@@ -56,17 +48,17 @@ export function BurgerIngredients({
                     <IngredientsCategory
                         title="Булки"
                         category={buns}
-                        renderModal={renderModal}
+                        setModalState={setModalState}
                     />
                     <IngredientsCategory
                         title="Соусы"
                         category={sauces}
-                        renderModal={renderModal}
+                        setModalState={setModalState}
                     />
                     <IngredientsCategory
                         title="Начинка"
                         category={main}
-                        renderModal={renderModal}
+                        setModalState={setModalState}
                     />
                 </>}
             </div>
