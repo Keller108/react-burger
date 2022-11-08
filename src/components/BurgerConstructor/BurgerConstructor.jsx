@@ -5,16 +5,19 @@ import { Button,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { ingredientPropType } from '../../utils/types/commonTypes';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
+import { BurgerConstructorContext } from '../../services/productsContext';
 
-export function BurgerConstructor({ ingredients, setModalState }) {
-    const handleModalState = () => {
+export function BurgerConstructor({ setModalState, handleOrderRequest }) {
+    const { ingredients } = useContext(BurgerConstructorContext);
+
+    const handleModalState = async () => {
+        await handleOrderRequest();
         setModalState({
             isActive: true,
             content: <OrderDetails />
-        })
+        });
     };
 
     const bun = useMemo(() => ingredients
@@ -83,6 +86,6 @@ export function BurgerConstructor({ ingredients, setModalState }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-    setModalState: PropTypes.func.isRequired
+    setModalState: PropTypes.func.isRequired,
+    handleOrderRequest: PropTypes.func.isRequired
 }
