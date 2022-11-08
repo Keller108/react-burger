@@ -6,11 +6,13 @@ import { Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
-    const { ingredients } = useContext(BurgerConstructorContext);
+    const {
+        ingredients, totalPrice, setTotalPrice
+    } = useContext(BurgerConstructorContext);
 
     const handleModalState = async () => {
         await handleOrderRequest();
@@ -25,6 +27,25 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
 
     const otherIngredients = useMemo(() => ingredients
         .filter(ingredient => ingredient.type !== 'bun'), [ingredients]);
+
+    const countTotalPrice = useMemo(() => {
+        let total;
+        let otherIngredientsPrice = otherIngredients.reduce((prev, curr) => {
+            return prev + curr.price
+        }, 0);
+
+        if (bun) {
+            total = otherIngredientsPrice + bun.price;
+        }
+
+        return total;
+    }, [ingredients])
+
+    useEffect(() => {
+        if (bun) {
+            setTotalPrice(countTotalPrice);
+        }
+    }, [ingredients, bun])
 
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
@@ -70,7 +91,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
                 <span className={`${contructorStyles.price} mr-10`}>
-                    <p className="text text_type_main-large mr-3">610</p>
+                    <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
                 <Button onClick={handleModalState}

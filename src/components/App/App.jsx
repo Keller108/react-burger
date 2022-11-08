@@ -28,6 +28,8 @@ export const App = () => {
         }
     });
 
+    const [totalPrice, setTotalPrice] = useState(0);
+
     const handleOrderRequest = async () => {
         return placeAnOrder({ingredients: orderState.orderData})
             .then(res => setOrderState(prevState => {
@@ -39,9 +41,9 @@ export const App = () => {
                         number: res.order.number
                     }
                 }
-            }).catch(error => setOrderState(prevState => {
-                return { ...prevState, success: false };
-            })));
+            }))
+            .catch(error => setOrderState(prevState => {
+                return { ...prevState, success: false }}));
     };
 
     useEffect(() => {
@@ -71,7 +73,8 @@ export const App = () => {
                 value={{
                     ingredients: appData.ingredients,
                     order: orderState.order,
-                    orderData: orderState.orderData
+                    orderData: orderState.orderData,
+                    totalPrice, setTotalPrice
                 }}
             >
                 <main className={appStyles.main}>
