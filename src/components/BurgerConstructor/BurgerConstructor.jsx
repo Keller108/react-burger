@@ -5,31 +5,42 @@ import { Button,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { ingredientPropType } from '../../shared/const/ingredientPropType';
+import { ingredientPropType } from '../../utils/types/commonTypes';
+import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { useMemo } from 'react';
 
-export function BurgerConstructor({ ingredients }) {
-    const bun = ingredients.find(ingredient => ingredient.type === 'bun');
-    const otherIngredients = ingredients
-        .filter(ingredient => ingredient.type !== 'bun');
+export function BurgerConstructor({ ingredients, setModalState }) {
+    const handleModalState = () => {
+        setModalState({
+            isActive: true,
+            content: <OrderDetails />
+        })
+    };
+
+    const bun = useMemo(() => ingredients
+        .find(ingredient => ingredient.type === 'bun'), [ingredients]);
+
+    const otherIngredients = useMemo(() => ingredients
+        .filter(ingredient => ingredient.type !== 'bun'), [ingredients]);
+
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                <li key={bun._id}
-                    className={`${contructorStyles.constructorItem} pl-8`}
-                >
+                {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
                         key={bun._id}
                         type="top"
                         isLocked={true}
-                        text={bun.name}
+                        text={`${bun.name} (верх)`}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
-                </li>
+                </li>}
                 <div className={contructorStyles.itemWrapper}>
                     {otherIngredients.map((item) => <li key={item._id}
-                        className={`${contructorStyles.constructorItem}
-                        ${contructorStyles.constructorItem_dragable} mb-4`}>
+                            className={`${contructorStyles.constructorItem}
+                            ${contructorStyles.constructorItem_dragable} mb-4`}
+                        >
                             <div className="mr-2">
                                 <DragIcon type="primary" />
                             </div>
@@ -43,25 +54,27 @@ export function BurgerConstructor({ ingredients }) {
                         </li>)
                     }
                 </div>
-                <li key={bun._id+1}
-                    className={`${contructorStyles.constructorItem} pl-8`}
-                >
+                {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
                         key={bun._id}
                         type="bottom"
                         isLocked={true}
-                        text={bun.name}
+                        text={`${bun.name} (низ)`}
                         price={bun.price}
                         thumbnail={bun.image}
                     />
-                </li>
+                </li>}
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
                 <span className={`${contructorStyles.price} mr-10`}>
                     <p className="text text_type_main-large mr-3">610</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button htmlType="button" type="primary" size="large">
+                <Button onClick={handleModalState}
+                    htmlType="button"
+                    type="primary"
+                    size="large"
+                >
                     Оформить заказ
                 </Button>
             </div>
@@ -71,4 +84,5 @@ export function BurgerConstructor({ ingredients }) {
 
 BurgerConstructor.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+    setModalState: PropTypes.func.isRequired
 }
