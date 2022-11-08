@@ -35,7 +35,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
         }, 0);
 
         if (bun) {
-            total = otherIngredientsPrice + bun.price;
+            total = otherIngredientsPrice + (bun.price * 2);
         }
 
         return total;
