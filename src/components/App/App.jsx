@@ -39,7 +39,9 @@ export const App = () => {
                         number: res.order.number
                     }
                 }
-            }));
+            }).catch(error => setOrderState(prevState => {
+                return { ...prevState, success: false };
+            })));
     };
 
     useEffect(() => {
