@@ -10,7 +10,7 @@ export async function fetchIngredients() {
 }
 
 export async function placeAnOrder(orderData) {
-    return fetch('https://norma.nomoreparties.space/api/orders', {
+    return fetch(ORDERS_PATH, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

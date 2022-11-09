@@ -6,27 +6,38 @@ import { Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
+    const [items, setItems] = useState([]);
     const {
-        ingredients, totalPrice, setTotalPrice
+        initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
     } = useContext(BurgerConstructorContext);
 
-    const handleModalState = async () => {
-        await handleOrderRequest();
-        setModalState({
-            isActive: true,
-            content: <OrderDetails />
-        });
-    };
+    const bun = useMemo(() => initialData
+        .find(ingredient => ingredient.type === 'bun'), [initialData]);
 
-    const bun = useMemo(() => ingredients
-        .find(ingredient => ingredient.type === 'bun'), [ingredients]);
+    const otherIngredients = useMemo(() => initialData
+        .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
 
-    const otherIngredients = useMemo(() => ingredients
-        .filter(ingredient => ingredient.type !== 'bun'), [ingredients]);
+    useEffect(() => {
+        /** В коде ниже я использую временные данные, для мапинга масива
+         * ингредиентов в конструкторе. В дальнейшем будет реализовано
+         * добавление эл-тов в конструктор из BurgerIngredients
+         */
+        if (bun && otherIngredients) {
+            const topBun = {...bun, name: `${bun.name} (верх)`};
+            const bottomBun = {...bun, name: `${bun.name} (низ)`};
+            setItems([topBun, ...otherIngredients, bottomBun]);
+        }
+    }, [bun, otherIngredients])
+
+    useEffect(() => {
+        if (items) {
+            setOrderState(prevState => ({...prevState, constructorItems: items}));
+        }
+    }, [items, orderState.constructorItems])
 
     const countTotalPrice = useMemo(() => {
         let total;
@@ -46,6 +57,19 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
             setTotalPrice(countTotalPrice);
         }
     }, [ingredients, bun])
+
+    const handleModalState = async () => {
+        await handleOrderRequest();
+    };
+
+    useEffect(() => {
+        if (orderState.success) {
+            setModalState({
+                isActive: true,
+                content: <OrderDetails order={orderState.order}/>
+            });
+        }
+    }, [orderState.success])
 
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>

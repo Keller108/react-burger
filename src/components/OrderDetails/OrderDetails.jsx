@@ -1,11 +1,8 @@
+import PropTypes from 'prop-types';
 import orderDetailsStyle from './OrderDetails.module.css';
 import IMG_SUCCESS_PATH from './assets/img-done.png';
-import { useContext } from 'react';
-import { BurgerConstructorContext } from '../../services/productsContext';
 
-export function OrderDetails() {
-    const { order } = useContext(BurgerConstructorContext);
-
+export function OrderDetails({ order }) {
     return (
         <div className={`${orderDetailsStyle.wrapper} pt-30 pb-30 pl-16 pr-16`}>
             <h2 className={`${orderDetailsStyle.title}
@@ -29,4 +26,10 @@ export function OrderDetails() {
             </p>
         </div>
     )
+}
+
+OrderDetails.propTypes = {
+    order: PropTypes.shape({
+        number: PropTypes.number.isRequired
+    }).isRequired
 }

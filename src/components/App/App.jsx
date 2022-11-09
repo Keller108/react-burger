@@ -21,6 +21,7 @@ export const App = () => {
 
     const [orderState, setOrderState] = useState({
         orderData: [],
+        constructorItems: [],
         success: false,
         name: "",
         order: {
@@ -31,7 +32,8 @@ export const App = () => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const handleOrderRequest = async () => {
-        return placeAnOrder({ingredients: orderState.orderData})
+        console.log('constr items', orderState.constructorItems);
+        return placeAnOrder({ingredients: orderState.constructorItems})
             .then(res => setOrderState(prevState => {
                 return {
                     ...prevState,
@@ -62,21 +64,16 @@ export const App = () => {
     useEffect(() => {
         if (appData.ingredients !== []) {
             const orderIDs = appData.ingredients.map(item => item._id);
-            setOrderState({...orderState, orderData: orderIDs});
+            setOrderState({
+                ...orderState,
+                orderData: orderIDs
+            });
         }
     }, [appData.ingredients])
 
     return (
         <div className={appStyles.app}>
             <AppHeader />
-            <BurgerConstructorContext.Provider
-                value={{
-                    ingredients: appData.ingredients,
-                    order: orderState.order,
-                    orderData: orderState.orderData,
-                    totalPrice, setTotalPrice
-                }}
-            >
                 <main className={appStyles.main}>
                     {!appData.hasError ? <>
                             <BurgerIngredients
@@ -84,17 +81,27 @@ export const App = () => {
                                 setModalState={setModalState}
                                 isLoading={appData.isLoading}
                             />
-                            <BurgerConstructor
-                                setModalState={setModalState}
-                                handleOrderRequest={handleOrderRequest}
-                            />
+                            <BurgerConstructorContext.Provider
+                                value={{
+                                    initialData: appData.ingredients,
+                                    ingredients: orderState.constructorItems,
+                                    orderState: orderState,
+                                    setOrderState,
+                                    totalPrice,
+                                    setTotalPrice
+                                }}
+                            >
+                                <BurgerConstructor
+                                    setModalState={setModalState}
+                                    handleOrderRequest={handleOrderRequest}
+                                />
+                            </BurgerConstructorContext.Provider>
                         </> : "Произошла ошибка"}
                     {modalState.isActive && <Modal
                         setModalState={setModalState}
                         children={modalState.content}
                     />}
                 </main>
-            </BurgerConstructorContext.Provider>
         </div>
     );
 }
