@@ -5,23 +5,71 @@ import { Button,
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { ingredientPropType } from '../../utils/types/commonTypes';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
-import { useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { BurgerConstructorContext } from '../../services/productsContext';
 
-export function BurgerConstructor({ ingredients, setModalState }) {
-    const handleModalState = () => {
-        setModalState({
-            isActive: true,
-            content: <OrderDetails />
-        })
+export function BurgerConstructor({ setModalState, handleOrderRequest }) {
+    const [items, setItems] = useState([]);
+    const {
+        initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
+    } = useContext(BurgerConstructorContext);
+
+    const bun = useMemo(() => initialData
+        .find(ingredient => ingredient.type === 'bun'), [initialData]);
+
+    const otherIngredients = useMemo(() => initialData
+        .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
+
+    useEffect(() => {
+        /** В коде ниже я использую временные данные, для мапинга масива
+         * ингредиентов в конструкторе. В дальнейшем будет реализовано
+         * добавление эл-тов в конструктор из BurgerIngredients
+         */
+        if (bun && otherIngredients) {
+            const topBun = {...bun, name: `${bun.name} (верх)`};
+            const bottomBun = {...bun, name: `${bun.name} (низ)`};
+            setItems([topBun, ...otherIngredients, bottomBun]);
+        }
+    }, [bun, otherIngredients])
+
+    useEffect(() => {
+        if (items) {
+            setOrderState(prevState => ({...prevState, constructorItems: items}));
+        }
+    }, [items, orderState.constructorItems])
+
+    const countTotalPrice = useMemo(() => {
+        let total;
+        let otherIngredientsPrice = otherIngredients.reduce((prev, curr) => {
+            return prev + curr.price
+        }, 0);
+
+        if (bun) {
+            total = otherIngredientsPrice + (bun.price * 2);
+        }
+
+        return total;
+    }, [ingredients])
+
+    useEffect(() => {
+        if (bun) {
+            setTotalPrice(countTotalPrice);
+        }
+    }, [ingredients, bun])
+
+    const handleModalState = async () => {
+        await handleOrderRequest();
     };
 
-    const bun = useMemo(() => ingredients
-        .find(ingredient => ingredient.type === 'bun'), [ingredients]);
-
-    const otherIngredients = useMemo(() => ingredients
-        .filter(ingredient => ingredient.type !== 'bun'), [ingredients]);
+    useEffect(() => {
+        if (orderState.success) {
+            setModalState({
+                isActive: true,
+                content: <OrderDetails order={orderState.order}/>
+            });
+        }
+    }, [orderState.success])
 
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
@@ -67,7 +115,7 @@ export function BurgerConstructor({ ingredients, setModalState }) {
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
                 <span className={`${contructorStyles.price} mr-10`}>
-                    <p className="text text_type_main-large mr-3">610</p>
+                    <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
                 <Button onClick={handleModalState}
@@ -83,6 +131,6 @@ export function BurgerConstructor({ ingredients, setModalState }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-    setModalState: PropTypes.func.isRequired
+    setModalState: PropTypes.func.isRequired,
+    handleOrderRequest: PropTypes.func.isRequired
 }
