@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Modal } from '../Modal/Modal';
 import { fetchIngredients, placeAnOrder } from '../../utils/burger-api';
 import { BurgerConstructorContext } from '../../services/productsContext';
+import { useSelector } from 'react-redux';
 
 export const App = () => {
     const [appData, setAppData] = useState({
@@ -28,6 +29,10 @@ export const App = () => {
             number: null
         }
     });
+
+    const ingredients = useSelector(store => store.ingredients);
+
+    console.log('redux ingredients', ingredients);
 
     const [totalPrice, setTotalPrice] = useState(0);
 
