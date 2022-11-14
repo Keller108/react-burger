@@ -1,22 +1,35 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { ingredientPropType } from '../../utils/types/commonTypes';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 import { Preloader } from '../Preloader/Preloader';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions';
 
 export function BurgerIngredients({
-    data,
     setModalState,
-    isLoading
 }) {
     const [types,] = useState(['bun', 'sauce', 'main']);
     const [currentTab, setCurrentTab] = useState('bun');
 
-    const buns = useMemo(() => data.filter((item) => item.type === 'bun'), [data]);
-    const sauces = useMemo(() => data.filter((item) => item.type === 'sauce'), [data]);
-    const main = useMemo(() => data.filter((item) => item.type === 'main'), [data]);
+    const dispatch = useDispatch();
+
+    const ingredients = useSelector(store => store.ingredients.ingredientItems);
+
+    useEffect(() => {
+        dispatch(getIngredients());
+    }, [dispatch])
+
+    const buns = useMemo(() => ingredients
+        .filter((item) => item.type === 'bun'), [ingredients]);
+
+    const sauces = useMemo(() => ingredients
+        .filter((item) => item.type === 'sauce'), [ingredients]);
+
+    const main = useMemo(() => ingredients
+        .filter((item) => item.type === 'main'), [ingredients]);
 
     const tabsText = {
         bun: "Булки",
@@ -26,7 +39,7 @@ export function BurgerIngredients({
 
     const handleSwitchTab = (type) => {
         setCurrentTab(type)
-    }
+    };
 
     return (
         <section className={`${ingredientsStyle.container} pt-10`}>
@@ -44,7 +57,9 @@ export function BurgerIngredients({
                 </Tab>)}
             </div>
             <div className={`${ingredientsStyle.ingredients}`}>
-                {isLoading ? <Preloader /> : <>
+                {
+                // isLoading ? <Preloader /> :
+                <>
                     <IngredientsCategory
                         title="Булки"
                         category={buns}
@@ -67,7 +82,5 @@ export function BurgerIngredients({
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
     setModalState: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired
 }
