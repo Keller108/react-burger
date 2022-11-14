@@ -6,7 +6,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 import { Preloader } from '../Preloader/Preloader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
 export function BurgerIngredients({
     setModalState,

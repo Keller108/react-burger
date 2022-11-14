@@ -7,7 +7,7 @@ import { Modal } from '../Modal/Modal';
 import { fetchIngredients, placeAnOrder } from '../../utils/burger-api';
 import { BurgerConstructorContext } from '../../services/productsContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
 export const App = () => {
     const [appData, setAppData] = useState({
@@ -104,7 +104,7 @@ export const App = () => {
                 > */}
                 <BurgerConstructor
                     setModalState={setModalState}
-                    handleOrderRequest={handleOrderRequest}
+                    // handleOrderRequest={handleOrderRequest}
                 />
                 {/* </BurgerConstructorContext.Provider> */}
                 {modalState.isActive && <Modal

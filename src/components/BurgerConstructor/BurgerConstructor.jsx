@@ -10,71 +10,71 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
-    const [items, setItems] = useState([]);
-    const {
-        initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
-    } = useContext(BurgerConstructorContext);
+    // const [items, setItems] = useState([]);
+    // const {
+    //     initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
+    // } = useContext(BurgerConstructorContext);
 
-    const bun = useMemo(() => initialData
-        .find(ingredient => ingredient.type === 'bun'), [initialData]);
+    // const bun = useMemo(() => initialData
+    //     .find(ingredient => ingredient.type === 'bun'), [initialData]);
 
-    const otherIngredients = useMemo(() => initialData
-        .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
+    // const otherIngredients = useMemo(() => initialData
+    //     .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
 
-    useEffect(() => {
-        /** В коде ниже я использую временные данные, для мапинга масива
-         * ингредиентов в конструкторе. В дальнейшем будет реализовано
-         * добавление эл-тов в конструктор из BurgerIngredients
-         */
-        if (bun && otherIngredients) {
-            const topBun = {...bun, name: `${bun.name} (верх)`};
-            const bottomBun = {...bun, name: `${bun.name} (низ)`};
-            setItems([topBun, ...otherIngredients, bottomBun]);
-        }
-    }, [bun, otherIngredients])
+    // useEffect(() => {
+    //     /** В коде ниже я использую временные данные, для мапинга масива
+    //      * ингредиентов в конструкторе. В дальнейшем будет реализовано
+    //      * добавление эл-тов в конструктор из BurgerIngredients
+    //      */
+    //     if (bun && otherIngredients) {
+    //         const topBun = {...bun, name: `${bun.name} (верх)`};
+    //         const bottomBun = {...bun, name: `${bun.name} (низ)`};
+    //         setItems([topBun, ...otherIngredients, bottomBun]);
+    //     }
+    // }, [bun, otherIngredients])
 
-    useEffect(() => {
-        if (items) {
-            setOrderState(prevState => ({...prevState, constructorItems: items}));
-        }
-    }, [items, orderState.constructorItems])
+    // useEffect(() => {
+    //     if (items) {
+    //         setOrderState(prevState => ({...prevState, constructorItems: items}));
+    //     }
+    // }, [items, orderState.constructorItems])
 
-    const countTotalPrice = useMemo(() => {
-        let total;
-        let otherIngredientsPrice = otherIngredients.reduce((prev, curr) => {
-            return prev + curr.price
-        }, 0);
+    // const countTotalPrice = useMemo(() => {
+    //     let total;
+    //     let otherIngredientsPrice = otherIngredients.reduce((prev, curr) => {
+    //         return prev + curr.price
+    //     }, 0);
 
-        if (bun) {
-            total = otherIngredientsPrice + (bun.price * 2);
-        }
+    //     if (bun) {
+    //         total = otherIngredientsPrice + (bun.price * 2);
+    //     }
 
-        return total;
-    }, [ingredients])
+    //     return total;
+    // }, [ingredients])
 
-    useEffect(() => {
-        if (bun) {
-            setTotalPrice(countTotalPrice);
-        }
-    }, [ingredients, bun])
+    // useEffect(() => {
+    //     if (bun) {
+    //         setTotalPrice(countTotalPrice);
+    //     }
+    // }, [ingredients, bun])
 
-    const handleModalState = async () => {
-        await handleOrderRequest();
-    };
+    // const handleModalState = async () => {
+    //     await handleOrderRequest();
+    // };
 
-    useEffect(() => {
-        if (orderState.success) {
-            setModalState({
-                isActive: true,
-                content: <OrderDetails order={orderState.order}/>
-            });
-        }
-    }, [orderState.success])
+    // useEffect(() => {
+    //     if (orderState.success) {
+    //         setModalState({
+    //             isActive: true,
+    //             content: <OrderDetails order={orderState.order}/>
+    //         });
+    //     }
+    // }, [orderState.success])
 
     return (
         <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {/* {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
                         key={bun._id}
                         type="top"
@@ -83,9 +83,9 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                         price={bun.price}
                         thumbnail={bun.image}
                     />
-                </li>}
+                </li>} */}
                 <div className={contructorStyles.itemWrapper}>
-                    {otherIngredients.map((item) => <li key={item._id}
+                    {/* {otherIngredients.map((item) => <li key={item._id}
                             className={`${contructorStyles.constructorItem}
                             ${contructorStyles.constructorItem_dragable} mb-4`}
                         >
@@ -100,9 +100,9 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                                 thumbnail={item.image}
                             />
                         </li>)
-                    }
+                    } */}
                 </div>
-                {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {/* {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
                         key={bun._id}
                         type="bottom"
@@ -111,10 +111,10 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                         price={bun.price}
                         thumbnail={bun.image}
                     />
-                </li>}
+                </li>} */}
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
-                <span className={`${contructorStyles.price} mr-10`}>
+                {/* <span className={`${contructorStyles.price} mr-10`}>
                     <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
@@ -124,7 +124,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                     size="large"
                 >
                     Оформить заказ
-                </Button>
+                </Button> */}
             </div>
         </section>
     )
