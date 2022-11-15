@@ -7,13 +7,10 @@ import { addItemToConstructor } from '../../services/actions/burger-constructor'
 import { useCallback, useEffect } from 'react';
 
 export function Card({ cardData, onCardClick }) {
-    const otherItems = useSelector(store => store.otherItems);
     const { image, price, name } = cardData;
     const dispatch = useDispatch();
 
-    const addItem = (item) => {
-        dispatch(addItemToConstructor(item));
-    };
+    const addItem = (item) => dispatch(addItemToConstructor(item));
 
     return (
         <li onClick={() => {

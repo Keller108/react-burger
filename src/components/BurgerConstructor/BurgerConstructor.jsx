@@ -8,8 +8,14 @@ import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
+import { useSelector } from 'react-redux';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
+    const otherItems = useSelector(store => store.constructor.otherItems);
+
+    useEffect(() => {
+        console.log('constructor', constructor);
+    })
     // const [items, setItems] = useState([]);
     // const {
     //     initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
@@ -85,7 +91,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                     />
                 </li>} */}
                 <div className={contructorStyles.itemWrapper}>
-                    {/* {otherIngredients.map((item) => <li key={item._id}
+                    {otherItems && otherItems.map((item) => <li draggable key={item._id}
                             className={`${contructorStyles.constructorItem}
                             ${contructorStyles.constructorItem_dragable} mb-4`}
                         >
@@ -100,7 +106,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                                 thumbnail={item.image}
                             />
                         </li>)
-                    } */}
+                    }
                 </div>
                 {/* {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
