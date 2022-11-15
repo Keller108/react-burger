@@ -9,7 +9,7 @@ import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToConstructor } from '../../services/actions/burger-constructor';
+import { addItemToConstructor, deleteItemFromConstructor } from '../../services/actions/burger-constructor';
 import { useDrop } from 'react-dnd';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
@@ -23,7 +23,9 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
         drop(ingredient) {
             addItem(ingredient)
         }
-      });
+    });
+
+    const removeItem = item => dispatch(deleteItemFromConstructor(item));
 
     // const [items, setItems] = useState([]);
     // const {
@@ -113,6 +115,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                                 text={item.name}
                                 price={item.price}
                                 thumbnail={item.image}
+                                handleClose={() => removeItem(item)}
                             />
                         </li>)
                     }

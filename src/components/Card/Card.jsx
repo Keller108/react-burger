@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/types/commonTypes';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToConstructor } from '../../services/actions/burger-constructor';
-import { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
 export function Card({ cardData, onCardClick }) {
@@ -20,13 +18,8 @@ export function Card({ cardData, onCardClick }) {
 
     const { image, price, name } = cardData;
 
-    // const addItem = (item) => dispatch(addItemToConstructor(item));
-
     return (
-        <li onClick={() => {
-            onCardClick();
-            // addItem(cardData);
-        }}
+        <li onClick={onCardClick}
             draggable
             ref={ref}
             className={cardStyle.card}>
