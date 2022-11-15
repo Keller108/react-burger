@@ -5,18 +5,30 @@ import { ingredientPropType } from '../../utils/types/commonTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToConstructor } from '../../services/actions/burger-constructor';
 import { useCallback, useEffect } from 'react';
+import { useDrag } from 'react-dnd';
 
 export function Card({ cardData, onCardClick }) {
-    const { image, price, name } = cardData;
     const dispatch = useDispatch();
 
-    const addItem = (item) => dispatch(addItemToConstructor(item));
+    const [, ref] = useDrag({
+        type: 'ingredients',
+        item: cardData ,
+        collect: monitor => ({
+            isHover: monitor.isDragging()
+        }),
+    });
+
+    const { image, price, name } = cardData;
+
+    // const addItem = (item) => dispatch(addItemToConstructor(item));
 
     return (
         <li onClick={() => {
             onCardClick();
-            addItem(cardData);
+            // addItem(cardData);
         }}
+            draggable
+            ref={ref}
             className={cardStyle.card}>
             <span className={`${cardStyle.quantity} "text text_type_main-medium"`}>1</span>
             <img

@@ -8,14 +8,23 @@ import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToConstructor } from '../../services/actions/burger-constructor';
+import { useDrop } from 'react-dnd';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
     const otherItems = useSelector(store => store.constructor.otherItems);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log('constructor', constructor);
-    })
+    const addItem = (item) => dispatch(addItemToConstructor(item));
+
+    const [, dropTarget] = useDrop({
+        accept: 'ingredients',
+        drop(ingredient) {
+            addItem(ingredient)
+        }
+      });
+
     // const [items, setItems] = useState([]);
     // const {
     //     initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
@@ -78,7 +87,7 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
     // }, [orderState.success])
 
     return (
-        <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
+        <section ref={dropTarget} className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
                 {/* {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement

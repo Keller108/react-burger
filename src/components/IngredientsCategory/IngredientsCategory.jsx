@@ -10,7 +10,7 @@ export function IngredientsCategory({ title, category, setModalState }) {
             isActive: true,
             content: <IngredientDetails data={cardData} />
         })
-    }
+    };
 
     return (
         <>
