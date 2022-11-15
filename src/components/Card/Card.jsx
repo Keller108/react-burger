@@ -2,12 +2,25 @@ import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/types/commonTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToConstructor } from '../../services/actions/burger-constructor';
+import { useCallback, useEffect } from 'react';
 
 export function Card({ cardData, onCardClick }) {
+    const otherItems = useSelector(store => store.otherItems);
     const { image, price, name } = cardData;
+    const dispatch = useDispatch();
+
+    const addItem = (item) => {
+        dispatch(addItemToConstructor(item));
+    };
 
     return (
-        <li onClick={onCardClick} className={cardStyle.card}>
+        <li onClick={() => {
+            onCardClick();
+            addItem(cardData);
+        }}
+            className={cardStyle.card}>
             <span className={`${cardStyle.quantity} "text text_type_main-medium"`}>1</span>
             <img
                 className={image}

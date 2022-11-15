@@ -10,12 +10,12 @@ export const constructorReducer = (state = initialState, action) => {
         case ADD_ITEM_TO_CONSTRUCTOR: {
             return {
                 ...state,
-                otherItems: [...state.otherItems, action.item]
+                otherItems: [state.otherItems, action.item]
             }
         }
         default: {
             return {
-                state
+                ...state
             }
         }
     }
