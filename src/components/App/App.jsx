@@ -92,24 +92,24 @@ export const App = () => {
             <AppHeader />
             <DndProvider backend={HTML5Backend}>
                 <main className={appStyles.main}>
-                        <BurgerIngredients
-                            setModalState={setModalState}
-                        />
-                        {/* <BurgerConstructorContext.Provider
-                            value={{
-                                initialData: appData.ingredients,
-                                ingredients: orderState.constructorItems,
-                                orderState: orderState,
-                                setOrderState,
-                                totalPrice,
-                                setTotalPrice
-                            }}
-                        > */}
-                        <BurgerConstructor
-                            setModalState={setModalState}
-                            // handleOrderRequest={handleOrderRequest}
-                        />
-                        {/* </BurgerConstructorContext.Provider> */}
+                    <BurgerIngredients
+                        setModalState={setModalState}
+                    />
+                    {/* <BurgerConstructorContext.Provider
+                        value={{
+                            initialData: appData.ingredients,
+                            ingredients: orderState.constructorItems,
+                            orderState: orderState,
+                            setOrderState,
+                            totalPrice,
+                            setTotalPrice
+                        }}
+                    > */}
+                    <BurgerConstructor
+                        setModalState={setModalState}
+                        // handleOrderRequest={handleOrderRequest}
+                    />
+                    {/* </BurgerConstructorContext.Provider> */}
                     {modalState.isActive && <Modal
                         setModalState={setModalState}
                         children={modalState.content}

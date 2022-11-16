@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ingredientsStyle from './BurgerIngredients.module.css';
-import { ingredientPropType } from '../../utils/types/commonTypes';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 import { Preloader } from '../Preloader/Preloader';
