@@ -13,7 +13,7 @@ import { addItemToConstructor, deleteItemFromConstructor } from '../../services/
 import { useDrop } from 'react-dnd';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
-    const { otherItems, totalPrice } = useSelector(store => store.constructor);
+    const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
@@ -27,6 +27,9 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
 
     const removeItem = item => dispatch(deleteItemFromConstructor(item));
 
+    // const topBun = {...buns, name: `${buns.name} (верх)`};
+    // const bottomBun = {...buns, name: `${buns.name} (низ)`};
+
     // const [items, setItems] = useState([]);
     // const {
     //     initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
@@ -37,18 +40,6 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
 
     // const otherIngredients = useMemo(() => initialData
     //     .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
-
-    // useEffect(() => {
-    //     /** В коде ниже я использую временные данные, для мапинга масива
-    //      * ингредиентов в конструкторе. В дальнейшем будет реализовано
-    //      * добавление эл-тов в конструктор из BurgerIngredients
-    //      */
-    //     if (bun && otherIngredients) {
-    //         const topBun = {...bun, name: `${bun.name} (верх)`};
-    //         const bottomBun = {...bun, name: `${bun.name} (низ)`};
-    //         setItems([topBun, ...otherIngredients, bottomBun]);
-    //     }
-    // }, [bun, otherIngredients])
 
     // useEffect(() => {
     //     if (items) {
@@ -91,16 +82,16 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
     return (
         <section ref={dropTarget} className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                {/* {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {buns.length !== 0 && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
-                        key={bun._id}
+                        key={buns[0]._id}
                         type="top"
                         isLocked={true}
-                        text={`${bun.name} (верх)`}
-                        price={bun.price}
-                        thumbnail={bun.image}
+                        text={`${buns[0].name} (верх)`}
+                        price={buns[0].price}
+                        thumbnail={buns[0].image}
                     />
-                </li>} */}
+                </li>}
                 <div className={contructorStyles.itemWrapper}>
                     {otherItems && otherItems.map((item) => <li draggable key={item._id}
                             className={`${contructorStyles.constructorItem}
@@ -120,16 +111,16 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                         </li>)
                     }
                 </div>
-                {/* {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {buns.length !== 0 && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
-                        key={bun._id}
+                        key={buns[0]._id}
                         type="bottom"
                         isLocked={true}
-                        text={`${bun.name} (низ)`}
-                        price={bun.price}
-                        thumbnail={bun.image}
+                        text={`${buns[0].name} (низ)`}
+                        price={buns[0].price}
+                        thumbnail={buns[0].image}
                     />
-                </li>} */}
+                </li>}
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
                 <span className={`${contructorStyles.price} mr-10`}>

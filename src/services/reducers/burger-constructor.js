@@ -9,6 +9,20 @@ const initialState = {
 export const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_ITEM_TO_CONSTRUCTOR: {
+            if (action.ingredient.type === 'bun') {
+                if (state.buns.length) {
+                    state.totalPrice = 0;
+                    state.buns = [];
+                }
+                return {
+                    ...state,
+                    buns: [
+                        action.ingredient
+                    ],
+                    totalPrice: state.totalPrice += (action.ingredient.price * 2)
+                }
+            }
+
             return {
                 ...state,
                 otherItems: [
