@@ -13,7 +13,7 @@ import { addItemToConstructor, deleteItemFromConstructor } from '../../services/
 import { useDrop } from 'react-dnd';
 
 export function BurgerConstructor({ setModalState, handleOrderRequest }) {
-    const otherItems = useSelector(store => store.constructor.otherItems);
+    const { otherItems, totalPrice } = useSelector(store => store.constructor);
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
@@ -132,11 +132,11 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                 </li>} */}
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
-                {/* <span className={`${contructorStyles.price} mr-10`}>
+                <span className={`${contructorStyles.price} mr-10`}>
                     <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button onClick={handleModalState}
+                {/* <Button onClick={handleModalState}
                     htmlType="button"
                     type="primary"
                     size="large"
