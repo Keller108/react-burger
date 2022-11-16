@@ -16,8 +16,8 @@ export function IngredientsCategory({ title, category, setModalState }) {
         <>
             <h2 className="text text_type_main-medium">{title}</h2>
             <ul className={`${categoryStyle.ingredients} pt-6 pl-4 pb-10 m-0`}>
-                {category.map((item) => <Card
-                    key={item._id}
+                {category.map((item, index) => <Card
+                    key={`${item._id + 'prefix-' + index}`}
                     cardData={item}
                     onCardClick={() => renderModal(item)}
                 />)}

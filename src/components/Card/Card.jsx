@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/types/commonTypes';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -20,23 +20,22 @@ export function Card({ cardData, onCardClick }) {
 
     const { image, price, name } = cardData;
 
-    useEffect(() => {
-        if (otherItems.length > 0) {
-            let ingredientAmount = otherItems
-            .filter(item => item._id === cardData._id).length;
-            setAmount(ingredientAmount);
-        }
-    }, [otherItems])
+    let ingredientAmount = useMemo(() => {
+        return otherItems.filter(item => item._id === cardData._id).length;
+    }, [otherItems, cardData._id])
 
     useEffect(() => {
-        console.log('amount', amount)
-    }, [amount])
+        if (otherItems.length > 0) {
+            setAmount(ingredientAmount);
+        } else if (!otherItems.length) {
+            setAmount(0);
+        }
+    }, [otherItems])
 
     return (
         <li onClick={onCardClick}
             draggable
             ref={ref}
-            key={amount > 1 ? `${cardData._id + amount}` : `${cardData._id}`}
             className={cardStyle.card}>
                 {amount > 0 && <span
                     className={`${cardStyle.quantity} "text text_type_main-medium"`}
