@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 export function Card({ cardData, onCardClick }) {
     const [amount, setAmount] = useState(0);
-    const { otherItems } = useSelector(store => store.constructor);
+    const { buns, otherItems } = useSelector(store => store.constructor);
 
     const [, ref] = useDrag({
         type: 'ingredients',
@@ -22,7 +22,11 @@ export function Card({ cardData, onCardClick }) {
 
     let ingredientAmount = useMemo(() => {
         return otherItems.filter(item => item._id === cardData._id).length;
-    }, [otherItems, cardData._id])
+    }, [otherItems, cardData._id]);
+
+    // let bunsAmount = useMemo(() => {
+    //     return buns.filter(item => item._id === cardData._id).length;
+    // }, [buns, cardData._id]);
 
     useEffect(() => {
         if (otherItems.length > 0) {
@@ -37,7 +41,11 @@ export function Card({ cardData, onCardClick }) {
             draggable
             ref={ref}
             className={cardStyle.card}>
-                {amount > 0 && <span
+                {(cardData.type === 'bun' && buns.length) && (buns.filter(item => item._id === cardData._id) && buns.find(item => item._id === cardData._id)) ? <span
+                    className={`${cardStyle.quantity} "text text_type_main-medium"`}
+                >
+                    {buns.length}
+                </span> : (amount > 0) && <span
                     className={`${cardStyle.quantity} "text text_type_main-medium"`}
                 >
                     {amount}
