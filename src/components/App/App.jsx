@@ -7,62 +7,56 @@ import { AppHeader } from '../AppHeader/AppHeader';
 import { BurgerIngredients } from '../BurgerIngredients/BurgerIngredients';
 import { BurgerConstructor } from '../BurgerConstructor/BurgerConstructor';
 import { Modal } from '../Modal/Modal';
-import { fetchIngredients, placeAnOrder } from '../../utils/burger-api';
-import { BurgerConstructorContext } from '../../services/productsContext';
+import { placeAnOrder } from '../../utils/burger-api';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
 export const App = () => {
-    const [appData, setAppData] = useState({
-        ingredients: [],
-        isLoading: false,
-        hasError: false
-    });
+    // const [appData, setAppData] = useState({
+    //     ingredients: [],
+    //     isLoading: false,
+    //     hasError: false
+    // });
 
-    const [modalState, setModalState] = useState({
-        isActive: false,
-        content: null
-    });
+    // const [modalState, setModalState] = useState({
+    //     isActive: false,
+    //     content: null
+    // });
 
-    const [orderState, setOrderState] = useState({
-        orderData: [],
-        constructorItems: [],
-        success: false,
-        name: "",
-        order: {
-            number: null
-        }
-    });
+    // const [orderState, setOrderState] = useState({
+    //     orderData: [],
+    //     constructorItems: [],
+    //     success: false,
+    //     name: "",
+    //     order: {
+    //         number: null
+    //     }
+    // });
 
     const dispatch = useDispatch();
 
+    const { isActive } = useSelector(store => store.ingredients.modal);
     const ingredients = useSelector(store => store.ingredients);
 
     useEffect(() => {
         dispatch(getIngredients())
     }, [dispatch])
 
-    // useEffect(() => {
-    //     console.log('redux ingredients', ingredients);
-    // }, [ingredients])
-
-    const [totalPrice, setTotalPrice] = useState(0);
-
-    const handleOrderRequest = async () => {
-        console.log('constr items', orderState.constructorItems);
-        return placeAnOrder({ingredients: orderState.constructorItems})
-            .then(res => setOrderState(prevState => {
-                return {
-                    ...prevState,
-                    success: true,
-                    name: res.name,
-                    order: {
-                        number: res.order.number
-                    }
-                }
-            }))
-            .catch(error => setOrderState(prevState => {
-                return { ...prevState, success: false }}));
-    };
+    // const handleOrderRequest = async () => {
+        // return placeAnOrder({
+        //     ingredients: orderState.constructorItems
+        // }).then(res => setOrderState(prevState => {
+        //         return {
+        //             ...prevState,
+        //             success: true,
+        //             name: res.name,
+        //             order: {
+        //                 number: res.order.number
+        //             }
+        //         }
+        //     }))
+        //     .catch(error => setOrderState(prevState => {
+        //         return { ...prevState, success: false }}));
+    // };
 
     // useEffect(() => {
     //     setAppData(prevState => {
@@ -93,7 +87,7 @@ export const App = () => {
             <DndProvider backend={HTML5Backend}>
                 <main className={appStyles.main}>
                     <BurgerIngredients
-                        setModalState={setModalState}
+                        // setModalState={setModalState}
                     />
                     {/* <BurgerConstructorContext.Provider
                         value={{
@@ -106,14 +100,11 @@ export const App = () => {
                         }}
                     > */}
                     <BurgerConstructor
-                        setModalState={setModalState}
+                        // setModalState={setModalState}
                         // handleOrderRequest={handleOrderRequest}
                     />
                     {/* </BurgerConstructorContext.Provider> */}
-                    {modalState.isActive && <Modal
-                        setModalState={setModalState}
-                        children={modalState.content}
-                    />}
+                    {isActive && <Modal/>}
                 </main>
             </DndProvider>
         </div>

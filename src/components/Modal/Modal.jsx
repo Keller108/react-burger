@@ -1,26 +1,20 @@
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
 import { useEffect } from 'react';
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
+import { useDispatch, useSelector } from 'react-redux';
+import { CLOSE_MODAL } from '../../services/actions/burger-ingredients';
 
-export function Modal({ setModalState, children }) {
+export function Modal() {
+    const dispatch = useDispatch();
+    const { content } = useSelector(store => store.ingredients.modal);
+
     const closeModalByEsc = (evt) => {
-        if (evt.key === 'Escape') {
-            setModalState({
-                isActive: false,
-                content: null
-            });
-        }
-    }
+        if (evt.key === 'Escape') return dispatch({ type: CLOSE_MODAL });
+    };
 
-    const closeModal = () => {
-        setModalState({
-            isActive: false,
-            content: null
-        });
-    }
+    const closeModal = () => dispatch({ type: CLOSE_MODAL });
 
     useEffect(() => {
         document.addEventListener('keydown', closeModalByEsc)
@@ -35,20 +29,10 @@ export function Modal({ setModalState, children }) {
                 <span className={modalStyle.closeBtn}>
                     <CloseIcon onClick={closeModal} type="primary" />
                 </span>
-                {children}
+                {content}
             </div>
             <ModalOverlay closeModal={closeModal}/>
         </>,
         document.getElementById("modals")
     )
-}
-
-Modal.defaultProps = {
-    setModalState: PropTypes.func.isRequired,
-    children: null
-}
-
-Modal.propTypes = {
-    setModalState: PropTypes.func.isRequired,
-    children: PropTypes.element
 }

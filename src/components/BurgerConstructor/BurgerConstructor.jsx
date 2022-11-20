@@ -9,14 +9,15 @@ import { OrderDetails } from '../OrderDetails/OrderDetails';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { BurgerConstructorContext } from '../../services/productsContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToConstructor, deleteItemFromConstructor } from '../../services/actions/burger-constructor';
+import { addItemToConstructor, deleteItemFromConstructor, handleOrderRequest } from '../../services/actions/burger-constructor';
 import { useDrop } from 'react-dnd';
 
-export function BurgerConstructor({ setModalState, handleOrderRequest }) {
-    const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
+export function BurgerConstructor({ setModalState }) {
+    const { buns, otherItems, totalPrice, order } = useSelector(store => store.constructor);
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
+    const removeItem = item => dispatch(deleteItemFromConstructor(item));
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
@@ -25,7 +26,10 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
         }
     });
 
-    const removeItem = item => dispatch(deleteItemFromConstructor(item));
+    const handleModalState = () => {
+        handleOrderRequest();
+        console.log('order.data', order.data);
+    };
 
     // const topBun = {...buns, name: `${buns.name} (верх)`};
     // const bottomBun = {...buns, name: `${buns.name} (низ)`};
@@ -66,10 +70,6 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
     //     }
     // }, [ingredients, bun])
 
-    // const handleModalState = async () => {
-    //     await handleOrderRequest();
-    // };
-
     // useEffect(() => {
     //     if (orderState.success) {
     //         setModalState({
@@ -80,9 +80,11 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
     // }, [orderState.success])
 
     return (
-        <section ref={dropTarget} className={`${contructorStyles.constructor} pt-25 pb-13`}>
+        <section ref={dropTarget}
+            className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                {buns.length !== 0 && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {buns.length !== 0 && <li
+                    className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
                         key={buns[0]._id}
                         type="top"
@@ -127,13 +129,13 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                     <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                {/* <Button onClick={handleModalState}
+                <Button onClick={handleModalState}
                     htmlType="button"
                     type="primary"
                     size="large"
                 >
                     Оформить заказ
-                </Button> */}
+                </Button>
             </div>
         </section>
     )
@@ -141,5 +143,5 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
 
 BurgerConstructor.propTypes = {
     setModalState: PropTypes.func.isRequired,
-    handleOrderRequest: PropTypes.func.isRequired
+    // handleOrderRequest: PropTypes.func.isRequired
 }

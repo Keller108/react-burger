@@ -1,23 +1,25 @@
 import categoryStyle from './IngredientsCategory.module.css';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
 import { ingredientPropType } from '../../utils/types/commonTypes';
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import { OPEN_MODAL } from '../../services/actions/burger-ingredients';
 
-export function IngredientsCategory({ title, category, setModalState }) {
-    const renderModal = (cardData) => {
-        setModalState({
-            isActive: true,
-            content: <IngredientDetails data={cardData} />
-        })
-    };
+export function IngredientsCategory({ title, category }) {
+    const dispatch = useDispatch();
+
+    const renderModal = cardData => dispatch({
+        type: OPEN_MODAL,
+        payload: <IngredientDetails data={cardData} />
+    });
 
     return (
         <>
             <h2 className="text text_type_main-medium">{title}</h2>
             <ul className={`${categoryStyle.ingredients} pt-6 pl-4 pb-10 m-0`}>
-                {category.map((item, index) => <Card
-                    key={`${item._id + 'prefix-' + index}`}
+                {category.map(item => <Card
+                    key={item._id}
                     cardData={item}
                     onCardClick={() => renderModal(item)}
                 />)}
@@ -29,5 +31,4 @@ export function IngredientsCategory({ title, category, setModalState }) {
 IngredientsCategory.propTypes = {
     title: PropTypes.string.isRequired,
     category: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-    setModalState: PropTypes.func.isRequired
 }

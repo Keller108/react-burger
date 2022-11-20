@@ -24,10 +24,6 @@ export function Card({ cardData, onCardClick }) {
         return otherItems.filter(item => item._id === cardData._id).length;
     }, [otherItems, cardData._id]);
 
-    // let bunsAmount = useMemo(() => {
-    //     return buns.filter(item => item._id === cardData._id).length;
-    // }, [buns, cardData._id]);
-
     useEffect(() => {
         if (otherItems.length > 0) {
             setAmount(ingredientAmount);
@@ -41,15 +37,16 @@ export function Card({ cardData, onCardClick }) {
             draggable
             ref={ref}
             className={cardStyle.card}>
-                {(cardData.type === 'bun' && buns.length) && (buns.filter(item => item._id === cardData._id) && buns.find(item => item._id === cardData._id)) ? <span
+                {(cardData.type === 'bun' && buns.length)
+                    && (buns.filter(item => item._id === cardData._id)
+                    && buns.find(item => item._id === cardData._id))
+                    ? <span className={`${cardStyle.quantity}
+                        "text text_type_main-medium"`}
+                    >{buns.length}</span>
+                    : (amount > 0) && <span
                     className={`${cardStyle.quantity} "text text_type_main-medium"`}
-                >
-                    {buns.length}
-                </span> : (amount > 0) && <span
-                    className={`${cardStyle.quantity} "text text_type_main-medium"`}
-                >
-                    {amount}
-                </span>}
+                    >{amount}</span>
+                }
             <img
                 className={image}
                 src={image}

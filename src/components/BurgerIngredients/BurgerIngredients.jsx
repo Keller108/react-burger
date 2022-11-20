@@ -7,9 +7,7 @@ import { Preloader } from '../Preloader/Preloader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
-export function BurgerIngredients({
-    setModalState,
-}) {
+export function BurgerIngredients() {
     const [types,] = useState(['bun', 'sauce', 'main']);
     const [currentTab, setCurrentTab] = useState('bun');
 
@@ -56,30 +54,23 @@ export function BurgerIngredients({
                 </Tab>)}
             </div>
             <div className={`${ingredientsStyle.ingredients}`}>
-                {
-                // isLoading ? <Preloader /> :
-                <>
-                    <IngredientsCategory
-                        title="Булки"
-                        category={buns}
-                        setModalState={setModalState}
-                    />
-                    <IngredientsCategory
-                        title="Соусы"
-                        category={sauces}
-                        setModalState={setModalState}
-                    />
-                    <IngredientsCategory
-                        title="Начинка"
-                        category={main}
-                        setModalState={setModalState}
-                    />
-                </>}
+                <IngredientsCategory
+                    title="Булки"
+                    category={buns}
+                />
+                <IngredientsCategory
+                    title="Соусы"
+                    category={sauces}
+                />
+                <IngredientsCategory
+                    title="Начинка"
+                    category={main}
+                />
             </div>
         </section>
     )
 }
 
-BurgerIngredients.propTypes = {
-    setModalState: PropTypes.func.isRequired,
-}
+// BurgerIngredients.propTypes = {
+//     setModalState: PropTypes.func.isRequired,
+// }

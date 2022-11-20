@@ -1,9 +1,23 @@
-import { ADD_BUN_TO_CONSTRUCTOR, ADD_ITEM_TO_CONSTRUCTOR, DELETE_ITEM_FROM_CONTRUCTOR } from "../actions/burger-constructor"
+import {
+    ADD_ITEM_TO_CONSTRUCTOR,
+    DELETE_ITEM_FROM_CONTRUCTOR,
+    ORDER_FAILED,
+    ORDER_REQUEST,
+    ORDER_SUCCESS
+} from "../actions/burger-constructor"
 
 const initialState = {
     buns: [],
     otherItems: [],
-    totalPrice: 0
+    totalPrice: 0,
+    order: {
+        data: [],
+        name: "",
+        number: null,
+        request: false,
+        success: false,
+        error: false
+    },
 }
 
 export const constructorReducer = (state = initialState, action) => {
@@ -41,6 +55,42 @@ export const constructorReducer = (state = initialState, action) => {
                 otherItems: [...state.otherItems]
                     .filter(item => item._id !== action.ingredient._id),
                 totalPrice: state.totalPrice -= priceToDecrease
+            }
+        }
+        case ORDER_REQUEST: {
+            const orderData = [...state.buns, ...state.otherItems];
+            console.log('orderData from reducer', orderData);
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    data: orderData,
+                    request: true
+                }
+            }
+        }
+        case ORDER_SUCCESS: {
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    name: action.payload.name,
+                    number: action.payload.number,
+                    success: true,
+                    request: false,
+                    error: false,
+                }
+            }
+        }
+        case ORDER_FAILED: {
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    error: true,
+                    request: false,
+                    success: false
+                }
             }
         }
         default: {
