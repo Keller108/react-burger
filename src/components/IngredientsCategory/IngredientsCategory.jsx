@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
 import { ingredientPropType } from '../../utils/types/commonTypes';
 import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
-import { OPEN_MODAL } from '../../services/actions/burger-ingredients';
+import { OPEN_MODAL } from '../../services/actions';
+
 
 export function IngredientsCategory({ title, category }) {
     const dispatch = useDispatch();

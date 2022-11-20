@@ -17,10 +17,6 @@ export const deleteItemFromConstructor = ingredient => ({
     ingredient
 });
 
-export const handleOrderRequest = () => {
-    return function(dispatch) {
-        dispatch({
-            type: ORDER_REQUEST
-        });
-    }
-};
+export const handleOrderRequest = () => ({
+    type: ORDER_REQUEST
+});

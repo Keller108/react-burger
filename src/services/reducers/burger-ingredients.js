@@ -1,41 +1,17 @@
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILED,
-    OPEN_MODAL,
-    CLOSE_MODAL
+    GET_INGREDIENTS_FAILED
 } from '../actions/burger-ingredients';
 
 const initialState = {
     ingredientItems: [],
     ingredientRequest: false,
-    ingredientFailed: false,
-    modal: {
-        isActive: false,
-        content: null
-    }
+    ingredientFailed: false
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case OPEN_MODAL: {
-            return {
-                ...state,
-                modal: {
-                    isActive: true,
-                    content: action.payload
-                }
-            }
-        }
-        case CLOSE_MODAL: {
-            return {
-                ...state,
-                modal: {
-                    isActive: false,
-                    content: null
-                }
-            }
-        }
         case GET_INGREDIENTS_REQUEST: {
             return {
                 ...state,
@@ -59,7 +35,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
         }
         default: {
-            return state
+            return initialState
         }
     }
 };

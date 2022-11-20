@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
-import { Preloader } from '../Preloader/Preloader';
-import { useDispatch, useSelector } from 'react-redux';
+// import { Preloader } from '../Preloader/Preloader';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
 export function BurgerIngredients() {
@@ -70,7 +69,3 @@ export function BurgerIngredients() {
         </section>
     )
 }
-
-// BurgerIngredients.propTypes = {
-//     setModalState: PropTypes.func.isRequired,
-// }

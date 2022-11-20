@@ -17,7 +17,7 @@ const initialState = {
         request: false,
         success: false,
         error: false
-    },
+    }
 }
 
 export const constructorReducer = (state = initialState, action) => {
@@ -58,13 +58,11 @@ export const constructorReducer = (state = initialState, action) => {
             }
         }
         case ORDER_REQUEST: {
-            const orderData = [...state.buns, ...state.otherItems];
-            console.log('orderData from reducer', orderData);
             return {
                 ...state,
                 order: {
                     ...state.order,
-                    data: orderData,
+                    data: [...state.buns, ...state.otherItems, ...state.buns],
                     request: true
                 }
             }

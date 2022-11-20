@@ -1,10 +1,10 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropType } from '../../utils/types/commonTypes';
-import { useSelector } from 'react-redux';
-import { useDrag } from 'react-dnd';
-import { useEffect, useMemo, useState } from 'react';
 
 export function Card({ cardData, onCardClick }) {
     const [amount, setAmount] = useState(0);

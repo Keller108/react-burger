@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
-import { useEffect } from 'react';
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
-import { useDispatch, useSelector } from 'react-redux';
-import { CLOSE_MODAL } from '../../services/actions/burger-ingredients';
+import { CLOSE_MODAL } from '../../services/actions';
 
 export function Modal() {
     const dispatch = useDispatch();

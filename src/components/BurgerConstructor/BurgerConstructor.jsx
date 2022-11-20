@@ -1,3 +1,6 @@
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { Button,
     ConstructorElement,
@@ -6,14 +9,16 @@ import { Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { BurgerConstructorContext } from '../../services/productsContext';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToConstructor, deleteItemFromConstructor, handleOrderRequest } from '../../services/actions/burger-constructor';
-import { useDrop } from 'react-dnd';
+import {
+    addItemToConstructor,
+    deleteItemFromConstructor,
+    handleOrderRequest
+} from '../../services/actions/burger-constructor';
 
-export function BurgerConstructor({ setModalState }) {
-    const { buns, otherItems, totalPrice, order } = useSelector(store => store.constructor);
+export function BurgerConstructor() {
+    const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
+    const order = useSelector(state => state.constructor.order);
+
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
@@ -27,8 +32,8 @@ export function BurgerConstructor({ setModalState }) {
     });
 
     const handleModalState = () => {
-        handleOrderRequest();
-        console.log('order.data', order.data);
+        dispatch(handleOrderRequest());
+
     };
 
     // const topBun = {...buns, name: `${buns.name} (верх)`};
@@ -142,6 +147,6 @@ export function BurgerConstructor({ setModalState }) {
 }
 
 BurgerConstructor.propTypes = {
-    setModalState: PropTypes.func.isRequired,
+    // setModalState: PropTypes.func.isRequired,
     // handleOrderRequest: PropTypes.func.isRequired
 }

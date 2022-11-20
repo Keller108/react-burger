@@ -34,11 +34,11 @@ export const App = () => {
 
     const dispatch = useDispatch();
 
-    const { isActive } = useSelector(store => store.ingredients.modal);
+    const { isActive } = useSelector(store => store.modal);
     const ingredients = useSelector(store => store.ingredients);
 
     useEffect(() => {
-        dispatch(getIngredients())
+        dispatch(getIngredients());
     }, [dispatch])
 
     // const handleOrderRequest = async () => {
@@ -86,24 +86,11 @@ export const App = () => {
             <AppHeader />
             <DndProvider backend={HTML5Backend}>
                 <main className={appStyles.main}>
-                    <BurgerIngredients
-                        // setModalState={setModalState}
-                    />
-                    {/* <BurgerConstructorContext.Provider
-                        value={{
-                            initialData: appData.ingredients,
-                            ingredients: orderState.constructorItems,
-                            orderState: orderState,
-                            setOrderState,
-                            totalPrice,
-                            setTotalPrice
-                        }}
-                    > */}
+                    <BurgerIngredients />
                     <BurgerConstructor
                         // setModalState={setModalState}
                         // handleOrderRequest={handleOrderRequest}
                     />
-                    {/* </BurgerConstructorContext.Provider> */}
                     {isActive && <Modal/>}
                 </main>
             </DndProvider>
