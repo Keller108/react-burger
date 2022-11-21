@@ -12,6 +12,7 @@ const initialState = {
     totalPrice: 0,
     order: {
         data: [],
+        name: "",
         number: null,
         request: false,
         success: false,
@@ -22,9 +23,6 @@ const initialState = {
 export const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_ITEM_TO_CONSTRUCTOR: {
-            const dataIDs = [...state.buns, ...state.otherItems, ...state.buns]
-                .map(item => item._id);
-
             if (action.ingredient.type === 'bun') {
                 if (state.buns.length) {
                     state.totalPrice = 0;
@@ -35,10 +33,6 @@ export const constructorReducer = (state = initialState, action) => {
                     buns: [
                         action.ingredient
                     ],
-                    order: {
-                        ...state.order,
-                        data: dataIDs
-                    },
                     totalPrice: state.totalPrice += (action.ingredient.price * 2)
                 }
             }
@@ -49,10 +43,6 @@ export const constructorReducer = (state = initialState, action) => {
                     ...state.otherItems,
                     action.ingredient
                 ],
-                order: {
-                    ...state.order,
-                    data: dataIDs
-                },
                 totalPrice: state.totalPrice += action.ingredient.price
             }
         }
@@ -68,7 +58,6 @@ export const constructorReducer = (state = initialState, action) => {
             }
         }
         case ORDER_REQUEST: {
-            console.log('state order', state.order);
             return {
                 ...state,
                 order: {
@@ -82,7 +71,8 @@ export const constructorReducer = (state = initialState, action) => {
                 ...state,
                 order: {
                     ...state.order,
-                    number: action.payload,
+                    name: action.payload.name,
+                    number: action.payload.number,
                     success: true,
                     request: false,
                     error: false,

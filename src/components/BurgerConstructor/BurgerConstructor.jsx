@@ -1,7 +1,6 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
 import { Button,
     ConstructorElement,
     CurrencyIcon,
@@ -12,23 +11,19 @@ import { OrderDetails } from '../OrderDetails/OrderDetails';
 import {
     addItemToConstructor,
     deleteItemFromConstructor,
-    handleOrderRequest,
     handlePlaceAnOrder,
-    ORDER_FAILED,
-    ORDER_SUCCESS
+    ORDER_REQUEST,
 } from '../../services/actions/burger-constructor';
-import { placeAnOrder } from '../../utils/burger-api';
 
 export function BurgerConstructor() {
-    const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
-    const { data } = useSelector(state => state.constructor.order);
-
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
     const removeItem = item => dispatch(deleteItemFromConstructor(item));
-    const prepareOrderData = () => dispatch(handleOrderRequest());
+    const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
     const placeOrder = data => dispatch(handlePlaceAnOrder(data));
+
+    const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
@@ -37,10 +32,14 @@ export function BurgerConstructor() {
         }
     });
 
+    const orderData = useMemo(() => {
+        return [...buns, ...otherItems, ...buns].map(item => item._id);
+    },[buns, otherItems])
+
     const handleModalState = () => {
         prepareOrderData();
-        placeOrder(data);
-    }
+        placeOrder(orderData);
+    };
 
     // const topBun = {...buns, name: `${buns.name} (верх)`};
     // const bottomBun = {...buns, name: `${buns.name} (низ)`};
@@ -150,9 +149,4 @@ export function BurgerConstructor() {
             </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    // setModalState: PropTypes.func.isRequired,
-    // handleOrderRequest: PropTypes.func.isRequired
 }

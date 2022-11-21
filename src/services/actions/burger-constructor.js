@@ -19,20 +19,14 @@ export const deleteItemFromConstructor = ingredient => ({
     ingredient
 });
 
-export const handleOrderRequest = () => ({
-    type: ORDER_REQUEST
-});
-
 export function handlePlaceAnOrder(data) {
     return function(dispatch) {
-        console.log('проверка data', data);
         return placeAnOrder({ ingredients: data })
             .then(res => {
                 if (res && res.success) {
-                    console.log('order', res.order);
                     dispatch({
                         type: ORDER_SUCCESS,
-                        payload: res.order.number
+                        payload: { number: res.order.number, name: res.name }
                     })
                 } else {
                     dispatch({
