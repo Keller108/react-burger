@@ -1,18 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 // import { Preloader } from '../Preloader/Preloader';
 import { getIngredients } from '../../services/actions/burger-ingredients';
+import { SWITCH_TAB } from '../../services/actions';
 
 export function BurgerIngredients() {
-    const [types,] = useState(['bun', 'sauce', 'main']);
-    const [currentTab, setCurrentTab] = useState('bun');
 
     const dispatch = useDispatch();
 
     const ingredients = useSelector(store => store.ingredients.ingredientItems);
+    const { tabs, activeTab } = useSelector(store => store.tabs);
 
     useEffect(() => {
         dispatch(getIngredients());
@@ -33,9 +33,9 @@ export function BurgerIngredients() {
         main: "Начинка"
     };
 
-    const handleSwitchTab = (type) => {
-        setCurrentTab(type)
-    };
+    const handleSwitchTab = (type) => dispatch({
+        type: SWITCH_TAB, payload: type
+    });
 
     return (
         <section className={`${ingredientsStyle.container} pt-10`}>
@@ -43,11 +43,11 @@ export function BurgerIngredients() {
                 Соберите бургер
             </h1>
             <div className={`${ingredientsStyle.tabsContainer} pb-10`}>
-                {types.map((type) => <Tab
+                {tabs.map((type) => <Tab
                     key={type}
                     value={type}
-                    active={currentTab === type}
-                    onClick={handleSwitchTab}
+                    active={activeTab === type}
+                    onClick={() => handleSwitchTab(type)}
                 >
                     {tabsText[type]}
                 </Tab>)}

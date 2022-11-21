@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CLOSE_MODAL, OPEN_MODAL } from '../actions';
+import { CLOSE_MODAL, OPEN_MODAL, SWITCH_TAB } from '../actions';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 
@@ -32,8 +32,31 @@ const modalReducer = (state = initialModalState, action) => {
     }
 }
 
+
+const initialTabState = {
+    tabs: ['bun', 'sauce', 'main'],
+    activeTab: 'bun'
+};
+
+const tabReducer = (state = initialTabState, action) => {
+    switch (action.type) {
+        case SWITCH_TAB: {
+            return {
+                ...state,
+                activeTab: action.payload
+            }
+        }
+        default: {
+            return {
+                ...state
+            }
+        }
+    }
+}
+
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     burgerConstructor: constructorReducer,
-    modal: modalReducer
+    modal: modalReducer,
+    tabs: tabReducer
 });
