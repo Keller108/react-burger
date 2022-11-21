@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { Button,
@@ -14,6 +14,7 @@ import {
     handlePlaceAnOrder,
     ORDER_REQUEST,
 } from '../../services/actions/burger-constructor';
+import { OPEN_MODAL } from '../../services/actions';
 
 export function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export function BurgerConstructor() {
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
     const placeOrder = data => dispatch(handlePlaceAnOrder(data));
 
-    const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
+    const { buns, otherItems, totalPrice, order } = useSelector(store => store.constructor);
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
@@ -41,53 +42,11 @@ export function BurgerConstructor() {
         placeOrder(orderData);
     };
 
-    // const topBun = {...buns, name: `${buns.name} (верх)`};
-    // const bottomBun = {...buns, name: `${buns.name} (низ)`};
-
-    // const [items, setItems] = useState([]);
-    // const {
-    //     initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
-    // } = useContext(BurgerConstructorContext);
-
-    // const bun = useMemo(() => initialData
-    //     .find(ingredient => ingredient.type === 'bun'), [initialData]);
-
-    // const otherIngredients = useMemo(() => initialData
-    //     .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
-
-    // useEffect(() => {
-    //     if (items) {
-    //         setOrderState(prevState => ({...prevState, constructorItems: items}));
-    //     }
-    // }, [items, orderState.constructorItems])
-
-    // const countTotalPrice = useMemo(() => {
-    //     let total;
-    //     let otherIngredientsPrice = otherIngredients.reduce((prev, curr) => {
-    //         return prev + curr.price
-    //     }, 0);
-
-    //     if (bun) {
-    //         total = otherIngredientsPrice + (bun.price * 2);
-    //     }
-
-    //     return total;
-    // }, [ingredients])
-
-    // useEffect(() => {
-    //     if (bun) {
-    //         setTotalPrice(countTotalPrice);
-    //     }
-    // }, [ingredients, bun])
-
-    // useEffect(() => {
-    //     if (orderState.success) {
-    //         setModalState({
-    //             isActive: true,
-    //             content: <OrderDetails order={orderState.order}/>
-    //         });
-    //     }
-    // }, [orderState.success])
+    useEffect(() => {
+        if (order.success) {
+            dispatch({ type: OPEN_MODAL, payload: <OrderDetails order={order}/> });
+        }
+    }, [order])
 
     return (
         <section ref={dropTarget}

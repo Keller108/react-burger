@@ -11,7 +11,6 @@ const initialState = {
     otherItems: [],
     totalPrice: 0,
     order: {
-        data: [],
         name: "",
         number: null,
         request: false,
@@ -62,6 +61,7 @@ export const constructorReducer = (state = initialState, action) => {
                 ...state,
                 order: {
                     ...state.order,
+                    name: "",
                     request: true
                 }
             }
@@ -85,6 +85,7 @@ export const constructorReducer = (state = initialState, action) => {
                 order: {
                     ...state.order,
                     error: true,
+                    name: "",
                     request: false,
                     success: false
                 }
