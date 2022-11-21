@@ -6,7 +6,7 @@ import {
     ORDER_SUCCESS
 } from "../actions/burger-constructor"
 
-const initialState = {
+const initialConstrState = {
     buns: [],
     otherItems: [],
     totalPrice: 0,
@@ -19,7 +19,7 @@ const initialState = {
     }
 }
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialConstrState, action) => {
     switch (action.type) {
         case ADD_ITEM_TO_CONSTRUCTOR: {
             if (action.ingredient.type === 'bun') {
@@ -92,7 +92,7 @@ export const constructorReducer = (state = initialState, action) => {
             }
         }
         default: {
-            return initialState
+            return initialConstrState
         }
     }
 }

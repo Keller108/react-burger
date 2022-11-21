@@ -3,12 +3,12 @@ import { CLOSE_MODAL, OPEN_MODAL } from '../actions';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 
-const initialState = {
+const initialModalState = {
     isActive: false,
     content: null
 };
 
-const modalReducer = (state = initialState, action) => {
+const modalReducer = (state = initialModalState, action) => {
     switch (action.type) {
         case OPEN_MODAL: {
             return {
@@ -22,15 +22,16 @@ const modalReducer = (state = initialState, action) => {
                 content: null
             }
         }
-
         default: {
-            return initialState
+            return {
+                ...initialModalState
+            }
         }
     }
 }
 
 export const rootReducer = combineReducers({
-    modal: modalReducer,
     ingredients: ingredientsReducer,
-    constructor: constructorReducer
+    constructor: constructorReducer,
+    modal: modalReducer
 });

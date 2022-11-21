@@ -29,13 +29,14 @@ export const ingredientsReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_FAILED: {
             return {
                 ...state,
-                ingredientItems: action.items,
                 ingredientRequest: false,
                 ingredientFailed: true
             }
         }
         default: {
-            return state
+            return {
+                ...state
+            }
         }
     }
 };

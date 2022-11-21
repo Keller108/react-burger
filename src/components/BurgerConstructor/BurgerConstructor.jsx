@@ -64,7 +64,7 @@ export function BurgerConstructor() {
                     />
                 </li>}
                 <div className={contructorStyles.itemWrapper}>
-                    {otherItems && otherItems.map((item) => <li draggable key={item._id}
+                    {otherItems.length !== 0 && otherItems.map((item) => <li draggable key={item._id}
                             className={`${contructorStyles.constructorItem}
                             ${contructorStyles.constructorItem_dragable} mb-4`}
                         >
