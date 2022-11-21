@@ -12,7 +12,6 @@ const initialState = {
     totalPrice: 0,
     order: {
         data: [],
-        name: "",
         number: null,
         request: false,
         success: false,
@@ -23,6 +22,9 @@ const initialState = {
 export const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_ITEM_TO_CONSTRUCTOR: {
+            const dataIDs = [...state.buns, ...state.otherItems, ...state.buns]
+                .map(item => item._id);
+
             if (action.ingredient.type === 'bun') {
                 if (state.buns.length) {
                     state.totalPrice = 0;
@@ -33,6 +35,10 @@ export const constructorReducer = (state = initialState, action) => {
                     buns: [
                         action.ingredient
                     ],
+                    order: {
+                        ...state.order,
+                        data: dataIDs
+                    },
                     totalPrice: state.totalPrice += (action.ingredient.price * 2)
                 }
             }
@@ -43,6 +49,10 @@ export const constructorReducer = (state = initialState, action) => {
                     ...state.otherItems,
                     action.ingredient
                 ],
+                order: {
+                    ...state.order,
+                    data: dataIDs
+                },
                 totalPrice: state.totalPrice += action.ingredient.price
             }
         }
@@ -57,40 +67,39 @@ export const constructorReducer = (state = initialState, action) => {
                 totalPrice: state.totalPrice -= priceToDecrease
             }
         }
-        // case ORDER_REQUEST: {
-        //     return {
-        //         ...state,
-        //         order: {
-        //             ...state.order,
-        //             data: [],
-        //             request: true
-        //         }
-        //     }
-        // }
-        // case ORDER_SUCCESS: {
-        //     return {
-        //         ...state,
-        //         order: {
-        //             ...state.order,
-        //             name: action.payload.name,
-        //             number: action.payload.number,
-        //             success: true,
-        //             request: false,
-        //             error: false,
-        //         }
-        //     }
-        // }
-        // case ORDER_FAILED: {
-        //     return {
-        //         ...state,
-        //         order: {
-        //             ...state.order,
-        //             error: true,
-        //             request: false,
-        //             success: false
-        //         }
-        //     }
-        // }
+        case ORDER_REQUEST: {
+            console.log('state order', state.order);
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    request: true
+                }
+            }
+        }
+        case ORDER_SUCCESS: {
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    number: action.payload,
+                    success: true,
+                    request: false,
+                    error: false,
+                }
+            }
+        }
+        case ORDER_FAILED: {
+            return {
+                ...state,
+                order: {
+                    ...state.order,
+                    error: true,
+                    request: false,
+                    success: false
+                }
+            }
+        }
         default: {
             return initialState
         }

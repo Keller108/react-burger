@@ -12,18 +12,23 @@ import { OrderDetails } from '../OrderDetails/OrderDetails';
 import {
     addItemToConstructor,
     deleteItemFromConstructor,
-    handleOrderRequest
+    handleOrderRequest,
+    handlePlaceAnOrder,
+    ORDER_FAILED,
+    ORDER_SUCCESS
 } from '../../services/actions/burger-constructor';
+import { placeAnOrder } from '../../utils/burger-api';
 
 export function BurgerConstructor() {
     const { buns, otherItems, totalPrice } = useSelector(store => store.constructor);
-    const order = useSelector(state => state.constructor.order);
+    const { data } = useSelector(state => state.constructor.order);
 
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
     const removeItem = item => dispatch(deleteItemFromConstructor(item));
-    const handleModalState = () => dispatch(handleOrderRequest());
+    const prepareOrderData = () => dispatch(handleOrderRequest());
+    const placeOrder = data => dispatch(handlePlaceAnOrder(data));
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
@@ -31,6 +36,11 @@ export function BurgerConstructor() {
             addItem(ingredient)
         }
     });
+
+    const handleModalState = () => {
+        prepareOrderData();
+        placeOrder(data);
+    }
 
     // const topBun = {...buns, name: `${buns.name} (верх)`};
     // const bottomBun = {...buns, name: `${buns.name} (низ)`};
