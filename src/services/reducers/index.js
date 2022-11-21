@@ -12,19 +12,21 @@ const modalReducer = (state = initialModalState, action) => {
     switch (action.type) {
         case OPEN_MODAL: {
             return {
+                ...state,
                 isActive: true,
                 content: action.payload
             }
         }
         case CLOSE_MODAL: {
             return {
+                ...state,
                 isActive: false,
                 content: null
             }
         }
         default: {
             return {
-                ...initialModalState
+                ...state
             }
         }
     }
@@ -32,6 +34,6 @@ const modalReducer = (state = initialModalState, action) => {
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
-    constructor: constructorReducer,
+    burgerConstructor: constructorReducer,
     modal: modalReducer
 });

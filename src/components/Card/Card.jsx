@@ -8,7 +8,7 @@ import { ingredientPropType } from '../../utils/types/commonTypes';
 
 export function Card({ cardData, onCardClick }) {
     const [amount, setAmount] = useState(0);
-    const { buns, otherItems } = useSelector(store => store.constructor);
+    const { buns, otherItems } = useSelector(store => store.burgerConstructor);
 
     const [, ref] = useDrag({
         type: 'ingredients',

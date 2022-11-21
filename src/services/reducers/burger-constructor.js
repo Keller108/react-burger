@@ -92,7 +92,9 @@ export const constructorReducer = (state = initialConstrState, action) => {
             }
         }
         default: {
-            return initialConstrState
+            return {
+                ...state
+            }
         }
     }
 }

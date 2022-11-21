@@ -24,7 +24,7 @@ export function BurgerConstructor() {
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
     const placeOrder = data => dispatch(handlePlaceAnOrder(data));
 
-    const { buns, otherItems, totalPrice, order } = useSelector(store => store.constructor);
+    const { buns, otherItems, totalPrice, order } = useSelector(store => store.burgerConstructor);
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
@@ -46,7 +46,7 @@ export function BurgerConstructor() {
         if (order.success) {
             dispatch({ type: OPEN_MODAL, payload: <OrderDetails order={order}/> });
         }
-    }, [order])
+    }, [order.success])
 
     return (
         <section ref={dropTarget}
