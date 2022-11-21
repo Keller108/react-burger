@@ -57,40 +57,40 @@ export const constructorReducer = (state = initialState, action) => {
                 totalPrice: state.totalPrice -= priceToDecrease
             }
         }
-        case ORDER_REQUEST: {
-            return {
-                ...state,
-                order: {
-                    ...state.order,
-                    data: [...state.buns, ...state.otherItems, ...state.buns],
-                    request: true
-                }
-            }
-        }
-        case ORDER_SUCCESS: {
-            return {
-                ...state,
-                order: {
-                    ...state.order,
-                    name: action.payload.name,
-                    number: action.payload.number,
-                    success: true,
-                    request: false,
-                    error: false,
-                }
-            }
-        }
-        case ORDER_FAILED: {
-            return {
-                ...state,
-                order: {
-                    ...state.order,
-                    error: true,
-                    request: false,
-                    success: false
-                }
-            }
-        }
+        // case ORDER_REQUEST: {
+        //     return {
+        //         ...state,
+        //         order: {
+        //             ...state.order,
+        //             data: [],
+        //             request: true
+        //         }
+        //     }
+        // }
+        // case ORDER_SUCCESS: {
+        //     return {
+        //         ...state,
+        //         order: {
+        //             ...state.order,
+        //             name: action.payload.name,
+        //             number: action.payload.number,
+        //             success: true,
+        //             request: false,
+        //             error: false,
+        //         }
+        //     }
+        // }
+        // case ORDER_FAILED: {
+        //     return {
+        //         ...state,
+        //         order: {
+        //             ...state.order,
+        //             error: true,
+        //             request: false,
+        //             success: false
+        //         }
+        //     }
+        // }
         default: {
             return initialState
         }

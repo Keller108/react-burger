@@ -23,6 +23,7 @@ export function BurgerConstructor() {
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
     const removeItem = item => dispatch(deleteItemFromConstructor(item));
+    const handleModalState = () => dispatch(handleOrderRequest());
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
@@ -30,11 +31,6 @@ export function BurgerConstructor() {
             addItem(ingredient)
         }
     });
-
-    const handleModalState = () => {
-        dispatch(handleOrderRequest());
-
-    };
 
     // const topBun = {...buns, name: `${buns.name} (верх)`};
     // const bottomBun = {...buns, name: `${buns.name} (низ)`};

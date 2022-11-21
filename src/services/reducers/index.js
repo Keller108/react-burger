@@ -4,30 +4,22 @@ import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 
 const initialState = {
-    modal: {
-        isActive: false,
-        content: null
-    }
+    isActive: false,
+    content: null
 };
 
 const modalReducer = (state = initialState, action) => {
     switch (action.type) {
         case OPEN_MODAL: {
             return {
-                ...state,
-                modal: {
-                    isActive: true,
-                    content: action.payload
-                }
+                isActive: true,
+                content: action.payload
             }
         }
         case CLOSE_MODAL: {
             return {
-                ...state,
-                modal: {
-                    isActive: false,
-                    content: null
-                }
+                isActive: false,
+                content: null
             }
         }
 
