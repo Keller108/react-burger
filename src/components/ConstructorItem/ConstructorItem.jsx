@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { deleteItemFromConstructor, MOVE_ITEM } from '../../services/actions/burger-constructor';
 import itemStyles from './ConstructorItem.module.css';
 
-export function ConstructorItem({ item, index }) {
+export function ConstructorItem({ item, index, uuid }) {
     const elementRef = useRef(null);
     const dispatch = useDispatch();
 

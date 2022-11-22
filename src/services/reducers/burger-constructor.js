@@ -35,26 +35,38 @@ export const constructorReducer = (state = initialConstrState, action) => {
                     ],
                     totalPrice: state.totalPrice += (action.ingredient.price * 2)
                 }
-            }
-
-            return {
-                ...state,
-                otherItems: [
-                    ...state.otherItems,
-                    action.ingredient
-                ],
-                totalPrice: state.totalPrice += action.ingredient.price
+            } else {
+                return {
+                    ...state,
+                    otherItems: [
+                        ...state.otherItems,
+                        action.ingredient
+                    ],
+                    totalPrice: state.totalPrice += action.ingredient.price
+                }
             }
         }
         case DELETE_ITEM_FROM_CONTRUCTOR: {
             const priceToDecrease = [...state.otherItems]
                 .find(item => item._id === action.ingredient._id).price;
 
-            return {
-                ...state,
-                otherItems: [...state.otherItems]
-                    .filter(item => item._id !== action.ingredient._id),
-                totalPrice: state.totalPrice -= priceToDecrease
+            const result = [...state.otherItems]
+                .filter(item => item._id === action.ingredient._id);
+
+            if (result) {
+                return {
+                    ...state,
+                    otherItems: [...state.otherItems]
+                        .filter(item => item.uuid !== action.ingredient.uuid),
+                    totalPrice: state.totalPrice -= priceToDecrease
+                }
+            } else {
+                return {
+                    ...state,
+                    otherItems: [...state.otherItems]
+                        .filter(item => item._id !== action.ingredient._id),
+                    totalPrice: state.totalPrice -= priceToDecrease
+                }
             }
         }
         case ORDER_REQUEST: {

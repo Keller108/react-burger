@@ -19,7 +19,7 @@ import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 export function BurgerConstructor() {
     const dispatch = useDispatch();
 
-    const addItem = (item) => dispatch(addItemToConstructor(item));
+    const addItem = (item) => dispatch(addItemToConstructor({ ...item, uuid: uuidv4() }));
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
     const placeOrder = data => dispatch(handlePlaceAnOrder(data));
 
