@@ -2,6 +2,7 @@ import { placeAnOrder } from "../../utils/burger-api";
 
 export const ADD_ITEM_TO_CONSTRUCTOR = 'ADD_ITEM_TO_CONSTRUCTOR';
 export const DELETE_ITEM_FROM_CONTRUCTOR = 'DELETE_ITEM_FROM_CONTRUCTOR';
+export const MOVE_ITEM = 'MOVE_ITEM';
 export const INCREASE_TOTAL_PRICE = 'INCREASE_TOTAL_PRICE';
 export const DECREASE_TOTAL_PRICE = 'DECREASE_TOTAL_PRICE';
 

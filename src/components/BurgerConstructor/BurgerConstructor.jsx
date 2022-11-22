@@ -1,26 +1,25 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 import { Button,
     ConstructorElement,
-    CurrencyIcon,
-    DragIcon
+    CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
 import {
     addItemToConstructor,
-    deleteItemFromConstructor,
     handlePlaceAnOrder,
     ORDER_REQUEST,
 } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/actions';
+import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 
 export function BurgerConstructor() {
     const dispatch = useDispatch();
 
     const addItem = (item) => dispatch(addItemToConstructor(item));
-    const removeItem = item => dispatch(deleteItemFromConstructor(item));
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
     const placeOrder = data => dispatch(handlePlaceAnOrder(data));
 
@@ -44,7 +43,10 @@ export function BurgerConstructor() {
 
     useEffect(() => {
         if (order.success) {
-            dispatch({ type: OPEN_MODAL, payload: <OrderDetails order={order}/> });
+            dispatch({
+                type: OPEN_MODAL,
+                payload: <OrderDetails order={order}/>
+            });
         }
     }, [order.success])
 
@@ -64,22 +66,12 @@ export function BurgerConstructor() {
                     />
                 </li>}
                 <div className={contructorStyles.itemWrapper}>
-                    {otherItems.length !== 0 && otherItems.map((item) => <li draggable key={item._id}
-                            className={`${contructorStyles.constructorItem}
-                            ${contructorStyles.constructorItem_dragable} mb-4`}
-                        >
-                            <div className="mr-2">
-                                <DragIcon type="primary" />
-                            </div>
-                            <ConstructorElement
-                                key={item.name}
-                                isLocked={false}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                                handleClose={() => removeItem(item)}
-                            />
-                        </li>)
+                    {otherItems.length !== 0 && otherItems
+                        .map((item, index) => <ConstructorItem
+                            item={item}
+                            index={index}
+                            key={uuidv4()}
+                        />)
                     }
                 </div>
                 {buns.length !== 0 && <li className={`${contructorStyles.constructorItem} pl-8`}>

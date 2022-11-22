@@ -1,6 +1,7 @@
 import {
     ADD_ITEM_TO_CONSTRUCTOR,
     DELETE_ITEM_FROM_CONTRUCTOR,
+    MOVE_ITEM,
     ORDER_FAILED,
     ORDER_REQUEST,
     ORDER_SUCCESS
@@ -90,6 +91,14 @@ export const constructorReducer = (state = initialConstrState, action) => {
                     success: false
                 }
             }
+        }
+        case MOVE_ITEM: {
+			let newItems = [...state.otherItems];
+			newItems.splice(action.toIndex, 0, newItems.splice(action.fromIndex, 1)[0]);
+			return {
+				...state,
+				otherItems: [...newItems]
+			}
         }
         default: {
             return {
