@@ -42,7 +42,7 @@ export function Card({ cardData, onCardClick }) {
                     && buns.find(item => item._id === cardData._id))
                     ? <span className={`${cardStyle.quantity}
                         "text text_type_main-medium"`}
-                    >{buns.length}</span>
+                    >{buns.length + 1}</span>
                     : (amount > 0) && <span
                     className={`${cardStyle.quantity} "text text_type_main-medium"`}
                     >{amount}</span>
