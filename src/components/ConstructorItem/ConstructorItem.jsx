@@ -1,12 +1,11 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteItemFromConstructor, MOVE_ITEM } from '../../services/actions/burger-constructor';
 import itemStyles from './ConstructorItem.module.css';
 
-export function ConstructorItem({ item, index, uuid }) {
+export function ConstructorItem({ item, index }) {
     const elementRef = useRef(null);
     const dispatch = useDispatch();
 
@@ -68,7 +67,6 @@ export function ConstructorItem({ item, index, uuid }) {
 
     return <li
             draggable
-            key={uuidv4()}
             ref={elementRef}
             className={`${itemStyles.constructorItem}
             ${itemStyles.constructorItem_dragable} mb-4`}

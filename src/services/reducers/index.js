@@ -25,9 +25,7 @@ const modalReducer = (state = initialModalState, action) => {
             }
         }
         default: {
-            return {
-                ...state
-            }
+            return state
         }
     }
 }
@@ -47,9 +45,7 @@ const tabReducer = (state = initialTabState, action) => {
             }
         }
         default: {
-            return {
-                ...state
-            }
+            return state
         }
     }
 }

@@ -9,6 +9,7 @@ export const DECREASE_TOTAL_PRICE = 'DECREASE_TOTAL_PRICE';
 export const ORDER_REQUEST = 'ORDER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
 export const ORDER_FAILED = 'ORDER_FAILED';
+export const CLEAR_CART = 'CLEAR_CART';
 
 export const addItemToConstructor = ingredient => ({
     type: ADD_ITEM_TO_CONSTRUCTOR,
@@ -24,6 +25,10 @@ export function handlePlaceAnOrder(data) {
     return function(dispatch) {
         return placeAnOrder({ ingredients: data })
             .then(res => {
+                dispatch({
+                    type: ORDER_REQUEST
+                });
+
                 if (res && res.success) {
                     dispatch({
                         type: ORDER_SUCCESS,
@@ -35,5 +40,7 @@ export function handlePlaceAnOrder(data) {
                     })
                 }
             })
+            .then(res => dispatch({ type: CLEAR_CART }))
+            .catch(err => alert(`Ошибка при создании заказа – ${err.message}`))
     }
 }

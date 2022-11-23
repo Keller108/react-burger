@@ -1,5 +1,6 @@
 import {
     ADD_ITEM_TO_CONSTRUCTOR,
+    CLEAR_CART,
     DELETE_ITEM_FROM_CONTRUCTOR,
     MOVE_ITEM,
     ORDER_FAILED,
@@ -112,10 +113,14 @@ export const constructorReducer = (state = initialConstrState, action) => {
 				otherItems: [...newItems]
 			}
         }
-        default: {
+        case CLEAR_CART: {
             return {
-                ...state
+                ...initialConstrState,
+                totalPrice: 0
             }
+        }
+        default: {
+            return state
         }
     }
 }

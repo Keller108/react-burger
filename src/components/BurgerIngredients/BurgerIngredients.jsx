@@ -19,10 +19,6 @@ export function BurgerIngredients() {
 	const sauceRef = useRef(null);
 	const mainRef = useRef(null);
 
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch])
-
     const buns = useMemo(() => ingredients
         .filter((item) => item.type === 'bun'), [ingredients]);
 

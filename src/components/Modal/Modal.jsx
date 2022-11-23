@@ -10,11 +10,11 @@ export function Modal() {
     const dispatch = useDispatch();
     const { content } = useSelector(store => store.modal);
 
-    const closeModalByEsc = (evt) => {
-        if (evt.key === 'Escape') return dispatch({ type: CLOSE_MODAL });
-    };
-
     const closeModal = () => dispatch({ type: CLOSE_MODAL });
+
+    const closeModalByEsc = (evt) => {
+        if (evt.key === 'Escape') return closeModal()
+    };
 
     useEffect(() => {
         document.addEventListener('keydown', closeModalByEsc)

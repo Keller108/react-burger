@@ -70,7 +70,7 @@ export function BurgerConstructor() {
                         .map((item, index) => <ConstructorItem
                             item={item}
                             index={index}
-                            key={uuidv4()}
+                            key={item.uuid}
                         />)
                     }
                 </div>
@@ -90,13 +90,14 @@ export function BurgerConstructor() {
                     <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button onClick={handleModalState}
+                {(buns.length > 0 || otherItems.length > 0) && <Button
+                    onClick={handleModalState}
                     htmlType="button"
                     type="primary"
                     size="large"
                 >
                     Оформить заказ
-                </Button>
+                </Button>}
             </div>
         </section>
     )

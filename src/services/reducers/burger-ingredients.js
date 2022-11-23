@@ -34,9 +34,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
         }
         default: {
-            return {
-                ...state
-            }
+            return state
         }
     }
 };
