@@ -23,18 +23,6 @@
     overflow-y: auto;
 }
 
-.constructorItem {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.constructorItem_dragable {
-    cursor: grab;
-}
-
 .total {
     display: flex;
     flex-direction: row;

@@ -1,115 +1,87 @@
-import PropTypes from 'prop-types';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 import { Button,
     ConstructorElement,
-    CurrencyIcon,
-    DragIcon
+    CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { BurgerConstructorContext } from '../../services/productsContext';
+import {
+    addItemToConstructor,
+    handlePlaceAnOrder,
+    ORDER_REQUEST,
+} from '../../services/actions/burger-constructor';
+import { OPEN_MODAL } from '../../services/actions';
+import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 
-export function BurgerConstructor({ setModalState, handleOrderRequest }) {
-    const [items, setItems] = useState([]);
-    const {
-        initialData, ingredients, orderState, setOrderState, totalPrice, setTotalPrice
-    } = useContext(BurgerConstructorContext);
+export function BurgerConstructor() {
+    const dispatch = useDispatch();
 
-    const bun = useMemo(() => initialData
-        .find(ingredient => ingredient.type === 'bun'), [initialData]);
+    const addItem = (item) => dispatch(addItemToConstructor({ ...item, uuid: uuidv4() }));
+    const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
+    const placeOrder = data => dispatch(handlePlaceAnOrder(data));
 
-    const otherIngredients = useMemo(() => initialData
-        .filter(ingredient => ingredient.type !== 'bun'), [initialData]);
+    const { buns, otherItems, totalPrice, order } = useSelector(store => store.burgerConstructor);
 
-    useEffect(() => {
-        /** В коде ниже я использую временные данные, для мапинга масива
-         * ингредиентов в конструкторе. В дальнейшем будет реализовано
-         * добавление эл-тов в конструктор из BurgerIngredients
-         */
-        if (bun && otherIngredients) {
-            const topBun = {...bun, name: `${bun.name} (верх)`};
-            const bottomBun = {...bun, name: `${bun.name} (низ)`};
-            setItems([topBun, ...otherIngredients, bottomBun]);
+    const [, dropTarget] = useDrop({
+        accept: 'ingredients',
+        drop(ingredient) {
+            addItem(ingredient)
         }
-    }, [bun, otherIngredients])
+    });
 
-    useEffect(() => {
-        if (items) {
-            setOrderState(prevState => ({...prevState, constructorItems: items}));
-        }
-    }, [items, orderState.constructorItems])
+    const orderData = useMemo(() => {
+        return [...buns, ...otherItems, ...buns].map(item => item._id);
+    },[buns, otherItems])
 
-    const countTotalPrice = useMemo(() => {
-        let total;
-        let otherIngredientsPrice = otherIngredients.reduce((prev, curr) => {
-            return prev + curr.price
-        }, 0);
-
-        if (bun) {
-            total = otherIngredientsPrice + (bun.price * 2);
-        }
-
-        return total;
-    }, [ingredients])
-
-    useEffect(() => {
-        if (bun) {
-            setTotalPrice(countTotalPrice);
-        }
-    }, [ingredients, bun])
-
-    const handleModalState = async () => {
-        await handleOrderRequest();
+    const handleModalState = () => {
+        prepareOrderData();
+        placeOrder(orderData);
     };
 
     useEffect(() => {
-        if (orderState.success) {
-            setModalState({
-                isActive: true,
-                content: <OrderDetails order={orderState.order}/>
+        if (order.success) {
+            dispatch({
+                type: OPEN_MODAL,
+                payload: <OrderDetails order={order}/>
             });
         }
-    }, [orderState.success])
+    }, [order.success])
 
     return (
-        <section className={`${contructorStyles.constructor} pt-25 pb-13`}>
+        <section ref={dropTarget}
+            className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {buns.length !== 0 && <li
+                    className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
-                        key={bun._id}
+                        key={buns[0]._id}
                         type="top"
                         isLocked={true}
-                        text={`${bun.name} (верх)`}
-                        price={bun.price}
-                        thumbnail={bun.image}
+                        text={`${buns[0].name} (верх)`}
+                        price={buns[0].price}
+                        thumbnail={buns[0].image}
                     />
                 </li>}
                 <div className={contructorStyles.itemWrapper}>
-                    {otherIngredients.map((item) => <li key={item._id}
-                            className={`${contructorStyles.constructorItem}
-                            ${contructorStyles.constructorItem_dragable} mb-4`}
-                        >
-                            <div className="mr-2">
-                                <DragIcon type="primary" />
-                            </div>
-                            <ConstructorElement
-                                key={item.name}
-                                isLocked={false}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </li>)
+                    {otherItems.length !== 0 && otherItems
+                        .map((item, index) => <ConstructorItem
+                            item={item}
+                            index={index}
+                            key={item.uuid}
+                        />)
                     }
                 </div>
-                {bun && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {buns.length !== 0 && <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
-                        key={bun._id}
+                        key={buns[0]._id}
                         type="bottom"
                         isLocked={true}
-                        text={`${bun.name} (низ)`}
-                        price={bun.price}
-                        thumbnail={bun.image}
+                        text={`${buns[0].name} (низ)`}
+                        price={buns[0].price}
+                        thumbnail={buns[0].image}
                     />
                 </li>}
             </ul>
@@ -118,19 +90,15 @@ export function BurgerConstructor({ setModalState, handleOrderRequest }) {
                     <p className="text text_type_main-large mr-3">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                <Button onClick={handleModalState}
+                {(buns.length > 0 || otherItems.length > 0) && <Button
+                    onClick={handleModalState}
                     htmlType="button"
                     type="primary"
                     size="large"
                 >
                     Оформить заказ
-                </Button>
+                </Button>}
             </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    setModalState: PropTypes.func.isRequired,
-    handleOrderRequest: PropTypes.func.isRequired
 }

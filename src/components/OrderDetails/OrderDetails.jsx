@@ -30,6 +30,10 @@ export function OrderDetails({ order }) {
 
 OrderDetails.propTypes = {
     order: PropTypes.shape({
-        number: PropTypes.number.isRequired
+        name: PropTypes.string.isRequired,
+        number: PropTypes.number.isRequired,
+        request: PropTypes.bool.isRequired,
+        success: PropTypes.bool.isRequired,
+        error: PropTypes.bool.isRequired
     }).isRequired
 }
