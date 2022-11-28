@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Register.module.css';
@@ -7,8 +7,6 @@ export function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-
-    const inputRef = useRef(null);
 
     const onChange = e => {
         if (e.target.name === 'email') {
@@ -31,27 +29,27 @@ export function Register() {
     return (
         <section className={styles.page}>
             <form className={styles.form}>
-                <h2 className="text text_type_main-medium mb-6">Вход</h2>
+                <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
                 <Input
-                    type={'text'}
-                    placeholder={'placeholder'}
                     onChange={e => setName(e.target.value)}
-                    icon={'CloseIcon'}
-                    value={name}
-                    name={'name'}
                     error={false}
-                    ref={inputRef}
+                    value={name}
                     onIconClick={clearName}
-                    errorText={'Ошибка'}
-                    size={'default'}
+                    type='text'
+                    placeholder='placeholder'
+                    icon='CloseIcon'
+
+                    name='name'
+                    errorText='Ошибка'
+                    size='default'
                     extraClass="mb-6"
                 />
                 <EmailInput
                     onChange={onChange}
+                    onIconClick={clearEmail}
                     value={email}
                     name='email'
-                    icon={'CloseIcon'}
-                    onIconClick={clearEmail}
+                    icon='CloseIcon'
                     extraClass="mb-6"
                 />
                 <PasswordInput
@@ -59,7 +57,7 @@ export function Register() {
                     value={password}
                     name='password'
                     extraClass="mb-6"
-                    icon={'CloseIcon'}
+                    icon='CloseIcon'
                 />
                 <Button
                     htmlType="submit"

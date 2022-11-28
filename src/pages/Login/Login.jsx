@@ -25,10 +25,10 @@ export function Login() {
                 <h2 className="text text_type_main-medium mb-6">Вход</h2>
                 <EmailInput
                     onChange={onChange}
+                    onIconClick={clearEmail}
                     value={email}
                     name='email'
-                    icon={'CloseIcon'}
-                    onIconClick={clearEmail}
+                    icon='CloseIcon'
                     extraClass="mb-6"
                 />
                 <PasswordInput
@@ -54,7 +54,7 @@ export function Login() {
                 </li>
                 <li>
                     <p className="text text_type_main-default text_color_inactive">
-                        Забыли пароль? <Link to="/reset-password">Восстановить пароль</Link>
+                        Забыли пароль? <Link to="/forgot-password">Восстановить пароль</Link>
                         </p>
                 </li>
             </ul>
