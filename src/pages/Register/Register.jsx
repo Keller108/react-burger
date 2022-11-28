@@ -38,7 +38,6 @@ export function Register() {
                     type='text'
                     placeholder='placeholder'
                     icon='CloseIcon'
-
                     name='name'
                     errorText='Ошибка'
                     size='default'

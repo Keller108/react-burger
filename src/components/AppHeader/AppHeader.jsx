@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BurgerIcon,
     ListIcon,
     Logo,
@@ -34,16 +35,16 @@ export function AppHeader() {
                         </a>
                     </div>
                     <div className={appHeaderStyles.headerColumn}>
-                        <a
-                            href='/'
+                        <Link
+                            to='/'
                             className={`${appHeaderStyles.navigationItem}`}
                         >
                             <Logo />
-                        </a>
+                        </Link>
                     </div>
                     <div className={appHeaderStyles.headerColumn}>
-                        <a
-                            href='/'
+                        <Link
+                            to='/profile'
                             className={`${appHeaderStyles.navigationItem}
                                 text text_type_main-default pt-4 pb-4 pl-5 pr-5`}
                         >
@@ -51,7 +52,7 @@ export function AppHeader() {
                                 <ProfileIcon type="secondary" />
                             </span>
                             Личный кабинет
-                        </a>
+                        </Link>
                     </div>
                 </nav>
             </div>
