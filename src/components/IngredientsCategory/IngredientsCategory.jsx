@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
 import { ingredientPropType } from '../../utils/types/commonTypes';
-import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import { IngredientDetails } from '../IngredientDetails';
 import { OPEN_MODAL } from '../../services/actions';
 import { forwardRef } from 'react';
 
