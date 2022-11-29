@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Register.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../services/actions/user';
 
 export function Register() {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const user = useSelector(store => store.user);
+    const dispatch = useDispatch();
+
+    const handleRegister = () => dispatch(setUser({ email: email, password: password, name: name }));
 
     const onChange = e => {
         if (e.target.name === 'email') {
@@ -26,9 +33,16 @@ export function Register() {
         setName('');
     };
 
+    const submitLoginForm = async (evt) => {
+        evt.preventDefault();
+        await handleRegister();
+        console.log('{ email, name, password }:', { email, name, password });
+        console.log('user', user);
+    };
+
     return (
         <section className={styles.page}>
-            <form className={styles.form}>
+            <form onSubmit={submitLoginForm} className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
                 <Input
                     onChange={e => setName(e.target.value)}
@@ -36,7 +50,7 @@ export function Register() {
                     value={name}
                     onIconClick={clearName}
                     type='text'
-                    placeholder='placeholder'
+                    placeholder='Имя'
                     icon='CloseIcon'
                     name='name'
                     errorText='Ошибка'
@@ -47,6 +61,7 @@ export function Register() {
                     onChange={onChange}
                     onIconClick={clearEmail}
                     value={email}
+                    placeholder='E-mail'
                     name='email'
                     icon='CloseIcon'
                     extraClass="mb-6"
@@ -54,6 +69,7 @@ export function Register() {
                 <PasswordInput
                     onChange={onChange}
                     value={password}
+                    placeholder='Пароль'
                     name='password'
                     extraClass="mb-6"
                     icon='CloseIcon'
