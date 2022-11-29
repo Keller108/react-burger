@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { CLOSE_MODAL, OPEN_MODAL, SWITCH_TAB } from '../actions';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
+import { userReducer } from './user';
 
 const initialModalState = {
     isActive: false,
@@ -51,6 +52,7 @@ const tabReducer = (state = initialTabState, action) => {
 }
 
 export const rootReducer = combineReducers({
+    user: userReducer,
     ingredients: ingredientsReducer,
     burgerConstructor: constructorReducer,
     modal: modalReducer,
