@@ -19,7 +19,11 @@ export function setUser(user) {
                 if (res && res.success) {
                     dispatch({
                         type: REGISTER_SUCCESS,
-                        user: res.user,
+                        user: {
+                            email: res.user.email,
+                            name: res.user.name,
+                            password: user.password
+                        },
                         accessToken: res.accessToken,
                         refreshToken: res.refreshToken
                     })
@@ -28,6 +32,23 @@ export function setUser(user) {
                         type: REGISTER_FAILED
                     })
                 }
-            }).catch(err => alert(`Ошибка при регистрации пользователя – ${err.message}`))
+            })
+            .then(res => {
+                dispatch({
+                    type: LOGIN_REQUEST
+                })
+
+                if (res) {
+                    dispatch({
+                        type: LOGIN_SUCCESS
+
+                    })
+                } else {
+                    dispatch({
+                        type: LOGIN_FAILED
+                    })
+                }
+            })
+            .catch(err => alert(`Ошибка при регистрации пользователя – ${err.message}`))
     }
 }
