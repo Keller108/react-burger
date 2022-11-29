@@ -35,10 +35,23 @@ export function Register() {
 
     const submitLoginForm = async (evt) => {
         evt.preventDefault();
-        await handleRegister();
-        console.log('{ email, name, password }:', { email, name, password });
-        console.log('user', user);
+        handleRegister()
+            .then(res => {
+                if (res && res.success) {
+                    console.log('reg result', res);
+                    console.log('Рега прошла успешно');
+                    localStorage.setItem('refreshToken', res.refreshToken);
+                    localStorage.setItem('accessToken', res.accessToken);
+                } else {
+                    alert('Ошибка при попытке регистрации');
+                }
+            })
+            .catch(err => console.log(`Ошибка при попытке регистрации:, ${err.message}`));
     };
+
+    useEffect(() => {
+        console.log('reg user', user);
+    }, [user])
 
     return (
         <section className={styles.page}>
