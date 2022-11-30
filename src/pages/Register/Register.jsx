@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Register.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../services/actions/user';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../services/actions/user';
 
 export function Register() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
-    const user = useSelector(store => store.user);
-
     const dispatch = useDispatch();
 
-    const handleRegister = () => dispatch(setUser({ email: email, password: password, name: name }));
+    const handleRegister = () => dispatch(signUp({ email: email, password: password, name: name }));
 
     const onChange = e => {
         if (e.target.name === 'email') {
@@ -34,14 +32,16 @@ export function Register() {
         setName('');
     };
 
-    const submitLoginForm = async (evt) => {
+    const submitRegisterForm = async (evt) => {
         evt.preventDefault();
         await handleRegister();
+        clearEmail();
+        clearName();
     };
 
     return (
         <section className={styles.page}>
-            <form onSubmit={submitLoginForm} className={styles.form}>
+            <form onSubmit={submitRegisterForm} className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
                 <Input
                     onChange={e => setName(e.target.value)}
