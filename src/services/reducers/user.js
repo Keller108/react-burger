@@ -26,6 +26,7 @@ export const userReducer = (state = initialUserState, action) => {
                 success: true,
                 request: false,
                 error: false,
+                isLogined: true,
                 accessToken: action.accessToken,
                 refreshToken: action.refreshToken
             }
@@ -46,9 +47,13 @@ export const userReducer = (state = initialUserState, action) => {
         case LOGIN_SUCCESS: {
             return {
                 ...state,
+                user: action.user,
+                success: true,
                 request: false,
+                error: false,
                 isLogined: true,
-                error: false
+                accessToken: action.accessToken,
+                refreshToken: action.refreshToken
             }
         }
         case LOGIN_FAILED: {
