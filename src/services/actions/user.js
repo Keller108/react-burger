@@ -27,28 +27,34 @@ export function setUser(user) {
                         accessToken: res.accessToken,
                         refreshToken: res.refreshToken
                     })
+
+                    console.log('reg result', res);
+                    console.log('Рега прошла успешно');
+
+                    localStorage.setItem('refreshToken', res.refreshToken);
+                    localStorage.setItem('accessToken', res.accessToken);
                 } else {
                     dispatch({
                         type: REGISTER_FAILED
                     })
                 }
             })
-            .then(res => {
-                dispatch({
-                    type: LOGIN_REQUEST
-                })
+            // .then(res => {
+            //     dispatch({
+            //         type: LOGIN_REQUEST
+            //     })
 
-                if (res) {
-                    dispatch({
-                        type: LOGIN_SUCCESS
+            //     if (res) {
+            //         dispatch({
+            //             type: LOGIN_SUCCESS
 
-                    })
-                } else {
-                    dispatch({
-                        type: LOGIN_FAILED
-                    })
-                }
-            })
-            .catch(err => alert(`Ошибка при регистрации пользователя – ${err.message}`))
+            //         })
+            //     } else {
+            //         dispatch({
+            //             type: LOGIN_FAILED
+            //         })
+            //     }
+            // })
+            .catch(err => console.log(`Ошибка при регистрации пользователя – ${err.message}`))
     }
 }

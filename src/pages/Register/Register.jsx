@@ -11,6 +11,7 @@ export function Register() {
     const [password, setPassword] = useState('');
 
     const user = useSelector(store => store.user);
+
     const dispatch = useDispatch();
 
     const handleRegister = () => dispatch(setUser({ email: email, password: password, name: name }));
@@ -35,23 +36,8 @@ export function Register() {
 
     const submitLoginForm = async (evt) => {
         evt.preventDefault();
-        handleRegister()
-            .then(res => {
-                if (res && res.success) {
-                    console.log('reg result', res);
-                    console.log('Рега прошла успешно');
-                    localStorage.setItem('refreshToken', res.refreshToken);
-                    localStorage.setItem('accessToken', res.accessToken);
-                } else {
-                    alert('Ошибка при попытке регистрации');
-                }
-            })
-            .catch(err => console.log(`Ошибка при попытке регистрации:, ${err.message}`));
+        await handleRegister();
     };
-
-    useEffect(() => {
-        console.log('reg user', user);
-    }, [user])
 
     return (
         <section className={styles.page}>
@@ -85,7 +71,6 @@ export function Register() {
                     placeholder='Пароль'
                     name='password'
                     extraClass="mb-6"
-                    icon='CloseIcon'
                 />
                 <Button
                     htmlType="submit"

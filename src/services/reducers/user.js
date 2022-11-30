@@ -23,6 +23,7 @@ export const userReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user,
+                success: true,
                 request: false,
                 error: false,
                 accessToken: action.accessToken,
