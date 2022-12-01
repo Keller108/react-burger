@@ -1,4 +1,4 @@
-import { Routes, Navigate, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { AppHeader } from '../AppHeader/AppHeader';
 import {
     Home, Login, Register, ForgotPassword, ResetPassword, Profile
@@ -9,9 +9,13 @@ import { useEffect } from "react";
 
 export const App = () => {
     const { user, isLogined }  = useSelector(store => store.user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log('isLogined', isLogined);
+        if (isLogined === true) {
+            navigate('/');
+        }
     }, [user])
 
     return (
