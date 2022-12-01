@@ -25,9 +25,9 @@ export function signUp(newUser) {
                             password: newUser.password
                         },
                         accessToken: res.accessToken,
-                        refreshToken: res.refreshToken
+                        token: res.refreshToken
                     })
-                    localStorage.setItem('refreshToken', res.refreshToken);
+                    localStorage.setItem('token', res.refreshToken);
                     localStorage.setItem('accessToken', res.accessToken);
                 } else {
                     dispatch({
@@ -55,9 +55,9 @@ export function signIn(user) {
                             password: user.password
                         },
                         accessToken: res.accessToken,
-                        refreshToken: res.refreshToken
+                        token: res.refreshToken
                     })
-                    localStorage.setItem('refreshToken', res.refreshToken);
+                    localStorage.setItem('token', res.refreshToken);
                     localStorage.setItem('accessToken', res.accessToken);
                 } else {
                     dispatch({

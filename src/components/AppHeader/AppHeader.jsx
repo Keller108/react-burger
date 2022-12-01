@@ -12,17 +12,16 @@ export function AppHeader() {
             <div className={appHeaderStyles.container}>
                 <nav className={appHeaderStyles.navigation}>
                     <div className={appHeaderStyles.headerColumn}>
-                        <a
-                            href='/'
+                        <Link
+                            to='/'
                             className={`${appHeaderStyles.navigationItem}
-                                ${appHeaderStyles.navigationItem_active}
                                 text text_type_main-default pt-4 pb-4 pl-5 pr-5`}
                         >
                             <span className={`${appHeaderStyles.navigationIcon} mr-2`}>
                                 <BurgerIcon type="primary" />
                             </span>
                             Конструктор
-                        </a>
+                        </Link>
                         <a
                             href='/'
                             className={`${appHeaderStyles.navigationItem}

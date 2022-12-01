@@ -7,7 +7,7 @@ const initialUserState = {
     success: false,
     error: false,
     accessToken: null,
-    refreshToken: null
+    token: null
 };
 
 export const userReducer = (state = initialUserState, action) => {
@@ -28,7 +28,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false,
                 isLogined: true,
                 accessToken: action.accessToken,
-                refreshToken: action.refreshToken
+                token: action.token
             }
         }
         case REGISTER_FAILED: {
@@ -53,7 +53,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false,
                 isLogined: true,
                 accessToken: action.accessToken,
-                refreshToken: action.refreshToken
+                token: action.token
             }
         }
         case LOGIN_FAILED: {

@@ -11,6 +11,13 @@ export const App = () => {
     const { user, isLogined }  = useSelector(store => store.user);
     const navigate = useNavigate();
 
+
+    useEffect(() => {
+        if (!isLogined) {
+            navigate('/login');
+        }
+    }, [])
+
     useEffect(() => {
         console.log('isLogined', isLogined);
         if (isLogined === true) {
