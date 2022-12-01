@@ -4,22 +4,29 @@ import {
     Home, Login, Register, ForgotPassword, ResetPassword, Profile
 } from "../../pages";
 import appStyles from './App.module.css';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { userCheck } from "../../services/actions/user";
 
 export const App = () => {
     const { user, isLogined }  = useSelector(store => store.user);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const handleCheckUser = () => dispatch(userCheck());
 
     useEffect(() => {
         if (!isLogined) {
             navigate('/login');
+            handleCheckUser();
         }
     }, [])
 
     useEffect(() => {
-        console.log('isLogined', isLogined);
+
+    }, [])
+
+    useEffect(() => {
         if (isLogined === true) {
             navigate('/');
         }

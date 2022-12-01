@@ -1,5 +1,5 @@
 import { handleResponse } from "./handlers/handleResponse";
-import { LOGIN_URL, REGISTER_URL } from "./routes";
+import { LOGIN_URL, REGISTER_URL, USER_URL } from "./routes";
 
 export function createUser(newUser) {
     return fetch(REGISTER_URL, {
@@ -21,4 +21,15 @@ export function login(user) {
         },
         body: JSON.stringify(user)
     }).then(handleResponse);
+}
+
+export function getUser() {
+    return fetch(USER_URL, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('accessToken')}`
+        },
+    })
 }

@@ -1,4 +1,4 @@
-import { createUser, login } from "../../utils/userApi";
+import { createUser, getUser, login } from "../../utils/userApi";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -7,6 +7,10 @@ export const REGISTER_FAILED = 'REGISTER_FAILED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
+
+export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
+export const CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS';
+export const CHECK_USER_FAILED = 'CHECK_USER_FAILED';
 
 export function signUp(newUser) {
     return function(dispatch) {
@@ -65,5 +69,29 @@ export function signIn(user) {
                     })
                 }
             }).catch(err => console.log(`Ошибка при авторизации пользователя – ${err.message}`))
+    }
+}
+
+export function userCheck() {
+    return function(dispatch) {
+        return getUser()
+            .then(res => {
+                dispatch({ type: CHECK_USER_REQUEST })
+
+                if (res && res.success) {
+                    dispatch({
+                        type: CHECK_USER_SUCCESS,
+                        user: {
+                            email: res.user.email,
+                            name: res.user.name,
+                            password: null
+                        }
+                    })
+                } else {
+                    dispatch({
+                        type: CHECK_USER_FAILED
+                    })
+                }
+            }).catch(err => console.log(`Ошибка при проверке пользователя – ${err.message}`))
     }
 }
