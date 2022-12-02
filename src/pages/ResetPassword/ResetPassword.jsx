@@ -8,8 +8,8 @@ import { resetPasswordRequest } from '../../services/actions/user';
 export function ResetPassword() {
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
-
     const dispatch = useDispatch();
+
     const handleResetPassword = dispatch(resetPasswordRequest({
         password: password,
         token: code

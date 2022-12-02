@@ -8,27 +8,19 @@ import { signIn } from '../../services/actions/user';
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const dispatch = useDispatch();
 
     const handleLogin = () => dispatch(signIn({ email: email, password: password }));
-
-    const onChange = e => {
-        if (e.target.name === 'email') {
-            setEmail(e.target.value);
-        } else if (e.target.name === 'password') {
-            setPassword(e.target.value);
-        }
-    };
 
     const clearEmail = () => {
         setEmail('');
     };
 
-    const submitLoginForm = async (evt) => {
+    const submitLoginForm = async evt => {
         evt.preventDefault();
         await handleLogin();
         clearEmail();
+        setPassword('');
     };
 
     return (
@@ -36,7 +28,7 @@ export function Login() {
             <form onSubmit={submitLoginForm} className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Вход</h2>
                 <EmailInput
-                    onChange={onChange}
+                    onChange={e => setEmail(e.target.value)}
                     onIconClick={clearEmail}
                     value={email}
                     name='email'
@@ -44,7 +36,7 @@ export function Login() {
                     extraClass="mb-6"
                 />
                 <PasswordInput
-                    onChange={onChange}
+                    onChange={e => setPassword(e.target.value)}
                     value={password}
                     name='password'
                     extraClass="mb-6"

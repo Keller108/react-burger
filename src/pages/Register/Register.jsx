@@ -9,8 +9,8 @@ export function Register() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-
     const dispatch = useDispatch();
+
     const handleRegister = () => dispatch(signUp({ email: email, password: password, name: name }));
 
     const clearEmail = () => {

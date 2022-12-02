@@ -5,6 +5,9 @@ import {
     LOGIN_FAILED,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
+    PASS_RESET_FAILED,
+    PASS_RESET_REQUEST,
+    PASS_RESET_SUCCESS,
     REGISTER_FAILED,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
@@ -120,6 +123,31 @@ export const userReducer = (state = initialUserState, action) => {
             }
         }
         case USER_EXISTS_FAILED: {
+            return {
+                ...state,
+                request: false,
+                success: false,
+                error: true
+            }
+        }
+
+        case PASS_RESET_REQUEST: {
+            return {
+                ...state,
+                request: true,
+                success: false,
+                error: false
+            }
+        }
+        case PASS_RESET_SUCCESS: {
+            return {
+                ...state,
+                request: false,
+                success: true,
+                error: false
+            }
+        }
+        case PASS_RESET_FAILED: {
             return {
                 ...state,
                 request: false,
