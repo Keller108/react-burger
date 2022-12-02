@@ -46,7 +46,7 @@ export function checkIfExist(email) {
 }
 
 export function resetPassword(data) {
-    return fetch(FORGOT_URL, {
+    return fetch(PASSWORD_RESET_URL, {
         method: 'POST',
         header: {
             'Accept': 'application/json',

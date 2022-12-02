@@ -20,17 +20,15 @@ export const App = () => {
             navigate('/login');
             handleCheckUser();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-
-    }, [])
-
-    useEffect(() => {
-        if (isLogined === true) {
-            navigate('/');
-        }
-    }, [user])
+    // useEffect(() => {
+    //     if (isLogined === true) {
+    //         navigate('/');
+    //     }
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [user])
 
     return (
         <div className={appStyles.app}>

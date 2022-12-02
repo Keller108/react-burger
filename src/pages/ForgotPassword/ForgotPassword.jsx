@@ -38,7 +38,7 @@ export function ForgotPassword() {
                     extraClass="mb-6"
                 />
                 <Button
-                    htmlTyp e="submit"
+                    htmlType="submit"
                     type="primary"
                     size="medium"
                     extraClass="mb-20"
