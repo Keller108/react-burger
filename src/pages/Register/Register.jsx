@@ -11,18 +11,7 @@ export function Register() {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
-
     const handleRegister = () => dispatch(signUp({ email: email, password: password, name: name }));
-
-    const onChange = e => {
-        if (e.target.name === 'email') {
-            setEmail(e.target.value);
-        } else if (e.target.name === 'password') {
-            setPassword(e.target.value);
-        } else {
-            setName(e.target.value);
-        }
-    };
 
     const clearEmail = () => {
         setEmail('');
@@ -37,6 +26,7 @@ export function Register() {
         await handleRegister();
         clearEmail();
         clearName();
+        setPassword('');
     };
 
     return (
@@ -57,7 +47,7 @@ export function Register() {
                     extraClass="mb-6"
                 />
                 <EmailInput
-                    onChange={onChange}
+                    onChange={e => setEmail(e.target.value)}
                     onIconClick={clearEmail}
                     value={email}
                     placeholder='E-mail'
@@ -66,7 +56,7 @@ export function Register() {
                     extraClass="mb-6"
                 />
                 <PasswordInput
-                    onChange={onChange}
+                    onChange={e => setPassword(e.target.value)}
                     value={password}
                     placeholder='Пароль'
                     name='password'

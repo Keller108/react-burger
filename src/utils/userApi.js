@@ -1,5 +1,5 @@
 import { handleResponse } from "./handlers/handleResponse";
-import { LOGIN_URL, PASSWORD_RESET_URL, REGISTER_URL, USER_URL } from "./routes";
+import { FORGOT_URL, LOGIN_URL, PASSWORD_RESET_URL, REGISTER_URL, USER_URL } from "./routes";
 
 export function createUser(newUser) {
     return fetch(REGISTER_URL, {
@@ -35,12 +35,23 @@ export function getUser() {
 }
 
 export function checkIfExist(email) {
-    return fetch(PASSWORD_RESET_URL, {
+    return fetch(FORGOT_URL, {
         method: 'POST',
         header: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(email)
+    }).then(handleResponse);
+}
+
+export function resetPassword(data) {
+    return fetch(FORGOT_URL, {
+        method: 'POST',
+        header: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     }).then(handleResponse);
 }

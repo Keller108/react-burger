@@ -1,4 +1,4 @@
-import { checkIfExist, createUser, getUser, login } from "../../utils/userApi";
+import { checkIfExist, createUser, getUser, login, resetPassword } from "../../utils/userApi";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -15,6 +15,10 @@ export const CHECK_USER_FAILED = 'CHECK_USER_FAILED';
 export const USER_EXISTS_REQUEST = 'USER_EXISTS_REQUEST';
 export const USER_EXISTS_SUCCESS = 'USER_EXISTS_SUCCESS';
 export const USER_EXISTS_FAILED = 'USER_EXISTS_FAILED';
+
+export const PASS_RESET_REQUEST = 'PASS_RESET_REQUEST';
+export const PASS_RESET_SUCCESS = 'PASS_RESET_SUCCESS';
+export const PASS_RESET_FAILED = 'PASS_RESET_FAILED';
 
 export function signUp(newUser) {
     return function(dispatch) {
@@ -118,5 +122,26 @@ export function checkUserExists(email) {
                     })
                 }
             }).catch(err => console.log(`Ошибка при проверке почты – ${err.message}`))
+    }
+}
+
+export function resetPasswordRequest(data) {
+    return function(dispatch) {
+        return resetPassword(data)
+            .then(res => {
+                dispatch({
+                    type: PASS_RESET_REQUEST
+                })
+
+                if (res && res.success) {
+                    dispatch({
+                        type: PASS_RESET_SUCCESS
+                    })
+                } else {
+                    dispatch({
+                        type: PASS_RESET_FAILED
+                    })
+                }
+            }).catch(err => console.log(`Ошибка при восставновлении пароля – ${err.message}`))
     }
 }

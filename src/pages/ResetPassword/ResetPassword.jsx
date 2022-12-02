@@ -2,14 +2,33 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ResetPassword.module.css';
+import { useDispatch } from 'react-redux';
+import { resetPasswordRequest } from '../../services/actions/user';
 
 export function ResetPassword() {
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
 
+    const dispatch = useDispatch();
+    const handleResetPassword = dispatch(resetPasswordRequest({
+        password: password,
+        token: code
+    }));
+
+    const clearCode = () => {
+        setCode('');
+    };
+
+    const handleSubmitResetForm = async () => {
+        await handleResetPassword();
+        setPassword('');
+        clearCode();
+    };
+
     return (
         <section className={styles.page}>
-            <form className={styles.form}>
+            <form onSubmit={handleSubmitResetForm}
+                className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
                 <PasswordInput
                     onChange={e => setPassword(e.target.value)}
@@ -22,9 +41,11 @@ export function ResetPassword() {
                     onChange={e => setCode(e.target.value)}
                     value={code}
                     error={false}
+                    onIconClick={clearCode}
+                    icon='CloseIcon'
                     type='text'
                     placeholder='Введите код из письма'
-                    name='name'
+                    name='code'
                     errorText='Ошибка'
                     size='default'
                     extraClass="mb-6"

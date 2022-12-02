@@ -12,10 +12,6 @@ export function ForgotPassword() {
 
     const handleCheckIfUserExists = () => dispatch(checkUserExists(email));
 
-    const onChange = e => {
-        setEmail(e.target.value);
-    };
-
     const clearEmail = () => {
         setEmail('');
     };
@@ -33,7 +29,7 @@ export function ForgotPassword() {
                 className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
                 <EmailInput
-                    onChange={onChange}
+                    onChange={e => setEmail(e.target.value)}
                     onIconClick={clearEmail}
                     value={email}
                     name='email'
