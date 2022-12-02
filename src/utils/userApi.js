@@ -34,7 +34,7 @@ export function getUser() {
     }).then(handleResponse);
 }
 
-export function checkByEmail(email) {
+export function checkIfExist(email) {
     return fetch(PASSWORD_RESET_URL, {
         method: 'POST',
         header: {

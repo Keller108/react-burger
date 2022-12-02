@@ -1,4 +1,4 @@
-import { createUser, getUser, login } from "../../utils/userApi";
+import { checkIfExist, createUser, getUser, login } from "../../utils/userApi";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -11,6 +11,10 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
 export const CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS';
 export const CHECK_USER_FAILED = 'CHECK_USER_FAILED';
+
+export const USER_EXISTS_REQUEST = 'USER_EXISTS_REQUEST';
+export const USER_EXISTS_SUCCESS = 'USER_EXISTS_SUCCESS';
+export const USER_EXISTS_FAILED = 'USER_EXISTS_FAILED';
 
 export function signUp(newUser) {
     return function(dispatch) {
@@ -93,5 +97,26 @@ export function userCheck() {
                     })
                 }
             }).catch(err => console.log(`Ошибка при проверке пользователя – ${err.message}`))
+    }
+}
+
+export function checkUserExists(email) {
+    return function(dispatch) {
+        return checkIfExist(email)
+            .then(res => {
+                dispatch({
+                    type: USER_EXISTS_REQUEST
+                })
+
+                if (res && res.success) {
+                    dispatch({
+                        type: USER_EXISTS_SUCCESS
+                    })
+                } else {
+                    dispatch({
+                        type: CHECK_USER_FAILED
+                    })
+                }
+            }).catch(err => console.log(`Ошибка при проверке почты – ${err.message}`))
     }
 }

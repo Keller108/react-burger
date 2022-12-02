@@ -32,7 +32,7 @@ export function Register() {
         setName('');
     };
 
-    const submitRegisterForm = async (evt) => {
+    const submitRegisterForm = async evt => {
         evt.preventDefault();
         await handleRegister();
         clearEmail();

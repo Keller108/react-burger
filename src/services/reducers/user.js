@@ -7,7 +7,10 @@ import {
     LOGIN_SUCCESS,
     REGISTER_FAILED,
     REGISTER_REQUEST,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    USER_EXISTS_FAILED,
+    USER_EXISTS_REQUEST,
+    USER_EXISTS_SUCCESS
 } from "../actions/user";
 
 const initialUserState = {
@@ -99,6 +102,29 @@ export const userReducer = (state = initialUserState, action) => {
                 success: false,
                 isLogined: false,
                 error: true,
+            }
+        }
+        case USER_EXISTS_REQUEST: {
+            return {
+                ...state,
+                request: true,
+                success: false
+            }
+        }
+        case USER_EXISTS_SUCCESS: {
+            return {
+                ...state,
+                request: false,
+                success: true,
+                error: false
+            }
+        }
+        case USER_EXISTS_FAILED: {
+            return {
+                ...state,
+                request: false,
+                success: false,
+                error: true
             }
         }
         default: {
