@@ -1,3 +1,5 @@
+export const SHOP_ROUTE = "/";
+
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 export const REGISTER_URL = `${BASE_URL}/auth/register`;
