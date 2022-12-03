@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Profile.module.css';
+import { useSelector } from 'react-redux';
 
 export function Profile() {
-    const [name, setName] = useState('Никита');
-    const [login, setLogin] = useState('Keller108');
-    const [password, setPassword] = useState('initialPassword');
+    const { name, email, password } = useSelector(state => state.userStore.user);
+
+    const [userName, setUserName] = useState(name ?? '');
+    const [userEmail, setUserEmail] = useState(email ?? '');
+    const [userPassword, setUserPassword] = useState(password ?? '');
 
     return (
         <section className={styles.page}>
@@ -28,9 +31,9 @@ export function Profile() {
                 </div>
                 <form className={styles.form}>
                     <Input
-                        onChange={e => setName(e.target.value)}
+                        onChange={e => setUserName(e.target.value)}
                         error={false}
-                        value={name}
+                        value={userName}
                         // onIconClick={clearName}
                         type='text'
                         placeholder='Имя'
@@ -41,21 +44,21 @@ export function Profile() {
                         extraClass="mb-6"
                     />
                     <Input
-                        onChange={e => setLogin(e.target.value)}
+                        onChange={e => setUserEmail(e.target.value)}
                         error={false}
-                        value={login}
+                        value={userEmail}
                         // onIconClick={clearName}
                         type='text'
                         placeholder='Логин'
                         icon='EditIcon'
-                        name='name'
+                        name='email'
                         errorText='Ошибка'
                         size='default'
                         extraClass="mb-6"
                     />
                     <PasswordInput
-                        onChange={e => setPassword(e.target.value)}
-                        value={password}
+                        onChange={e => setUserPassword(e.target.value)}
+                        value={userPassword}
                         placeholder='Пароль'
                         name='password'
                         icon='ClosEditIconeIcon'

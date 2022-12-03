@@ -52,7 +52,7 @@ const tabReducer = (state = initialTabState, action) => {
 }
 
 export const rootReducer = combineReducers({
-    user: userReducer,
+    userStore: userReducer,
     ingredients: ingredientsReducer,
     burgerConstructor: constructorReducer,
     modal: modalReducer,

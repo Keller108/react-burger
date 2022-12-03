@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { userCheck } from "../../services/actions/user";
 
 export const App = () => {
-    const { user, isLogined }  = useSelector(store => store.user);
+    const { user, isLogined }  = useSelector(store => store.userStore);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,12 +23,12 @@ export const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // useEffect(() => {
-    //     if (isLogined === true) {
-    //         navigate('/');
-    //     }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [user])
+    useEffect(() => {
+        if (isLogined === true) {
+            navigate('/');
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
 
     return (
         <div className={appStyles.app}>

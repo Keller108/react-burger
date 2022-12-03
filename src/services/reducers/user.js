@@ -95,7 +95,7 @@ export const userReducer = (state = initialUserState, action) => {
                 request: false,
                 success: true,
                 user: {
-                    ...state,
+                    ...state.user,
                     email: action.user.email,
                     name: action.user.name,
                     password: action.user.password
