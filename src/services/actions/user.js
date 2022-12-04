@@ -156,8 +156,9 @@ export function resetPasswordRequest(data) {
 }
 
 export function tokenRefresh() {
+    let jwt = localStorage.getItem('token');
     return function(dispatch) {
-        refreshToken()
+        refreshToken({ token: jwt })
             .then(res => {
                 if (res && res.success) {
                     dispatch({

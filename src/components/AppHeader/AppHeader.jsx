@@ -9,9 +9,12 @@ import appHeaderStyles from './AppHeader.module.css';
 export function AppHeader() {
     let location = useLocation();
 
-    let inactiveLinkClass = `${appHeaderStyles.navigationItem} text text_type_main-default pt-4 pb-4 pl-5 pr-5`;
+    let inactiveLinkClass = `${appHeaderStyles.navigationItem}
+        text text_type_main-default pt-4 pb-4 pl-5 pr-5`;
+
     let activeLinkClass = `${appHeaderStyles.navigationItem}
-        ${appHeaderStyles.navigationItem_active} text text_type_main-default pt-4 pb-4 pl-5 pr-5`;
+        ${appHeaderStyles.navigationItem_active}
+        text text_type_main-default pt-4 pb-4 pl-5 pr-5`;
 
     return (
         <header className={`${appHeaderStyles.header} p-4`}>

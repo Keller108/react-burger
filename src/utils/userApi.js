@@ -17,7 +17,7 @@ export function login(user) {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json;charset=utf-8"
         },
         body: JSON.stringify(user)
     }).then(handleResponse);
@@ -28,7 +28,7 @@ export function getUser() {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json;charset=utf-8",
             'Authorization': `${localStorage.getItem('accessToken')}`
         },
     }).then(handleResponse);
@@ -56,13 +56,13 @@ export function resetPassword(data) {
     }).then(handleResponse);
 }
 
-export function refreshToken() {
+export function refreshToken(token) {
     return fetch(TOKEN_URL, {
         method: 'POST',
         header: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json;charset=utf-8"
         },
-        body: JSON.stringify(localStorage.getItem('token'))
+        body: JSON.stringify(token)
     }).then(handleResponse);
 }
