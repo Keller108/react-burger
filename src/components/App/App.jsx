@@ -14,8 +14,9 @@ export const App = () => {
     const { user, isLogined }  = useSelector(store => store.userStore);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const checkData = async () => {
-        await dispatch(tokenRefresh());
+
+    const checkData = () => {
+        dispatch(tokenRefresh());
         dispatch(userCheck());
     };
 
