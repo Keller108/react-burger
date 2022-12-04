@@ -11,7 +11,6 @@ import {
     REGISTER_FAILED,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
-    TOKEN_REFRESH,
     USER_EXISTS_FAILED,
     USER_EXISTS_REQUEST,
     USER_EXISTS_SUCCESS
@@ -22,9 +21,7 @@ const initialUserState = {
     isLogined: false,
     request: false,
     success: false,
-    error: false,
-    accessToken: null,
-    token: null
+    error: false
 };
 
 export const userReducer = (state = initialUserState, action) => {
@@ -43,9 +40,7 @@ export const userReducer = (state = initialUserState, action) => {
                 success: true,
                 request: false,
                 error: false,
-                isLogined: true,
-                accessToken: action.accessToken,
-                token: action.token
+                isLogined: true
             }
         }
         case REGISTER_FAILED: {
@@ -68,9 +63,7 @@ export const userReducer = (state = initialUserState, action) => {
                 success: true,
                 request: false,
                 error: false,
-                isLogined: true,
-                accessToken: action.accessToken,
-                token: action.token
+                isLogined: true
             }
         }
         case LOGIN_FAILED: {
@@ -160,13 +153,6 @@ export const userReducer = (state = initialUserState, action) => {
                 request: false,
                 success: false,
                 error: true
-            }
-        }
-        case TOKEN_REFRESH: {
-            return {
-                ...state,
-                accessToken: action.accessToken,
-                token: action.token
             }
         }
         default: {

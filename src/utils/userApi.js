@@ -56,13 +56,13 @@ export function resetPassword(data) {
     }).then(handleResponse);
 }
 
-export function refreshToken(token) {
+export function refreshToken() {
     return fetch(TOKEN_URL, {
         method: 'POST',
         header: {
             'Accept': 'application/json',
             "Content-Type": "application/json;charset=utf-8"
         },
-        body: JSON.stringify(token)
+        body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
     }).then(handleResponse);
 }

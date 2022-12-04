@@ -27,8 +27,6 @@ export const PASS_RESET_REQUEST = 'PASS_RESET_REQUEST';
 export const PASS_RESET_SUCCESS = 'PASS_RESET_SUCCESS';
 export const PASS_RESET_FAILED = 'PASS_RESET_FAILED';
 
-export const TOKEN_REFRESH = 'TOKEN_REFRESH';
-
 export function signUp(newUser) {
     return function(dispatch) {
         return createUser(newUser)
@@ -44,11 +42,9 @@ export function signUp(newUser) {
                             email: res.user.email,
                             name: res.user.name,
                             password: newUser.password
-                        },
-                        accessToken: res.accessToken,
-                        token: res.refreshToken
+                        }
                     })
-                    localStorage.setItem('token', res.refreshToken);
+                    localStorage.setItem('refreshToken', res.refreshToken);
                     localStorage.setItem('accessToken', res.accessToken);
                 } else {
                     dispatch({
@@ -74,11 +70,9 @@ export function signIn(user) {
                             email: res.user.email,
                             name: res.user.name,
                             password: user.password
-                        },
-                        accessToken: res.accessToken,
-                        token: res.refreshToken
+                        }
                     })
-                    localStorage.setItem('token', res.refreshToken);
+                    localStorage.setItem('refreshToken', res.refreshToken);
                     localStorage.setItem('accessToken', res.accessToken);
                 } else {
                     dispatch({
@@ -156,16 +150,12 @@ export function resetPasswordRequest(data) {
 }
 
 export function tokenRefresh() {
-    let jwt = localStorage.getItem('token');
     return function(dispatch) {
-        refreshToken({ token: jwt })
+        refreshToken()
             .then(res => {
                 if (res && res.success) {
-                    dispatch({
-                        type: TOKEN_REFRESH,
-                        token: res.refreshToken,
-                        accessToken: res.accessToken
-                    })
+                    localStorage.setItem('refreshToken', res.refreshToken);
+                    localStorage.setItem('accessToken', res.accessToken);
                 }
             }).catch(err => console.log(`Ошибка при обновлении токена – ${err}`))
     }
