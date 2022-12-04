@@ -7,7 +7,7 @@ import appStyles from './App.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { userCheck } from "../../services/actions/user";
-import { ProtectedRoute } from "../../HOC/ProtectedRoute";
+import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 
 export const App = () => {
     const { user, isLogined }  = useSelector(store => store.userStore);
@@ -35,12 +35,14 @@ export const App = () => {
         <div className={appStyles.app}>
             <AppHeader />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route element={<ProtectedRoutes isLogined={isLogined} />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/profile" element={!isLogined ? <Navigate to="/login" /> : <Profile />} />
             </Routes>
         </div>
     );

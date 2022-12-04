@@ -34,7 +34,6 @@ export function Profile() {
                         onChange={e => setUserName(e.target.value)}
                         error={false}
                         value={userName}
-                        // onIconClick={clearName}
                         type='text'
                         placeholder='Имя'
                         icon='EditIcon'
@@ -47,7 +46,6 @@ export function Profile() {
                         onChange={e => setUserEmail(e.target.value)}
                         error={false}
                         value={userEmail}
-                        // onIconClick={clearName}
                         type='text'
                         placeholder='Логин'
                         icon='EditIcon'
@@ -61,7 +59,6 @@ export function Profile() {
                         value={userPassword}
                         placeholder='Пароль'
                         name='password'
-                        icon='ClosEditIconeIcon'
                     />
                 </form>
                 <div className={styles.sideColumn}></div>
