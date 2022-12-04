@@ -13,8 +13,6 @@ export function AppHeader() {
     let activeLinkClass = `${appHeaderStyles.navigationItem}
         ${appHeaderStyles.navigationItem_active} text text_type_main-default pt-4 pb-4 pl-5 pr-5`;
 
-    console.log('location', location.pathname);
-
     return (
         <header className={`${appHeaderStyles.header} p-4`}>
             <div className={appHeaderStyles.container}>

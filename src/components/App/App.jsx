@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { AppHeader } from '../AppHeader/AppHeader';
 import {
     Home, Login, Register, ForgotPassword, ResetPassword, Profile
@@ -6,20 +6,23 @@ import {
 import appStyles from './App.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { userCheck } from "../../services/actions/user";
+import { tokenRefresh, userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
+import { NotFound } from "../../pages/NotFound/NotFound";
 
 export const App = () => {
     const { user, isLogined }  = useSelector(store => store.userStore);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleCheckUser = () => dispatch(userCheck());
+    const checkData = async () => {
+        await dispatch(tokenRefresh());
+        dispatch(userCheck());
+    };
 
     useEffect(() => {
         if (!isLogined) {
             navigate('/login');
-            handleCheckUser();
+            checkData();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -39,6 +42,7 @@ export const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
                 </Route>
+                <Route path='*' element={<NotFound />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />

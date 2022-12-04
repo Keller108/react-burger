@@ -11,6 +11,7 @@ import {
     REGISTER_FAILED,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
+    TOKEN_REFRESH,
     USER_EXISTS_FAILED,
     USER_EXISTS_REQUEST,
     USER_EXISTS_SUCCESS
@@ -159,6 +160,13 @@ export const userReducer = (state = initialUserState, action) => {
                 request: false,
                 success: false,
                 error: true
+            }
+        }
+        case TOKEN_REFRESH: {
+            return {
+                ...state,
+                accessToken: action.accessToken,
+                token: action.token
             }
         }
         default: {

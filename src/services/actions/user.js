@@ -1,4 +1,11 @@
-import { checkIfExist, createUser, getUser, login, resetPassword } from "../../utils/userApi";
+import {
+    checkIfExist,
+    createUser,
+    getUser,
+    login,
+    resetPassword,
+    refreshToken
+} from "../../utils/userApi";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -19,6 +26,8 @@ export const USER_EXISTS_FAILED = 'USER_EXISTS_FAILED';
 export const PASS_RESET_REQUEST = 'PASS_RESET_REQUEST';
 export const PASS_RESET_SUCCESS = 'PASS_RESET_SUCCESS';
 export const PASS_RESET_FAILED = 'PASS_RESET_FAILED';
+
+export const TOKEN_REFRESH = 'TOKEN_REFRESH';
 
 export function signUp(newUser) {
     return function(dispatch) {
@@ -46,7 +55,7 @@ export function signUp(newUser) {
                         type: REGISTER_FAILED
                     })
                 }
-            }).catch(err => console.log(`Ошибка при регистрации пользователя – ${err.message}`))
+            }).catch(err => console.log(`Ошибка при регистрации пользователя – ${err}`))
     }
 }
 
@@ -76,12 +85,12 @@ export function signIn(user) {
                         type: LOGIN_FAILED
                     })
                 }
-            }).catch(err => console.log(`Ошибка при авторизации пользователя – ${err.message}`))
+            }).catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`))
     }
 }
 
 export function userCheck() {
-    return function(dispatch) {
+    return async function(dispatch) {
         return getUser()
             .then(res => {
                 dispatch({ type: CHECK_USER_REQUEST })
@@ -100,7 +109,7 @@ export function userCheck() {
                         type: CHECK_USER_FAILED
                     })
                 }
-            }).catch(err => console.log(`Ошибка при проверке пользователя – ${err.message}`))
+            }).catch(err => console.log(`Ошибка при проверке пользователя – ${err}`))
     }
 }
 
@@ -121,7 +130,7 @@ export function checkUserExists(email) {
                         type: CHECK_USER_FAILED
                     })
                 }
-            }).catch(err => console.log(`Ошибка при проверке почты – ${err.message}`))
+            }).catch(err => console.log(`Ошибка при проверке почты – ${err}`))
     }
 }
 
@@ -142,6 +151,21 @@ export function resetPasswordRequest(data) {
                         type: PASS_RESET_FAILED
                     })
                 }
-            }).catch(err => console.log(`Ошибка при восставновлении пароля – ${err.message}`))
+            }).catch(err => console.log(`Ошибка при восставновлении пароля – ${err}`))
+    }
+}
+
+export function tokenRefresh() {
+    return function(dispatch) {
+        refreshToken()
+            .then(res => {
+                if (res && res.success) {
+                    dispatch({
+                        type: TOKEN_REFRESH,
+                        token: res.refreshToken,
+                        accessToken: res.accessToken
+                    })
+                }
+            }).catch(err => console.log(`Ошибка при обновлении токена – ${err}`))
     }
 }
