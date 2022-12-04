@@ -6,7 +6,7 @@ export function createUser(newUser) {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(newUser)
     }).then(handleResponse);
@@ -37,9 +37,9 @@ export function getUser() {
 export function checkIfExist(email) {
     return fetch(FORGOT_URL, {
         method: 'POST',
-        header: {
+        headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(email)
     }).then(handleResponse);
@@ -48,9 +48,9 @@ export function checkIfExist(email) {
 export function resetPassword(data) {
     return fetch(PASSWORD_RESET_URL, {
         method: 'POST',
-        header: {
+        headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(data)
     }).then(handleResponse);
@@ -59,9 +59,9 @@ export function resetPassword(data) {
 export function refreshToken() {
     return fetch(TOKEN_URL, {
         method: 'POST',
-        header: {
+        headers: {
             'Accept': 'application/json',
-            "Content-Type": "application/json;charset=utf-8"
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
     }).then(handleResponse);
