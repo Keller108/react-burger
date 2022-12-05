@@ -24,13 +24,11 @@ export const App = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        handleTokenRefresh()
-            .then(res => {
-                if (res && res.succcess) setIsLoading(false);
-            })
+        handleTokenRefresh();
         handleUserCheck()
             .then(res => {
                 if (res && res.success) {
+                    setIsLoading(false);
                     navigate(SHOP_ROUTE);
                 }
             })
