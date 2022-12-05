@@ -36,9 +36,6 @@ export const App = () => {
     // eslint-disable-next-line
     }, [user])
 
-    console.log('refreshToken', localStorage.getItem('refreshToken'));
-    console.log('accessToken', localStorage.getItem('accessToken'));
-
     return (
         <div className={appStyles.app}>
             <AppHeader />
