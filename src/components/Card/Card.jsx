@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
@@ -9,6 +10,7 @@ import { ingredientPropType } from '../../utils/types/commonTypes';
 export function Card({ cardData, onCardClick }) {
     const [amount, setAmount] = useState(0);
     const { buns, otherItems } = useSelector(store => store.burgerConstructor);
+    const location = useLocation();
 
     const [, ref] = useDrag({
         type: 'ingredients',
@@ -19,6 +21,7 @@ export function Card({ cardData, onCardClick }) {
     });
 
     const { image, price, name } = cardData;
+    const ingredientId = cardData._id;
 
     let ingredientAmount = useMemo(() => {
         return otherItems.filter(item => item._id === cardData._id).length;
@@ -30,36 +33,48 @@ export function Card({ cardData, onCardClick }) {
         } else if (!otherItems.length) {
             setAmount(0);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otherItems])
 
     return (
-        <li onClick={onCardClick}
-            draggable
-            ref={ref}
-            className={cardStyle.card}>
-                {(cardData.type === 'bun' && buns.length)
-                    && (buns.filter(item => item._id === cardData._id)
-                    && buns.find(item => item._id === cardData._id))
-                    ? <span className={`${cardStyle.quantity}
-                        "text text_type_main-medium"`}
-                    >{buns.length + 1}</span>
-                    : (amount > 0) && <span
-                    className={`${cardStyle.quantity} "text text_type_main-medium"`}
-                    >{amount}</span>
-                }
-            <img
-                className={image}
-                src={image}
-                alt="Картинка ингридиента"
-            />
-            <span className={`${cardStyle.price} mb-1`}>
-                <p className="text text_type_main-medium mr-2">{price}</p>
-                <span>
-                    <CurrencyIcon type="primary"/>
+        <Link
+            key={ingredientId}
+            onClick={onCardClick}
+            to={{
+                // Тут мы формируем динамический путь для нашего ингредиента
+                // а также сохраняем в свойство background роут, на котором была открыта наша модалка
+                pathname: `/ingredients/${ingredientId}`,
+                state: { background: location },
+            }}
+            className={cardStyle.link}
+        >
+            <li draggable
+                ref={ref}
+                className={cardStyle.card}>
+                    {(cardData.type === 'bun' && buns.length)
+                        && (buns.filter(item => item._id === cardData._id)
+                        && buns.find(item => item._id === cardData._id))
+                        ? <span className={`${cardStyle.quantity}
+                            "text text_type_main-medium"`}
+                        >{buns.length + 1}</span>
+                        : (amount > 0) && <span
+                        className={`${cardStyle.quantity} "text text_type_main-medium"`}
+                        >{amount}</span>
+                    }
+                <img
+                    className={image}
+                    src={image}
+                    alt="Картинка ингридиента"
+                />
+                <span className={`${cardStyle.price} mb-1`}>
+                    <p className="text text_type_main-medium mr-2">{price}</p>
+                    <span>
+                        <CurrencyIcon type="primary"/>
+                    </span>
                 </span>
-            </span>
-            <p className="text text_type_main-default">{name}</p>
-        </li>
+                <p className="text text_type_main-default">{name}</p>
+            </li>
+        </Link>
     )
 }
 
