@@ -3,14 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ForgotPassword.module.css';
 import { useDispatch } from 'react-redux';
-import { checkUserExists } from '../../services/actions/user';
+import { forgotPasswordRequest } from '../../services/actions/user';
 
 export function ForgotPassword() {
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleCheckIfUserExists = () => dispatch(checkUserExists(email));
+    const handleCheckIfUserExists = () => dispatch(
+        forgotPasswordRequest({ email: email })
+    );
 
     const clearEmail = () => {
         setEmail('');
@@ -18,9 +20,11 @@ export function ForgotPassword() {
 
     const handleSubmitForgotForm = async evt => {
         evt.preventDefault();
-        await handleCheckIfUserExists();
+
+        let result = await handleCheckIfUserExists();
         clearEmail();
-        navigate('/reset-password');
+
+        if (result) navigate('/reset-password');
     };
 
     return (

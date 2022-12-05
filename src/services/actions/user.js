@@ -23,9 +23,9 @@ export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
 export const CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS';
 export const CHECK_USER_FAILED = 'CHECK_USER_FAILED';
 
-export const USER_EXISTS_REQUEST = 'USER_EXISTS_REQUEST';
-export const USER_EXISTS_SUCCESS = 'USER_EXISTS_SUCCESS';
-export const USER_EXISTS_FAILED = 'USER_EXISTS_FAILED';
+export const PASS_FORGOT_REQUEST = 'USER_EXISTS_REQUEST';
+export const PASS_FORGOT_SUCCESS = 'USER_EXISTS_SUCCESS';
+export const PASS_FORGOT_FAILED = 'USER_EXISTS_FAILED';
 
 export const PASS_RESET_REQUEST = 'PASS_RESET_REQUEST';
 export const PASS_RESET_SUCCESS = 'PASS_RESET_SUCCESS';
@@ -55,6 +55,8 @@ export function signUp(newUser) {
                         type: REGISTER_FAILED
                     })
                 }
+
+                return res
             })
             .catch(err => console.log(`Ошибка при регистрации пользователя – ${err}`))
     }
@@ -84,6 +86,8 @@ export function signIn(user) {
                         type: LOGIN_FAILED
                     })
                 }
+
+                return res
             })
             .catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`))
     }
@@ -109,28 +113,32 @@ export function userCheck() {
                         type: CHECK_USER_FAILED
                     })
                 }
+
+                return res
             })
             .catch(err => console.log(`Ошибка при проверке пользователя – ${err}`))
     }
 }
 
-export function checkUserExists(email) {
+export function forgotPasswordRequest(email) {
     return function(dispatch) {
         return checkIfExist(email)
             .then(res => {
                 dispatch({
-                    type: USER_EXISTS_REQUEST
+                    type: PASS_FORGOT_REQUEST
                 })
 
                 if (res && res.success) {
                     dispatch({
-                        type: USER_EXISTS_SUCCESS
+                        type: PASS_FORGOT_SUCCESS
                     })
                 } else {
                     dispatch({
-                        type: CHECK_USER_FAILED
+                        type: PASS_FORGOT_FAILED
                     })
                 }
+
+                return res
             })
             .catch(err => console.log(`Ошибка при проверке почты – ${err}`))
     }
@@ -153,6 +161,8 @@ export function resetPasswordRequest(data) {
                         type: PASS_RESET_FAILED
                     })
                 }
+
+                return res
             })
             .catch(err => console.log(`Ошибка при восставновлении пароля – ${err}`))
     }
@@ -178,6 +188,8 @@ export function signOut() {
                         type: USER_LOGOUT_FAILED
                     })
                 }
+
+                return res
             })
             .catch(err => console.log(`Ошибка при разлогинивании – ${err}`))
     }

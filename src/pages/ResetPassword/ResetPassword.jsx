@@ -1,34 +1,37 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ResetPassword.module.css';
 import { useDispatch } from 'react-redux';
 import { resetPasswordRequest } from '../../services/actions/user';
+import { LOGIN_ROUTE } from '../../utils/routes';
 
 export function ResetPassword() {
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
-    const dispatch = useDispatch();
 
-    const handleResetPassword = dispatch(resetPasswordRequest({
-        password: password,
-        token: code
-    }));
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleResetPassword = (data) => dispatch(resetPasswordRequest(data));
 
     const clearCode = () => {
         setCode('');
     };
 
-    const handleSubmitResetForm = async () => {
-        await handleResetPassword();
+    const handleSubmitResetForm = async evt => {
+        evt.preventDefault();
+
+        let result =  await handleResetPassword({ password: password, token: code });
         setPassword('');
         clearCode();
+
+        if (result) navigate(LOGIN_ROUTE);
     };
 
     return (
         <section className={styles.page}>
-            <form onSubmit={handleSubmitResetForm}
-                className={styles.form}>
+            <form className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
                 <PasswordInput
                     onChange={e => setPassword(e.target.value)}
@@ -51,6 +54,7 @@ export function ResetPassword() {
                     extraClass="mb-6"
                 />
                 <Button
+                    onClick={handleSubmitResetForm}
                     htmlType="submit"
                     type="primary"
                     size="medium"

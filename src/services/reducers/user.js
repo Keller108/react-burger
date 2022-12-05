@@ -11,9 +11,9 @@ import {
     REGISTER_FAILED,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
-    USER_EXISTS_FAILED,
-    USER_EXISTS_REQUEST,
-    USER_EXISTS_SUCCESS,
+    PASS_FORGOT_FAILED,
+    PASS_FORGOT_REQUEST,
+    PASS_FORGOT_SUCCESS,
     USER_LOGOUT_FAILED,
     USER_LOGOUT_REQUEST,
     USER_LOGOUT_SUCCESS
@@ -110,14 +110,14 @@ export const userReducer = (state = initialUserState, action) => {
                 error: true,
             }
         }
-        case USER_EXISTS_REQUEST: {
+        case PASS_FORGOT_REQUEST: {
             return {
                 ...state,
                 request: true,
                 success: false
             }
         }
-        case USER_EXISTS_SUCCESS: {
+        case PASS_FORGOT_SUCCESS: {
             return {
                 ...state,
                 request: false,
@@ -125,7 +125,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case USER_EXISTS_FAILED: {
+        case PASS_FORGOT_FAILED: {
             return {
                 ...state,
                 request: false,
