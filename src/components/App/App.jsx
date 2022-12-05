@@ -6,17 +6,18 @@ import {
 import appStyles from './App.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { tokenRefresh, userCheck } from "../../services/actions/user";
+import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
+import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
 
 export const App = () => {
     const { user, isLogined }  = useSelector(store => store.userStore);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const checkData = () => {
-        dispatch(tokenRefresh());
+    const checkData = async () => {
+        await handleTokenRefresh();
         dispatch(userCheck());
     };
 

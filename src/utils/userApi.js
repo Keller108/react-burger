@@ -1,5 +1,13 @@
 import { handleResponse } from "./handlers/handleResponse";
-import { FORGOT_URL, LOGIN_URL, PASSWORD_RESET_URL, REGISTER_URL, TOKEN_URL, USER_URL } from "./routes";
+import {
+    FORGOT_URL,
+    LOGIN_URL,
+    LOGOUT_URL,
+    PASSWORD_RESET_URL,
+    REGISTER_URL,
+    TOKEN_URL,
+    USER_URL
+} from "./routes";
 
 export function createUser(newUser) {
     return fetch(REGISTER_URL, {
@@ -58,6 +66,17 @@ export function resetPassword(data) {
 
 export function refreshToken() {
     return fetch(TOKEN_URL, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
+    }).then(handleResponse);
+}
+
+export function logOut() {
+    return fetch(LOGOUT_URL, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
