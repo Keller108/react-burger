@@ -3,6 +3,7 @@ import {
     createUser,
     getUser,
     login,
+    logOut,
     resetPassword
 } from "../../utils/userApi";
 
@@ -13,6 +14,10 @@ export const REGISTER_FAILED = 'REGISTER_FAILED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
+
+export const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
+export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
+export const USER_LOGOUT_FAILED = 'USER_LOGOUT_FAILED';
 
 export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
 export const CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS';
@@ -150,5 +155,30 @@ export function resetPasswordRequest(data) {
                 }
             })
             .catch(err => console.log(`Ошибка при восставновлении пароля – ${err}`))
+    }
+}
+
+export function signOut() {
+    return function(dispatch) {
+        return logOut()
+            .then(res => {
+                dispatch({
+                    type: USER_LOGOUT_REQUEST
+                })
+
+                if (res && res.success) {
+                    dispatch({
+                        type: USER_LOGOUT_SUCCESS
+                    })
+
+                    localStorage.removeItem('refreshToken');
+                    localStorage.removeItem('accessToken');
+                } else {
+                    dispatch({
+                        type: USER_LOGOUT_FAILED
+                    })
+                }
+            })
+            .catch(err => console.log(`Ошибка при разлогинивании – ${err}`))
     }
 }

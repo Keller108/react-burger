@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Profile.module.css';
-import { useSelector } from 'react-redux';
-import { handleLogOut } from '../../utils/handlers/handleLogOut';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../../utils/routes';
+import { signOut } from '../../services/actions/user';
 
 export function Profile() {
     const { name, email, password } = useSelector(state => state.userStore.user);
@@ -14,9 +14,10 @@ export function Profile() {
     const [userPassword, setUserPassword] = useState(password ?? '');
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const signOut = async () => {
-        await handleLogOut();
+    const handleLogOut = async () => {
+        await dispatch(signOut());
         navigate(LOGIN_ROUTE);
     };
 
@@ -31,7 +32,7 @@ export function Profile() {
                         <li>
                             <p className="text text_type_main-medium text_color_inactive">История заказов</p>
                         </li>
-                        <li onClick={signOut}>
+                        <li onClick={handleLogOut}>
                             <p className="text text_type_main-medium text_color_inactive">Выход</p>
                         </li>
                     </ul>

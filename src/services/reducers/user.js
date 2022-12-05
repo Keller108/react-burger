@@ -13,7 +13,10 @@ import {
     REGISTER_SUCCESS,
     USER_EXISTS_FAILED,
     USER_EXISTS_REQUEST,
-    USER_EXISTS_SUCCESS
+    USER_EXISTS_SUCCESS,
+    USER_LOGOUT_FAILED,
+    USER_LOGOUT_REQUEST,
+    USER_LOGOUT_SUCCESS
 } from "../actions/user";
 
 const initialUserState = {
@@ -153,6 +156,32 @@ export const userReducer = (state = initialUserState, action) => {
                 request: false,
                 success: false,
                 error: true
+            }
+        }
+        case USER_LOGOUT_REQUEST: {
+            return {
+                ...state,
+                request: true,
+                success: false,
+                error: false
+            }
+        }
+        case USER_LOGOUT_SUCCESS: {
+            return {
+                ...state,
+                user: null,
+                isLogined: false,
+                request: false,
+                success: true,
+                error: false
+            }
+        }
+        case USER_LOGOUT_FAILED: {
+            return {
+                ...state,
+                request: false,
+                success: false,
+                error: true,
             }
         }
         default: {
