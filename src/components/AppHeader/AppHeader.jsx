@@ -5,6 +5,7 @@ import { BurgerIcon,
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeaderStyles from './AppHeader.module.css';
+import { SHOP_ROUTE } from '../../utils/routes';
 
 export function AppHeader() {
     let location = useLocation();
@@ -26,7 +27,7 @@ export function AppHeader() {
                             className={({ isActive }) => isActive ? activeLinkClass : inactiveLinkClass}
                         >
                             <span className={`${appHeaderStyles.navigationIcon} mr-2`}>
-                                <BurgerIcon type={location.pathname === '/' ? 'primary' : "secondary"} />
+                                <BurgerIcon type={location.pathname === SHOP_ROUTE ? 'primary' : "secondary"} />
                             </span>
                             Конструктор
                         </NavLink>

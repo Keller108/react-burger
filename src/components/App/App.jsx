@@ -10,7 +10,7 @@ import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
-import { SHOP_ROUTE } from "../../utils/routes";
+import { LOGIN_ROUTE, SHOP_ROUTE } from "../../utils/routes";
 import { Preloader } from "../Preloader/Preloader";
 
 export const App = () => {
@@ -24,14 +24,19 @@ export const App = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        handleTokenRefresh();
+        handleTokenRefresh()
+            .then(res => res)
+            .catch(err => console.log(`Ошибка при проверке токена – ${err}`));
         handleUserCheck()
             .then(res => {
                 if (res && res.success) {
-                    setIsLoading(false);
                     navigate(SHOP_ROUTE);
+                } else {
+                    navigate(LOGIN_ROUTE);
                 }
+                setIsLoading(false);
             })
+            .catch(err => console.log(`Ошибка при проверке токена – ${err}`));
     // eslint-disable-next-line
     }, [])
 
