@@ -5,41 +5,42 @@ import {
 } from "../../pages";
 import appStyles from './App.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
+import { SHOP_ROUTE } from "../../utils/routes";
+import { Preloader } from "../Preloader/Preloader";
 
 export const App = () => {
-    const { user, isLogined }  = useSelector(store => store.userStore);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const { isLogined } = useSelector(store => store.userStore);
 
-    const checkData = async () => {
-        await handleTokenRefresh();
-        dispatch(userCheck());
-    };
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleUserCheck = () => dispatch(userCheck());
 
     useEffect(() => {
-        if (!isLogined) {
-            navigate('/login');
-            checkData();
-        }
+        setIsLoading(true);
+        handleTokenRefresh()
+            .then(res => {
+                if (res && res.succcess) setIsLoading(false);
+            })
+        handleUserCheck()
+            .then(res => {
+                if (res && res.success) {
+                    navigate(SHOP_ROUTE);
+                }
+            })
     // eslint-disable-next-line
     }, [])
-
-    useEffect(() => {
-        if (isLogined === true) {
-            navigate('/');
-        }
-    // eslint-disable-next-line
-    }, [user])
 
     return (
         <div className={appStyles.app}>
             <AppHeader />
-            <Routes>
+            {isLoading ? <Preloader /> : <Routes>
                 <Route element={<ProtectedRoutes isLogined={isLogined} />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
@@ -49,7 +50,7 @@ export const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-            </Routes>
+            </Routes>}
         </div>
     );
 }

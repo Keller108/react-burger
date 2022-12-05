@@ -22,7 +22,7 @@ export function ResetPassword() {
     const handleSubmitResetForm = async evt => {
         evt.preventDefault();
 
-        let result =  await handleResetPassword({ password: password, token: code });
+        let result = await handleResetPassword({ password: password, token: code });
         setPassword('');
         clearCode();
 

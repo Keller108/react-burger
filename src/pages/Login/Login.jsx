@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Login.module.css';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../../services/actions/user';
+import { SHOP_ROUTE } from '../../utils/routes';
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleLogin = () => dispatch(signIn({ email: email, password: password }));
+    const handleLogin = data => dispatch(signIn(data));
 
     const clearEmail = () => {
         setEmail('');
@@ -18,9 +20,14 @@ export function Login() {
 
     const submitLoginForm = async evt => {
         evt.preventDefault();
-        await handleLogin();
+
+        let result = await handleLogin({ email: email, password: password });
         clearEmail();
         setPassword('');
+
+        if (result && result.success) {
+            navigate(SHOP_ROUTE);
+        }
     };
 
     return (
