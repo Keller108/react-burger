@@ -13,19 +13,22 @@ export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => 
 
     const renderModal = cardData => dispatch({
         type: OPEN_MODAL,
-        payload: <IngredientDetails data={cardData} />
+        payload: <IngredientDetails />,
+        data: cardData
     });
 
-    return <>
-        <h2 ref={ref} id={id} className="text text_type_main-medium">{title}</h2>
-        <ul className={`${categoryStyle.ingredients} pt-6 pl-4 pb-10 m-0`}>
-            {category.map(item => <Card
-                key={item._id}
-                cardData={item}
-                onCardClick={() => renderModal(item)}
-            />)}
-        </ul>
-    </>
+    return (
+        <>
+            <h2 ref={ref} id={id} className="text text_type_main-medium">{title}</h2>
+            <ul className={`${categoryStyle.ingredients} pt-6 pl-4 pb-10 m-0`}>
+                {category.map(item => <Card
+                    key={item._id}
+                    cardData={item}
+                    onCardClick={() => renderModal(item)}
+                />)}
+            </ul>
+        </>
+    )
 })
 
 IngredientsCategory.propTypes = {

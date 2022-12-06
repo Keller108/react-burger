@@ -70,7 +70,7 @@ export const App = () => {
                         path='/ingredients/:ingredientId'
                         children={
                             <Modal onClose={handleModalClose}>
-                                <IngredientDetails data={cardData} />
+                                <IngredientDetails />
                             </Modal>
                         }
                     />

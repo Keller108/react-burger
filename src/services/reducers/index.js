@@ -6,7 +6,8 @@ import { userReducer } from './user';
 
 const initialModalState = {
     isActive: false,
-    content: null
+    content: null,
+    currentData: null
 };
 
 const modalReducer = (state = initialModalState, action) => {
@@ -15,14 +16,16 @@ const modalReducer = (state = initialModalState, action) => {
             return {
                 ...state,
                 isActive: true,
-                content: action.payload
+                content: action.payload,
+                currentData: action.data
             }
         }
         case CLOSE_MODAL: {
             return {
                 ...state,
                 isActive: false,
-                content: null
+                content: null,
+                currentData: null
             }
         }
         default: {
