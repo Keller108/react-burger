@@ -40,12 +40,8 @@ export function Card({ cardData, onCardClick }) {
         <Link
             key={ingredientId}
             onClick={onCardClick}
-            to={{
-                // Тут мы формируем динамический путь для нашего ингредиента
-                // а также сохраняем в свойство background роут, на котором была открыта наша модалка
-                pathname: `/ingredients/${ingredientId}`,
-                state: { background: location },
-            }}
+            to={{ pathname: `/ingredients/${ingredientId}` }}
+            state={{ backgroundLocation: location }}
             className={cardStyle.link}
         >
             <li draggable

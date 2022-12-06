@@ -23,7 +23,7 @@ export const App = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const background = location.state && location.state.background;
+    const state = location.state && location.state.background;
 
     const handleModalClose = () => {
       navigate.goBack();
@@ -46,14 +46,16 @@ export const App = () => {
                 setIsLoading(false);
             })
             .catch(err => console.log(`Ошибка при проверке токена – ${err}`));
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    console.log('location', location);
 
     return (
         <div className={appStyles.app}>
             <AppHeader />
             {isLoading ? <Preloader /> : <>
-                <Routes>
+                <Routes location={state?.backgroundLocation || location}>
                     <Route element={<ProtectedRoutes isLogined={isLogined} />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
@@ -65,15 +67,18 @@ export const App = () => {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                 </Routes>
-                {background && (
-                    <Route
-                        path='/ingredients/:ingredientId'
-                        children={
-                            <Modal onClose={handleModalClose}>
-                                <IngredientDetails />
-                            </Modal>
-                        }
-                    />
+                {state?.backgroundLocation && (
+                    <Routes>
+                        <Route element={<ProtectedRoutes isLogined={isLogined} />}>
+                            <Route path='/ingredients/:ingredientId'
+                                children={
+                                    <Modal onClose={handleModalClose}>
+                                        <IngredientDetails />
+                                    </Modal>
+                                }
+                            />
+                        </Route>
+                    </Routes>
                 )}
             </>}
         </div>
