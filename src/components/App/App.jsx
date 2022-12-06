@@ -69,15 +69,12 @@ export const App = () => {
                 </Routes>
                 {state?.backgroundLocation && (
                     <Routes>
-                        <Route element={<ProtectedRoutes isLogined={isLogined} />}>
-                            <Route path='/ingredients/:ingredientId'
-                                children={
-                                    <Modal onClose={handleModalClose}>
-                                        <IngredientDetails />
-                                    </Modal>
-                                }
-                            />
-                        </Route>
+                        <Route
+                            path='/ingredients/:ingredientId'
+                            element={<Modal onClose={handleModalClose}>
+                                <IngredientDetails />
+                            </Modal>}
+                        />
                     </Routes>
                 )}
             </>}
