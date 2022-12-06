@@ -18,18 +18,15 @@ import { Modal } from "../Modal";
 export const App = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { isLogined } = useSelector(store => store.userStore);
+    const { isActive } = useSelector(store => store.modal);
 
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const state = location.state && location.state.background;
-
-    const handleModalClose = () => {
-      navigate.goBack();
-    };
-
     const handleUserCheck = () => dispatch(userCheck());
+
+    const state = location.state && location.state.background;
 
     useEffect(() => {
         setIsLoading(true);
@@ -55,26 +52,24 @@ export const App = () => {
             {isLoading ? <Preloader /> : <>
                 <Routes location={state || location}>
                     <Route element={<ProtectedRoutes isLogined={isLogined} />}>
-                        <Route path="/" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+                        {state && isActive && (
+                            <Route
+                                path='/ingredients/:ingredientId'
+                                element={<Modal>
+                                    <IngredientDetails />
+                                </Modal>}
+                            />
+                        )}
                     </Route>
                     <Route path='*' element={<NotFound />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                 </Routes>
-                {state && (
-                    <Routes>
-                        <Route
-                            path='/ingredients/:ingredientId'
-                            element={<Modal onClose={handleModalClose}>
-                                <IngredientDetails />
-                            </Modal>}
-                        />
-                    </Routes>
-                )}
             </>}
         </div>
     );

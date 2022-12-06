@@ -5,12 +5,17 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
 import { CLOSE_MODAL } from '../../services/actions';
+import { useNavigate } from 'react-router-dom';
 
 export function Modal() {
     const dispatch = useDispatch();
     const { content } = useSelector(store => store.modal);
+    const navigate = useNavigate();
 
-    const closeModal = () => dispatch({ type: CLOSE_MODAL });
+    const closeModal = () => {
+        navigate(-1);
+        return dispatch({ type: CLOSE_MODAL });
+    }
 
     const closeModalByEsc = (evt) => {
         if (evt.key === 'Escape') return closeModal()
@@ -21,6 +26,7 @@ export function Modal() {
         return () => {
             document.removeEventListener('keydown', closeModalByEsc)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return ReactDOM.createPortal(
