@@ -41,7 +41,7 @@ export function Card({ cardData, onCardClick }) {
             key={ingredientId}
             onClick={onCardClick}
             to={{ pathname: `/ingredients/${ingredientId}` }}
-            state={{ backgroundLocation: location }}
+            state={{ background: location }}
             className={cardStyle.link}
         >
             <li draggable

@@ -49,13 +49,11 @@ export const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('location', location);
-
     return (
         <div className={appStyles.app}>
             <AppHeader />
             {isLoading ? <Preloader /> : <>
-                <Routes location={state?.backgroundLocation || location}>
+                <Routes location={state || location}>
                     <Route element={<ProtectedRoutes isLogined={isLogined} />}>
                         <Route path="/" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
@@ -67,7 +65,7 @@ export const App = () => {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                 </Routes>
-                {state?.backgroundLocation && (
+                {state && (
                     <Routes>
                         <Route
                             path='/ingredients/:ingredientId'
