@@ -28,21 +28,30 @@ export const App = () => {
 
     const state = location.state && location.state.background;
 
-    useEffect(() => {
+    const handleCheckData = async () => {
         setIsLoading(true);
-        handleTokenRefresh()
-            .then(res => res)
-            .catch(err => console.log(`Ошибка при проверке токена – ${err}`));
-        handleUserCheck()
-            .then(res => {
-                if (res && res.success) {
-                    navigate(SHOP_ROUTE);
-                } else {
-                    navigate(LOGIN_ROUTE);
-                }
+        let res = await handleUserCheck();
+
+        if (res && res.success) {
+            setIsLoading(false);
+        } else if (res && !res.success) {
+            let result = await handleTokenRefresh();
+
+            if (result && result.success) {
                 setIsLoading(false);
-            })
-            .catch(err => console.log(`Ошибка при проверке токена – ${err}`));
+            } else {
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 10000)
+            }
+        } else {
+            setIsLoading(false);
+            if (location.pathname !== SHOP_ROUTE) navigate(LOGIN_ROUTE);
+        }
+    }
+
+    useEffect(() => {
+        handleCheckData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
