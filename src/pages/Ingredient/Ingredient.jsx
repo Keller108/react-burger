@@ -2,9 +2,9 @@ import { IngredientDetails } from '../../components/IngredientDetails';
 import styles from './Ingredient.module.css';
 
 export function Ingredient() {
-  return (
+    return (
     <section className={styles.page}>
-        {/* <IngredientDetails data={data} /> */}
+        <IngredientDetails />
     </section>
   )
 }

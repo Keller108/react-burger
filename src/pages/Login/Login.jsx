@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,11 +7,13 @@ import { signIn } from '../../services/actions/user';
 import { SHOP_ROUTE } from '../../utils/routes';
 
 export function Login() {
-    const { isLogined } = useSelector(store => store.userStore);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const state = location.state;
 
     const handleLogin = data => dispatch(signIn(data));
 
@@ -27,13 +29,9 @@ export function Login() {
         setPassword('');
 
         if (result && result.success) {
-            navigate(SHOP_ROUTE);
+            navigate(state?.from || SHOP_ROUTE);
         }
     };
-
-    useEffect(() => {
-        isLogined && navigate(SHOP_ROUTE);
-    }, [])
 
     return (
         <section className={styles.page}>

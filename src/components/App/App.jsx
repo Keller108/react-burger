@@ -14,6 +14,7 @@ import { LOGIN_ROUTE, SHOP_ROUTE } from "../../utils/routes";
 import { Preloader } from "../Preloader/Preloader";
 import { IngredientDetails } from "../IngredientDetails";
 import { Modal } from "../Modal";
+import { Ingredient } from "../../pages/Ingredient/Ingredient";
 
 export const App = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +49,7 @@ export const App = () => {
             setIsLoading(false);
             if (location.pathname !== SHOP_ROUTE) navigate(LOGIN_ROUTE);
         }
-    }
+    };
 
     useEffect(() => {
         handleCheckData();
@@ -69,15 +70,15 @@ export const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+                    <Route path="/ingredients/:ingredientId" element={<Ingredient />} />
                     {state && isActive && (
-                            <Route
-                                path='/ingredients/:ingredientId'
-                                element={<Modal>
-                                    <IngredientDetails />
-                                </Modal>}
-                            />
-                        )}
+                        <Route
+                            path="/ingredients/:ingredientId"
+                            element={<Modal>
+                                <IngredientDetails />
+                            </Modal>}
+                        />
+                    )}
                 </Routes>
             </>}
         </div>

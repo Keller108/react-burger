@@ -17,6 +17,12 @@ export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => 
         data: cardData
     });
 
+    const renderElement = item => {
+        renderModal(item);
+        const data = JSON.stringify(item);
+        localStorage.setItem('currentItem', data);
+    };
+
     return (
         <>
             <h2 ref={ref} id={id} className="text text_type_main-medium">{title}</h2>
@@ -24,7 +30,7 @@ export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => 
                 {category.map(item => <Card
                     key={item._id}
                     cardData={item}
-                    onCardClick={() => renderModal(item)}
+                    onCardClick={() => renderElement(item)}
                 />)}
             </ul>
         </>
