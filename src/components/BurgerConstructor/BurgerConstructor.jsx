@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,9 +16,12 @@ import {
 } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/actions';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
+import { LOGIN_ROUTE } from '../../utils/routes';
 
 export function BurgerConstructor() {
+    const { isLogined } = useSelector(store => store.userStore);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const addItem = (item) => dispatch(addItemToConstructor({ ...item, uuid: uuidv4() }));
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
@@ -37,8 +41,13 @@ export function BurgerConstructor() {
     },[buns, otherItems])
 
     const handleModalState = () => {
-        prepareOrderData();
-        placeOrder(orderData);
+        if (isLogined) {
+            prepareOrderData();
+            placeOrder(orderData);
+        } else {
+            navigate(LOGIN_ROUTE);
+        }
+
     };
 
     useEffect(() => {
