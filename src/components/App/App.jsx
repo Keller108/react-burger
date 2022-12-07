@@ -62,15 +62,6 @@ export const App = () => {
                 <Routes location={state || location}>
                     <Route element={<ProtectedRoutes isLogined={isLogined} />}>
                         <Route path="/profile" element={<Profile />} />
-                        <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
-                        {state && isActive && (
-                            <Route
-                                path='/ingredients/:ingredientId'
-                                element={<Modal>
-                                    <IngredientDetails />
-                                </Modal>}
-                            />
-                        )}
                     </Route>
                     <Route path='*' element={<NotFound />} />
                     <Route path="/" element={<Home />} />
@@ -78,6 +69,15 @@ export const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/ingredients/:ingredientId" element={<IngredientDetails />} />
+                    {state && isActive && (
+                            <Route
+                                path='/ingredients/:ingredientId'
+                                element={<Modal>
+                                    <IngredientDetails />
+                                </Modal>}
+                            />
+                        )}
                 </Routes>
             </>}
         </div>

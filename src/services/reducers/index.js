@@ -24,8 +24,7 @@ const modalReducer = (state = initialModalState, action) => {
             return {
                 ...state,
                 isActive: false,
-                content: null,
-                currentData: null
+                content: null
             }
         }
         default: {
