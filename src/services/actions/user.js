@@ -211,7 +211,8 @@ export function editUser(form) {
                         type: USER_EDIT_SUCCESS,
                         user: {
                             email: res.user.email,
-                            name: res.user.name
+                            name: res.user.name,
+                            password: form.password
                         }
                     })
                 } else {

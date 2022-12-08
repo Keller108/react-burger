@@ -16,7 +16,13 @@ export function Profile() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmit = () => dispatch(editUser({ email: userEmail, name: userName }));
+    const handleSubmit = () => dispatch(
+        editUser({
+            email: userEmail,
+            name: userName,
+            password: userPassword
+        })
+    );
 
     const handleLogOut = async () => {
         await dispatch(signOut());
@@ -25,8 +31,7 @@ export function Profile() {
 
     const handleFormSubmit = async evt => {
         evt.preventDefault();
-        let res = await handleSubmit();
-        console.log('res', res);
+        await handleSubmit();
     };
 
     return (
