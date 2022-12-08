@@ -47,12 +47,11 @@ export const App = () => {
             }
         } else {
             setIsLoading(false);
-            if (location.pathname !== SHOP_ROUTE) navigate(LOGIN_ROUTE);
         }
     };
 
     useEffect(() => {
-        if (location.pathname === PROFILE_ROUTE) handleCheckData();
+        handleCheckData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

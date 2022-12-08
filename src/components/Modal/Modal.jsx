@@ -1,11 +1,12 @@
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
 import { CLOSE_MODAL } from '../../services/actions';
-import { useNavigate } from 'react-router-dom';
+import { SHOP_ROUTE } from '../../utils/routes';
 
 export function Modal() {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export function Modal() {
     const navigate = useNavigate();
 
     const closeModal = () => {
-        navigate(-1);
+        navigate(SHOP_ROUTE);
         return dispatch({ type: CLOSE_MODAL });
     }
 
