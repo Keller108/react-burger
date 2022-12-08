@@ -109,8 +109,7 @@ export function userCheck() {
                         type: CHECK_USER_SUCCESS,
                         user: {
                             email: res.user.email,
-                            name: res.user.name,
-                            password: null
+                            name: res.user.name
                         }
                     })
                 } else {
@@ -202,10 +201,19 @@ export function signOut() {
 
 export function editUser(form) {
     return function(dispatch) {
+        dispatch({ type : USER_EDIT_REQUEST });
+
+        dispatch({
+            type: USER_EDIT_SUCCESS,
+            user: {
+                email: form.email,
+                name: form.name,
+                password: form.password
+            }
+        })
+
         return patchUser(form)
             .then(res => {
-                dispatch({ type : USER_EDIT_REQUEST });
-
                 if (res && res.success) {
                     dispatch({
                         type: USER_EDIT_SUCCESS,
