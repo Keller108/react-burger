@@ -57,6 +57,7 @@ export function BurgerConstructor() {
                 payload: <OrderDetails order={order}/>
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [order.success])
 
     return (

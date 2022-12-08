@@ -1,15 +1,23 @@
-import ingredientsDetailsStyle from './IngredientDetails.module.css';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import ingredientsDetailsStyle from './IngredientDetails.module.css';
 
 export function IngredientDetails() {
+    const { ingredientId } = useParams();
     const { currentData } = useSelector(store => store.modal);
+    const [items,] = useState(JSON.parse(localStorage.getItem('ingredients')));
+    const [currentItem, setCurrentItem] = useState(null);
+
+    useEffect(() => {
+        setCurrentItem(items.find(i => i._id === ingredientId));
+    }, [items, ingredientId])
 
     let card;
 
     if (!currentData) {
-        let data = localStorage.getItem('currentItem');
-        card = JSON.parse(data);
-    }  else {
+        card = currentItem;
+    } else {
         card = currentData;
     }
 
@@ -22,9 +30,9 @@ export function IngredientDetails() {
                 Детали ингредиента
             </h2>
             <figure className={ingredientsDetailsStyle.figure}>
-                <img className="mt-0 mb-4" src={card.image_large} alt="Картинка ингредиента"/>
+                <img className="mt-0 mb-4" src={card?.image_large ?? ''} alt="Картинка ингредиента"/>
                 <figcaption className="text text_type_main-medium mt-0 mb-8">
-                    {card.name}
+                    {card?.name ?? ''}
                 </figcaption>
             </figure>
             <ul className={ingredientsDetailsStyle.list}>
@@ -32,25 +40,25 @@ export function IngredientDetails() {
                     <h3 className="text text_type_main-default
                         text_color_inactive mb-5">Калории,ккал</h3>
                     <p className="text text_type_digits-default
-                        text_color_inactive">{card.calories}</p>
+                        text_color_inactive">{card?.calories ?? ''}</p>
                 </li>
                 <li>
                     <h3 className="text text_type_main-default
                         text_color_inactive mb-5">Белки, г</h3>
                     <p className="text text_type_digits-default
-                        text_color_inactive">{card.proteins}</p>
+                        text_color_inactive">{card?.proteins ?? ''}</p>
                 </li>
                 <li>
                     <h3 className="text text_type_main-default
                         text_color_inactive mb-5">Жиры, г</h3>
                     <p className="text text_type_digits-default
-                        text_color_inactive">{card.fat}</p>
+                        text_color_inactive">{card?.fat ?? ''}</p>
                 </li>
                 <li>
                     <h3 className="text text_type_main-default
                         text_color_inactive mb-5">Углеводы, г</h3>
                     <p className="text text_type_digits-default
-                        text_color_inactive">{card.carbohydrates}</p>
+                        text_color_inactive">{card?.carbohydrates ?? ''}</p>
                 </li>
             </ul>
         </div>

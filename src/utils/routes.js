@@ -3,6 +3,7 @@ export const LOGIN_ROUTE = '/login';
 export const REGISTER_ROUTE = '/register';
 export const FORGOT_ROUTE = '/forgot-password';
 export const RESET_ROUTE = '/reset-password';
+export const PROFILE_ROUTE = '/profile';
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 

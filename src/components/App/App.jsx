@@ -10,7 +10,7 @@ import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
-import { LOGIN_ROUTE, SHOP_ROUTE } from "../../utils/routes";
+import { LOGIN_ROUTE, PROFILE_ROUTE, SHOP_ROUTE } from "../../utils/routes";
 import { Preloader } from "../Preloader/Preloader";
 import { IngredientDetails } from "../IngredientDetails";
 import { Modal } from "../Modal";
@@ -52,7 +52,7 @@ export const App = () => {
     };
 
     useEffect(() => {
-        handleCheckData();
+        if (location.pathname === PROFILE_ROUTE) handleCheckData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
