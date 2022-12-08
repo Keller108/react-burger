@@ -42,6 +42,18 @@ export function getUser() {
     }).then(handleResponse);
 }
 
+export function patchUser(form) {
+    return fetch(USER_URL, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json;charset=utf-8",
+            'Authorization': `${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify(form)
+    }).then(handleResponse);
+}
+
 export function checkIfExist(email) {
     return fetch(FORGOT_URL, {
         method: 'POST',

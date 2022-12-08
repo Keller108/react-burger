@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Login.module.css';
@@ -7,6 +7,7 @@ import { signIn } from '../../services/actions/user';
 import { SHOP_ROUTE } from '../../utils/routes';
 
 export function Login() {
+    const { isLogined } = useSelector(store => store.userStore);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -32,6 +33,11 @@ export function Login() {
             navigate(state?.from || SHOP_ROUTE);
         }
     };
+
+    useEffect(() => {
+        if (isLogined) navigate(state?.from || SHOP_ROUTE);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLogined])
 
     return (
         <section className={styles.page}>

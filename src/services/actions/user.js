@@ -4,6 +4,7 @@ import {
     getUser,
     login,
     logOut,
+    patchUser,
     resetPassword
 } from "../../utils/userApi";
 
@@ -18,6 +19,10 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
 export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
 export const USER_LOGOUT_FAILED = 'USER_LOGOUT_FAILED';
+
+export const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST';
+export const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS';
+export const USER_EDIT_FAILED = 'USER_EDIT_FAILED';
 
 export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
 export const CHECK_USER_SUCCESS = 'CHECK_USER_SUCCESS';
@@ -192,5 +197,29 @@ export function signOut() {
                 return res
             })
             .catch(err => console.log(`Ошибка при разлогинивании – ${err}`))
+    }
+}
+
+export function editUser(form) {
+    return function(dispatch) {
+        return patchUser(form)
+            .then(res => {
+                dispatch({ type : USER_EDIT_REQUEST });
+
+                if (res && res.success) {
+                    dispatch({
+                        type: USER_EDIT_SUCCESS,
+                        user: {
+                            email: res.user.email,
+                            name: res.user.name
+                        }
+                    })
+                } else {
+                    dispatch({ type: USER_EDIT_FAILED });
+                }
+
+                return res
+            })
+            .catch(err => console.log(`Ошибка при изменении данных юзера – ${err}`))
     }
 }

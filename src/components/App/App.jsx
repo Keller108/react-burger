@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { AppHeader } from '../AppHeader/AppHeader';
 import {
     Home, Login, Register, ForgotPassword, ResetPassword, Profile
@@ -10,7 +10,6 @@ import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
-import { LOGIN_ROUTE, PROFILE_ROUTE, SHOP_ROUTE } from "../../utils/routes";
 import { Preloader } from "../Preloader/Preloader";
 import { IngredientDetails } from "../IngredientDetails";
 import { Modal } from "../Modal";
@@ -22,7 +21,6 @@ export const App = () => {
     const { isActive } = useSelector(store => store.modal);
 
     const location = useLocation();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleUserCheck = () => dispatch(userCheck());

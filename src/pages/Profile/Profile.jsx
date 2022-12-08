@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Profile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../../utils/routes';
-import { signOut } from '../../services/actions/user';
+import { editUser, signOut } from '../../services/actions/user';
 
 export function Profile() {
     const { name, email, password } = useSelector(state => state.userStore.user);
@@ -16,9 +16,17 @@ export function Profile() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const handleSubmit = () => dispatch(editUser({ email: userEmail, name: userName }));
+
     const handleLogOut = async () => {
         await dispatch(signOut());
         navigate(LOGIN_ROUTE);
+    };
+
+    const handleFormSubmit = async evt => {
+        evt.preventDefault();
+        let res = await handleSubmit();
+        console.log('res', res);
     };
 
     return (
@@ -40,7 +48,9 @@ export function Profile() {
                         В этом разделе вы можете изменить свои персональные данные
                     </p>
                 </div>
-                <form className={styles.form}>
+                <form
+                    onSubmit={handleFormSubmit}
+                    className={styles.form}>
                     <Input
                         onChange={e => setUserName(e.target.value)}
                         error={false}
@@ -71,6 +81,12 @@ export function Profile() {
                         placeholder='Пароль'
                         name='password'
                     />
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        size="medium"
+                        extraClass="mt-8"
+                    >Сохранить</Button>
                 </form>
                 <div className={styles.sideColumn}></div>
             </div>

@@ -16,7 +16,10 @@ import {
     PASS_FORGOT_SUCCESS,
     USER_LOGOUT_FAILED,
     USER_LOGOUT_REQUEST,
-    USER_LOGOUT_SUCCESS
+    USER_LOGOUT_SUCCESS,
+    USER_EDIT_REQUEST,
+    USER_EDIT_SUCCESS,
+    USER_EDIT_FAILED
 } from "../actions/user";
 
 const initialUserState = {
@@ -182,6 +185,37 @@ export const userReducer = (state = initialUserState, action) => {
                 request: false,
                 success: false,
                 error: true,
+            }
+        }
+        case USER_EDIT_REQUEST: {
+            return {
+                ...state,
+                request: true,
+                success: false,
+                error: false,
+            }
+        }
+        case USER_EDIT_SUCCESS: {
+            return {
+                ...state,
+                request: false,
+                success: true,
+                error: false,
+                user: {
+                    ...state.user,
+                    email: action.user.email,
+                    name: action.user.name
+                },
+                isLogined: true,
+            }
+        }
+        case USER_EDIT_FAILED: {
+            return {
+                ...state,
+                request: false,
+                success: false,
+                error: true,
+                isLogined: false,
             }
         }
         default: {
