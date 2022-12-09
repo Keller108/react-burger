@@ -11,14 +11,11 @@ import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
 import { Preloader } from "../Preloader/Preloader";
-import { IngredientDetails } from "../IngredientDetails";
-import { Modal } from "../Modal";
 import { Ingredient } from "../../pages/Ingredient/Ingredient";
 
 export const App = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { isLogined } = useSelector(store => store.userStore);
-    const { isActive } = useSelector(store => store.modal);
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -68,14 +65,6 @@ export const App = () => {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/ingredients/:ingredientId" element={<Ingredient />} />
-                    {state && isActive && (
-                        <Route
-                            path="/ingredients/:ingredientId"
-                            element={<Modal>
-                                <IngredientDetails />
-                            </Modal>}
-                        />
-                    )}
                 </Routes>
             </>}
         </div>
