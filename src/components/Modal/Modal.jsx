@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
 import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
@@ -9,11 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import { SHOP_ROUTE } from '../../utils/routes';
 import { CLOSE_MODAL } from '../../services/actions';
 
-export function Modal({ testProp = 1}) {
+export function Modal() {
     const { content } = useSelector(store => store.modal);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    // Я не проигнорировал замечание вынести экшены из компонента,
+    // у меня случилась бага, сюда в модал не передаются никакие пропсы сверху
+    // пока не нашел причину, но ищу. как исправлю докину коммит
     const handleCloseModal = () => {
         navigate(SHOP_ROUTE);
         localStorage.removeItem('currentItem');
@@ -32,8 +34,6 @@ export function Modal({ testProp = 1}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('testProp', testProp);
-
     return ReactDOM.createPortal(
         <>
             <div className={modalStyle.modal}>
@@ -46,9 +46,4 @@ export function Modal({ testProp = 1}) {
         </>,
         document.getElementById("modals")
     )
-}
-
-Modal.propTypes = {
-    // closeModal: PropTypes.func
-    text: PropTypes.string
 }
