@@ -5,7 +5,7 @@ import { Card } from '../Card/Card';
 import { ingredientPropType } from '../../utils/types/commonTypes';
 import { IngredientDetails } from '../IngredientDetails';
 import { OPEN_MODAL } from '../../services/actions';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 
 
 export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => {
@@ -22,6 +22,12 @@ export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => 
         const data = JSON.stringify(item);
         localStorage.setItem('currentItem', data);
     };
+
+    useEffect(() => {
+        let item = JSON.parse(localStorage.getItem('currentItem'));
+        if (item) renderModal(item);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>

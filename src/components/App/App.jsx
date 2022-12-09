@@ -53,6 +53,8 @@ export const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const testProp = 'test';
+
     return (
         <div className={appStyles.app}>
             <AppHeader />
@@ -71,7 +73,7 @@ export const App = () => {
                     {state && isActive && (
                         <Route
                             path="/ingredients/:ingredientId"
-                            element={<Modal>
+                            element={<Modal testProp={testProp}>
                                 <IngredientDetails />
                             </Modal>}
                         />
