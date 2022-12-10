@@ -47,7 +47,6 @@ export function BurgerConstructor() {
         } else {
             navigate(LOGIN_ROUTE);
         }
-
     };
 
     useEffect(() => {

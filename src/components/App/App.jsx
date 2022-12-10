@@ -69,7 +69,7 @@ export const App = () => {
                     <Route element={<ProtectedRoutes isLogined={isLogined} />}>
                         <Route path="/profile" element={<Profile />} />
                     </Route>
-                    <Route path="/" index element={<Home />} />
+                    <Route path="/" index element={<Home handleCloseModal={handleCloseModal}/>} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -77,7 +77,7 @@ export const App = () => {
                     <Route path='*' element={<NotFound />} />
                     <Route path="/ingredients/:ingredientId" element={<Ingredient />} />
                 </Routes>
-                {isActive && <Routes>
+                {state && isActive && <Routes>
                     <Route
                         path="/ingredients/:ingredientId"
                         element={<Modal onClose={handleCloseModal} />}
