@@ -15,6 +15,8 @@ export function getIngredients() {
                     type: GET_INGREDIENTS_SUCCESS,
                     items: res.data
                 })
+                let items = JSON.stringify(res.data);
+                localStorage.setItem('ingredients', items);
             } else {
                 dispatch({
                     type: GET_INGREDIENTS_FAILED

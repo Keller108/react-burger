@@ -1,9 +1,9 @@
-import loaderStyle from './Preloader.module.css';
+import style from './Preloader.module.css';
 
 export function Preloader() {
-    return (
-        <span className={loaderStyle.loader}>
-            Загрузка...
-        </span>
-    )
+    return <div className={style.preloader}>
+        <div className={style.roller}>
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+    </div>
 }

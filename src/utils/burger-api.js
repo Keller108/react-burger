@@ -1,8 +1,5 @@
-export const BASE_URL = 'https://norma.nomoreparties.space/api';
-export const INGREDIENTS_PATH = `${BASE_URL}/ingredients`;
-export const ORDERS_PATH = `${BASE_URL}/orders`;
-
-const handleResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
+import { handleResponse } from "./handlers/handleResponse";
+import { INGREDIENTS_PATH, ORDERS_PATH } from "./routes";
 
 export async function fetchIngredients() {
     return fetch(INGREDIENTS_PATH)

@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
 import { ingredientPropType } from '../../utils/types/commonTypes';
-import { IngredientDetails } from '../IngredientDetails/IngredientDetails';
+import { IngredientDetails } from '../IngredientDetails';
 import { OPEN_MODAL } from '../../services/actions';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 
 
 export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => {
@@ -13,19 +13,34 @@ export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => 
 
     const renderModal = cardData => dispatch({
         type: OPEN_MODAL,
-        payload: <IngredientDetails data={cardData} />
+        payload: <IngredientDetails />,
+        data: cardData
     });
 
-    return <>
-        <h2 ref={ref} id={id} className="text text_type_main-medium">{title}</h2>
-        <ul className={`${categoryStyle.ingredients} pt-6 pl-4 pb-10 m-0`}>
-            {category.map(item => <Card
-                key={item._id}
-                cardData={item}
-                onCardClick={() => renderModal(item)}
-            />)}
-        </ul>
-    </>
+    const renderElement = item => {
+        renderModal(item);
+        const data = JSON.stringify(item);
+        localStorage.setItem('currentItem', data);
+    };
+
+    useEffect(() => {
+        let item = JSON.parse(localStorage.getItem('currentItem'));
+        if (item) renderModal(item);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    return (
+        <>
+            <h2 ref={ref} id={id} className="text text_type_main-medium">{title}</h2>
+            <ul className={`${categoryStyle.ingredients} pt-6 pl-4 pb-10 m-0`}>
+                {category.map(item => <Card
+                    key={item._id}
+                    cardData={item}
+                    onCardClick={() => renderElement(item)}
+                />)}
+            </ul>
+        </>
+    )
 })
 
 IngredientsCategory.propTypes = {

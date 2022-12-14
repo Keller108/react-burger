@@ -1,9 +1,11 @@
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteItemFromConstructor, MOVE_ITEM } from '../../services/actions/burger-constructor';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ConstructorItem.module.css';
+import { ingredientPropType } from '../../utils/types/commonTypes';
 
 export function ConstructorItem({ item, index }) {
     const elementRef = useRef(null);
@@ -83,4 +85,9 @@ export function ConstructorItem({ item, index }) {
             handleClose={() => removeItem(item)}
         />
     </li>
+}
+
+ConstructorItem.propTypes = {
+    item: ingredientPropType.isRequired,
+    index: PropTypes.number.isRequired
 }

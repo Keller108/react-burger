@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
-import { CLOSE_MODAL, OPEN_MODAL, SWITCH_TAB } from '../actions';
+import { CLOSE_MODAL, LOADER_OFF, LOADER_ON, OPEN_MODAL, SWITCH_TAB } from '../actions';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
+import { userReducer } from './user';
 
 const initialModalState = {
     isActive: false,
-    content: null
+    content: null,
+    currentData: null
 };
 
 const modalReducer = (state = initialModalState, action) => {
@@ -14,7 +16,8 @@ const modalReducer = (state = initialModalState, action) => {
             return {
                 ...state,
                 isActive: true,
-                content: action.payload
+                content: action.payload,
+                currentData: action.data
             }
         }
         case CLOSE_MODAL: {
@@ -25,10 +28,10 @@ const modalReducer = (state = initialModalState, action) => {
             }
         }
         default: {
-            return state
+            return state;
         }
     }
-}
+};
 
 
 const initialTabState = {
@@ -45,12 +48,38 @@ const tabReducer = (state = initialTabState, action) => {
             }
         }
         default: {
-            return state
+            return state;
+        }
+    }
+};
+
+const initialAppState = {
+    isLoading: false
+};
+
+const appReducer = (state = initialAppState, action) => {
+    switch (action.type) {
+        case LOADER_ON: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case LOADER_OFF: {
+            return {
+                ...state,
+                isLoading: false
+            }
+        }
+        default: {
+            return state;
         }
     }
 }
 
 export const rootReducer = combineReducers({
+    appStore: appReducer,
+    userStore: userReducer,
     ingredients: ingredientsReducer,
     burgerConstructor: constructorReducer,
     modal: modalReducer,
