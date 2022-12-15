@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../utils/routes';
 
-export const ProtectedRoutes = ({ anonymous = false }) => {
+type TProtectedRoutesProps = {
+  anonymous?: boolean;
+}
+
+export const ProtectedRoutes = ({ anonymous = false }: TProtectedRoutesProps) => {
+    //@ts-ignore
     const isLoggedIn = useSelector((store) => store.userStore.isLogined);
 
     const location = useLocation();
@@ -18,8 +22,4 @@ export const ProtectedRoutes = ({ anonymous = false }) => {
     }
 
     return <Outlet />;
-}
-
-ProtectedRoutes.propTypes = {
-    anonymous: PropTypes.bool
 }

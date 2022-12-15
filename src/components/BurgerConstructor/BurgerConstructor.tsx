@@ -18,21 +18,41 @@ import { OPEN_MODAL } from '../../services/actions';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import { LOGIN_ROUTE } from '../../utils/routes';
 
+interface IConstructorItem {
+    calories: number;
+    carbohydrates: number;
+    fat: number;
+    image: string;
+    image_large: string;
+    image_mobile: string;
+    name: string;
+    price: number;
+    proteins: number;
+    type: string;
+    __v: number;
+    _id: string;
+}
+
 export function BurgerConstructor() {
+    //@ts-ignore
     const { isLogined } = useSelector(store => store.userStore);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const addItem = (item) => dispatch(addItemToConstructor({ ...item, uuid: uuidv4() }));
-    const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
-    const placeOrder = data => dispatch(handlePlaceAnOrder(data));
+    const addItem = (item: IConstructorItem) => dispatch(
+        addItemToConstructor({ ...item, uuid: uuidv4() })
+    );
 
+    const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
+    //@ts-ignore
+    const placeOrder = data => dispatch(handlePlaceAnOrder(data));
+    //@ts-ignore
     const { buns, otherItems, totalPrice, order } = useSelector(store => store.burgerConstructor);
 
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
         drop(ingredient) {
-            addItem(ingredient)
+            addItem(ingredient as IConstructorItem)
         }
     });
 
@@ -76,7 +96,7 @@ export function BurgerConstructor() {
                 </li>}
                 <div className={contructorStyles.itemWrapper}>
                     {otherItems.length !== 0 && otherItems
-                        .map((item, index) => <ConstructorItem
+                        .map((item: IConstructorItem & { uuid: string}, index: number) => <ConstructorItem
                             item={item}
                             index={index}
                             key={item.uuid}

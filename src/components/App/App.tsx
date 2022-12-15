@@ -1,11 +1,11 @@
-import { Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
-import { AppHeader } from '../AppHeader/AppHeader';
+import { useEffect, useState } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppHeader } from '../AppHeader';
 import {
     Home, Login, Register, ForgotPassword, ResetPassword, Profile
 } from "../../pages";
 import appStyles from './App.module.css';
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
@@ -18,13 +18,16 @@ import { SHOP_ROUTE } from "../../utils/routes";
 
 export const App = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const { isLogined } = useSelector(store => store.userStore);
-    const { isActive } = useSelector(store => store.modal);
+    //@ts-ignore
+    const { isLogined } = useSelector((store) => store.userStore);
+    //@ts-ignore
+    const { isActive } = useSelector((store) => store.modal);
 
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    //@ts-ignore
     const handleUserCheck = () => dispatch(userCheck());
 
     const state = location.state && location.state.background;
@@ -66,7 +69,7 @@ export const App = () => {
             <AppHeader />
             {isLoading ? <Preloader /> : <>
                 <Routes location={state || location}>
-                    <Route element={<ProtectedRoutes isLogined={isLogined} />}>
+                    <Route element={<ProtectedRoutes />}>
                         <Route path="/profile" element={<Profile />} />
                     </Route>
                     <Route path="/" index element={<Home handleCloseModal={handleCloseModal}/>} />
