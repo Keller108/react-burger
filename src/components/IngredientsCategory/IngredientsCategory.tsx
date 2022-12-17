@@ -34,8 +34,8 @@ export const IngredientsCategory = forwardRef<Ref, TIngredientsCategoryProps>(({
     };
 
     useEffect(() => {
-        let item: IIngredientItem = JSON.parse(localStorage.getItem('currentItem') ?? '');
-        if (item) renderModal(item);
+        let item = localStorage.getItem('currentItem');
+        if (item) renderModal(JSON.parse(item) as IIngredientItem);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
