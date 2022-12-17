@@ -15,9 +15,9 @@ export function BurgerIngredients() {
     const [current, setCurrent] = useState<string>(activeTab);
 
     const rootRef = useRef<HTMLHeadingElement>(null);
-	const bunRef = useRef(null);
-	const sauceRef = useRef(null);
-	const mainRef = useRef(null);
+	const bunRef = useRef<HTMLHeadingElement>(null);
+	const sauceRef = useRef<HTMLHeadingElement>(null);
+	const mainRef = useRef<HTMLHeadingElement>(null);
 
     const buns = useMemo(() => ingredients
         .filter((item: IIngredientItem) => item.type === 'bun'), [ingredients]);
