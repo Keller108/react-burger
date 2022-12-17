@@ -22,6 +22,7 @@ export function LoginPage() {
     const submitLoginForm = async (evt: FormEvent) => {
         evt.preventDefault();
         let result = await handleLogin({ email: email, password: password });
+
         setEmail('');
         setPassword('');
 
