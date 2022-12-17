@@ -6,8 +6,6 @@ import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory'
 import { SWITCH_TAB } from '../../services/actions';
 import { IIngredientItem } from '../../shared/types';
 
-type TTab = string;
-
 export function BurgerIngredients() {
     const dispatch = useDispatch();
     //@ts-ignore
@@ -16,7 +14,7 @@ export function BurgerIngredients() {
     const { tabs, activeTab } = useSelector(store => store.tabs);
     const [current, setCurrent] = useState<string>(activeTab);
 
-    const rootRef = useRef(null);
+    const rootRef = useRef<HTMLHeadingElement>(null);
 	const bunRef = useRef(null);
 	const sauceRef = useRef(null);
 	const mainRef = useRef(null);
@@ -41,7 +39,10 @@ export function BurgerIngredients() {
         setCurrent(type);
     };
 
-    const getDistance = (parentRef: RefObject<any>, elementRef: RefObject<any>): number => {
+    const getDistance = (
+        parentRef: RefObject<HTMLHeadingElement>,
+        elementRef: RefObject<HTMLHeadingElement>
+    ): number => {
         if (parentRef && parentRef.current && elementRef && elementRef.current) {
             return Math.abs(parentRef.current.getBoundingClientRect()
                 .top - elementRef.current.getBoundingClientRect().top);
@@ -72,13 +73,13 @@ export function BurgerIngredients() {
                 Соберите бургер
             </h1>
             <div className={`${ingredientsStyle.tabsContainer} pb-10`}>
-                {tabs.map((type: TTab) => <Tab
+                {tabs.map((type: string) => <Tab
                     key={type}
                     value={type}
                     active={activeTab === type}
                     onClick={() => handleSwitchTab(type)}
                 >
-                    {tabsText[type]}
+                    {tabsText[type as keyof typeof tabsText]}
                 </Tab>)}
             </div>
             <div ref={rootRef} onScroll={handleScroll} className={`${ingredientsStyle.ingredients}`}>
