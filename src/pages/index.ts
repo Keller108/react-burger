@@ -1,5 +1,5 @@
 export { HomePage } from './Home/HomePage';
-export { Login } from './Login/Login';
+export { LoginPage } from './Login/LoginPage';
 export { Register } from './Register/Register';
 export { ForgotPassword } from './ForgotPassword/ForgotPassword';
 export { ResetPassword } from './ResetPassword/ResetPassword';

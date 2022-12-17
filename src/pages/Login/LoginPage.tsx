@@ -1,32 +1,28 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../../services/actions/user';
 import { SHOP_ROUTE } from '../../shared/routes';
 
-export function Login() {
+export function LoginPage() {
+    //@ts-ignore
     const { isLogined } = useSelector(store => store.userStore);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
     const state = location.state;
-
+    //@ts-ignore
     const handleLogin = data => dispatch(signIn(data));
 
-    const clearEmail = () => {
-        setEmail('');
-    };
-
-    const submitLoginForm = async evt => {
+    const submitLoginForm = async (evt: FormEvent) => {
         evt.preventDefault();
-
         let result = await handleLogin({ email: email, password: password });
-        clearEmail();
+        setEmail('');
         setPassword('');
 
         if (result && result.success) {
@@ -44,11 +40,12 @@ export function Login() {
             <form onSubmit={submitLoginForm} className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Вход</h2>
                 <EmailInput
-                    onChange={e => setEmail(e.target.value)}
-                    onIconClick={clearEmail}
+                    onChange={(e: ChangeEvent) => {
+                        let eventTarget = e.target as HTMLInputElement;
+                        setEmail(eventTarget.value);
+                    }}
                     value={email}
                     name='email'
-                    icon='CloseIcon'
                     extraClass="mb-6"
                 />
                 <PasswordInput

@@ -13,7 +13,7 @@ export function IngredientDetails() {
         setCurrentItem(items.find(i => i._id === ingredientId));
     }, [items, ingredientId])
 
-    let card;
+    let card = {};
 
     if (!currentData) {
         card = currentItem;
