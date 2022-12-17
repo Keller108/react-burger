@@ -15,23 +15,9 @@ import {
     ORDER_REQUEST,
 } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/actions';
-import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
-import { LOGIN_ROUTE } from '../../utils/routes';
-
-interface IConstructorItem {
-    calories: number;
-    carbohydrates: number;
-    fat: number;
-    image: string;
-    image_large: string;
-    image_mobile: string;
-    name: string;
-    price: number;
-    proteins: number;
-    type: string;
-    __v: number;
-    _id: string;
-}
+import { ConstructorItem } from '../ConstructorItem';
+import { LOGIN_ROUTE } from '../../shared/routes';
+import { IIngredientItem } from '../../shared/types';
 
 export function BurgerConstructor() {
     //@ts-ignore
@@ -39,7 +25,7 @@ export function BurgerConstructor() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const addItem = (item: IConstructorItem) => dispatch(
+    const addItem = (item: IIngredientItem) => dispatch(
         addItemToConstructor({ ...item, uuid: uuidv4() })
     );
 
@@ -52,7 +38,7 @@ export function BurgerConstructor() {
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
         drop(ingredient) {
-            addItem(ingredient as IConstructorItem)
+            addItem(ingredient as IIngredientItem)
         }
     });
 
@@ -96,7 +82,7 @@ export function BurgerConstructor() {
                 </li>}
                 <div className={contructorStyles.itemWrapper}>
                     {otherItems.length !== 0 && otherItems
-                        .map((item: IConstructorItem & { uuid: string}, index: number) => <ConstructorItem
+                        .map((item: IIngredientItem & { uuid: string}, index: number) => <ConstructorItem
                             item={item}
                             index={index}
                             key={item.uuid}

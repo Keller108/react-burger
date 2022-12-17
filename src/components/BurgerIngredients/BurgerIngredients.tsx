@@ -1,17 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
 import { SWITCH_TAB } from '../../services/actions';
+import { IIngredientItem } from '../../shared/types';
+
+type TTab = string;
 
 export function BurgerIngredients() {
     const dispatch = useDispatch();
-
+    //@ts-ignore
     const ingredients = useSelector(store => store.ingredients.ingredientItems);
+    //@ts-ignore
     const { tabs, activeTab } = useSelector(store => store.tabs);
-
-    const [current, setCurrent] = useState(activeTab);
+    const [current, setCurrent] = useState<string>(activeTab);
 
     const rootRef = useRef(null);
 	const bunRef = useRef(null);
@@ -19,13 +22,13 @@ export function BurgerIngredients() {
 	const mainRef = useRef(null);
 
     const buns = useMemo(() => ingredients
-        .filter((item) => item.type === 'bun'), [ingredients]);
+        .filter((item: IIngredientItem) => item.type === 'bun'), [ingredients]);
 
     const sauces = useMemo(() => ingredients
-        .filter((item) => item.type === 'sauce'), [ingredients]);
+        .filter((item: IIngredientItem) => item.type === 'sauce'), [ingredients]);
 
     const main = useMemo(() => ingredients
-        .filter((item) => item.type === 'main'), [ingredients]);
+        .filter((item: IIngredientItem) => item.type === 'main'), [ingredients]);
 
     const tabsText = {
         bun: "Булки",
@@ -33,16 +36,16 @@ export function BurgerIngredients() {
         main: "Начинка"
     };
 
-    const handleSwitchTab = (type) => {
-        dispatch({
-            type: SWITCH_TAB, payload: type
-        });
+    const handleSwitchTab = (type: string) => {
+        dispatch({ type: SWITCH_TAB, payload: type });
         setCurrent(type);
     };
 
-    function getDistance(parentRef, elementRef) {
-        return Math.abs(parentRef.current.getBoundingClientRect()
-            .top - elementRef.current.getBoundingClientRect().top);
+    const getDistance = (parentRef: RefObject<any>, elementRef: RefObject<any>): number => {
+        if (parentRef && parentRef.current && elementRef && elementRef.current) {
+            return Math.abs(parentRef.current.getBoundingClientRect()
+                .top - elementRef.current.getBoundingClientRect().top);
+        } else return 0;
     }
 
 	const handleScroll = () => {
@@ -60,7 +63,7 @@ export function BurgerIngredients() {
 	};
 
     useEffect(() => {
-		document.querySelector(`#${current}`).scrollIntoView();
+        document.querySelector(`#${current}`)?.scrollIntoView();
 	}, [current])
 
     return (
@@ -69,7 +72,7 @@ export function BurgerIngredients() {
                 Соберите бургер
             </h1>
             <div className={`${ingredientsStyle.tabsContainer} pb-10`}>
-                {tabs.map((type) => <Tab
+                {tabs.map((type: TTab) => <Tab
                     key={type}
                     value={type}
                     active={activeTab === type}

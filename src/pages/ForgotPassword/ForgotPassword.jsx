@@ -4,7 +4,7 @@ import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-comp
 import styles from './ForgotPassword.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordRequest } from '../../services/actions/user';
-import { RESET_ROUTE } from '../../utils/routes';
+import { RESET_ROUTE } from '../../shared/routes';
 import { LOADER_OFF, LOADER_ON } from '../../services/actions';
 import { Preloader } from '../../components/Preloader/Preloader';
 

@@ -2,13 +2,18 @@ import categoryStyle from './IngredientsCategory.module.css';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card } from '../Card/Card';
-import { ingredientPropType } from '../../utils/types/commonTypes';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 import { IngredientDetails } from '../IngredientDetails';
 import { OPEN_MODAL } from '../../services/actions';
 import { forwardRef, useEffect } from 'react';
 
+type TIngredientsCategoryProps = {
+    title: string;
+    id: string;
+    category: string;
+};
 
-export const IngredientsCategory = forwardRef(({ title, id, category }, ref) => {
+export const IngredientsCategory = forwardRef(({ title, id, category }: TIngredientsCategoryProps, ref) => {
     const dispatch = useDispatch();
 
     const renderModal = cardData => dispatch({

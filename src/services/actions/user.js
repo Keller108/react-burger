@@ -6,7 +6,7 @@ import {
     logOut,
     patchUser,
     resetPassword
-} from "../../utils/userApi";
+} from "../../shared/userApi";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';

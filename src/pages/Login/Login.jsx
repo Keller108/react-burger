@@ -4,7 +4,7 @@ import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer
 import styles from './Login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../../services/actions/user';
-import { SHOP_ROUTE } from '../../utils/routes';
+import { SHOP_ROUTE } from '../../shared/routes';
 
 export function Login() {
     const { isLogined } = useSelector(store => store.userStore);

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { LOGIN_ROUTE } from '../utils/routes';
+import { LOGIN_ROUTE } from '../shared/routes';
 
 type TProtectedRoutesProps = {
   anonymous?: boolean;

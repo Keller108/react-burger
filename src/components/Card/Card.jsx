@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType } from '../../utils/types/commonTypes';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 
 export function Card({ cardData, onCardClick }) {
     const [amount, setAmount] = useState(0);

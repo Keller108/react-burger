@@ -4,7 +4,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from './ResetPassword.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordRequest } from '../../services/actions/user';
-import { LOGIN_ROUTE } from '../../utils/routes';
+import { LOGIN_ROUTE } from '../../shared/routes';
 import { LOADER_OFF, LOADER_ON } from '../../services/actions';
 import { Preloader } from '../../components/Preloader/Preloader';
 

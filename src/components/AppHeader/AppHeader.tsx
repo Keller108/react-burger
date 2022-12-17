@@ -5,7 +5,7 @@ import { BurgerIcon,
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeaderStyles from './AppHeader.module.css';
-import { SHOP_ROUTE } from '../../utils/routes';
+import { SHOP_ROUTE } from '../../shared/routes';
 
 export function AppHeader() {
     let location = useLocation();

@@ -9,17 +9,15 @@ import appStyles from './App.module.css';
 import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
-import { handleTokenRefresh } from "../../utils/handlers/handleTokenRefresh";
+import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
 import { Preloader } from "../Preloader/Preloader";
 import { Modal } from "../Modal";
 import { Ingredient } from "../../pages/Ingredient/Ingredient";
 import { CLOSE_MODAL } from "../../services/actions";
-import { SHOP_ROUTE } from "../../utils/routes";
+import { SHOP_ROUTE } from "../../shared/routes";
 
 export const App = () => {
     const [isLoading, setIsLoading] = useState(false);
-    //@ts-ignore
-    const { isLogined } = useSelector((store) => store.userStore);
     //@ts-ignore
     const { isActive } = useSelector((store) => store.modal);
 

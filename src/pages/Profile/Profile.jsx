@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from './Profile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { LOGIN_ROUTE } from '../../utils/routes';
+import { LOGIN_ROUTE } from '../../shared/routes';
 import { editUser, signOut } from '../../services/actions/user';
 
 export function Profile() {

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteItemFromConstructor, MOVE_ITEM } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ConstructorItem.module.css';
-import { ingredientPropType } from '../../utils/types/commonTypes';
+import { ingredientPropType } from '../../shared/types/commonTypes';
 
 export function ConstructorItem({ item, index }) {
     const elementRef = useRef(null);
