@@ -2,13 +2,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropType } from '../../shared/types/commonTypes';
+import { IIngredientItem } from '../../shared/types';
 
-export function Card({ cardData, onCardClick }) {
+type TCardProps = {
+    cardData: IIngredientItem;
+    onCardClick: () => void;
+};
+
+export function Card({ cardData, onCardClick }: TCardProps) {
     const [amount, setAmount] = useState(0);
+    //@ts-ignore
     const { buns, otherItems } = useSelector(store => store.burgerConstructor);
     const location = useLocation();
 
@@ -24,7 +29,7 @@ export function Card({ cardData, onCardClick }) {
     const ingredientId = cardData._id;
 
     let ingredientAmount = useMemo(() => {
-        return otherItems.filter(item => item._id === cardData._id).length;
+        return otherItems.filter((item: IIngredientItem) => item._id === cardData._id).length;
     }, [otherItems, cardData._id]);
 
     useEffect(() => {
@@ -48,8 +53,8 @@ export function Card({ cardData, onCardClick }) {
                 ref={ref}
                 className={cardStyle.card}>
                     {(cardData.type === 'bun' && buns.length)
-                        && (buns.filter(item => item._id === cardData._id)
-                        && buns.find(item => item._id === cardData._id))
+                        && (buns.filter((item: IIngredientItem) => item._id === cardData._id)
+                        && buns.find((item: IIngredientItem) => item._id === cardData._id))
                         ? <span className={`${cardStyle.quantity}
                             "text text_type_main-medium"`}
                         >{buns.length + 1}</span>
@@ -72,9 +77,4 @@ export function Card({ cardData, onCardClick }) {
             </li>
         </Link>
     )
-}
-
-Card.propTypes = {
-    cardData: ingredientPropType.isRequired,
-    onCardClick: PropTypes.func.isRequired
 }

@@ -1,11 +1,11 @@
-import categoryStyle from './IngredientsCategory.module.css';
+import { forwardRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Card } from '../Card/Card';
+import categoryStyle from './IngredientsCategory.module.css';
+import { Card } from '../Card';
 import { ingredientPropType } from '../../shared/types/commonTypes';
 import { IngredientDetails } from '../IngredientDetails';
 import { OPEN_MODAL } from '../../services/actions';
-import { forwardRef, useEffect } from 'react';
 
 type TIngredientsCategoryProps = {
     title: string;

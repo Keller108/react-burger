@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordRequest } from '../../services/actions/user';
 import { RESET_ROUTE } from '../../shared/routes';
 import { LOADER_OFF, LOADER_ON } from '../../services/actions';
-import { Preloader } from '../../components/Preloader/Preloader';
+import { Preloader } from '../../components/Preloader';
 
 export function ForgotPassword() {
     const { isLoading } = useSelector(store => store.appStore);
