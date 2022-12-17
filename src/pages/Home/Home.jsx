@@ -7,7 +7,7 @@ import { BurgerIngredients } from '../../components/BurgerIngredients';
 import { BurgerConstructor } from '../../components/BurgerConstructor';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import styles from './Home.module.css';
-import { Modal } from '../../components/Modal';
+import { Modal } from '../../components/Modal/index.js';
 
 export function Home({ handleCloseModal }) {
     const { isActive } = useSelector(store => store.modal);

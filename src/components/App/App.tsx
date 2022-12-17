@@ -11,7 +11,7 @@ import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
 import { Preloader } from "../Preloader/Preloader";
-import { Modal } from "../Modal";
+import { Modal } from "../Modal/index.js";
 import { Ingredient } from "../../pages/Ingredient/Ingredient";
 import { CLOSE_MODAL } from "../../services/actions";
 import { SHOP_ROUTE } from "../../shared/routes";

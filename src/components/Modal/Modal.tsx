@@ -1,17 +1,21 @@
-import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { ModalOverlay } from '../ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
-import { ModalOverlay } from '../ModalOverlay/ModalOverlay';
 
-export function Modal({ onClose }) {
+type TModalProps = {
+    onClose: () => void;
+};
+
+export function Modal({ onClose }: TModalProps) {
+    //@ts-ignore
     const { content } = useSelector(store => store.modal);
 
     const modalClose = () => onClose();
 
-    const closeModalByEsc = (evt) => {
+    const closeModalByEsc = (evt: KeyboardEvent) => {
         if (evt.key === 'Escape') return modalClose();
     };
 
@@ -33,10 +37,6 @@ export function Modal({ onClose }) {
             </div>
             <ModalOverlay closeModal={modalClose}/>
         </>,
-        document.getElementById("modals")
+        document.getElementById("modals") as HTMLDivElement
     )
-}
-
-Modal.propTypes = {
-    onClose: PropTypes.func.isRequired
 }
