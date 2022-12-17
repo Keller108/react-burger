@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppHeader } from '../AppHeader';
 import {
-    HomePage, LoginPage, Register, ForgotPassword, ResetPassword, Profile
+    HomePage, LoginPage, Register, ForgotPassword, ResetPassword, ProfilePage
 } from "../../pages";
 import appStyles from './App.module.css';
 import { userCheck } from "../../services/actions/user";
@@ -68,7 +68,7 @@ export const App = () => {
             {isLoading ? <Preloader /> : <>
                 <Routes location={state || location}>
                     <Route element={<ProtectedRoutes />}>
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile" element={<ProfilePage />} />
                     </Route>
                     <Route path="/" index element={<HomePage handleCloseModal={handleCloseModal}/>} />
                     <Route path="/login" element={<LoginPage />} />

@@ -41,10 +41,7 @@ export function LoginPage() {
             <form onSubmit={submitLoginForm} className={styles.form}>
                 <h2 className="text text_type_main-medium mb-6">Вход</h2>
                 <EmailInput
-                    onChange={(e: ChangeEvent) => {
-                        let eventTarget = e.target as HTMLInputElement;
-                        setEmail(eventTarget.value);
-                    }}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     value={email}
                     name='email'
                     extraClass="mb-6"

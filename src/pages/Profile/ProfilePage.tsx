@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Profile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,17 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { editUser, signOut } from '../../services/actions/user';
 
-export function Profile() {
+export function ProfilePage() {
+    //@ts-ignore
     const { name, email, password } = useSelector(state => state.userStore.user);
 
-    const [userName, setUserName] = useState(name ?? '');
-    const [userEmail, setUserEmail] = useState(email ?? '');
-    const [userPassword, setUserPassword] = useState(password ?? '');
+    const [userName, setUserName] = useState<string>(name ?? '');
+    const [userEmail, setUserEmail] = useState<string>(email ?? '');
+    const [userPassword, setUserPassword] = useState<string>(password ?? '');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSubmit = () => dispatch(
+        //@ts-ignore
         editUser({
             email: userEmail,
             name: userName,
@@ -25,11 +27,12 @@ export function Profile() {
     );
 
     const handleLogOut = async () => {
+        //@ts-ignore
         await dispatch(signOut());
         navigate(LOGIN_ROUTE);
     };
 
-    const handleFormSubmit = async evt => {
+    const handleFormSubmit = async (evt: FormEvent) => {
         evt.preventDefault();
         await handleSubmit();
     };
