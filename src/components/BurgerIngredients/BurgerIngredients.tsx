@@ -2,7 +2,7 @@ import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientsCategory } from '../IngredientsCategory/IngredientsCategory';
+import { IngredientsCategory } from '../IngredientsCategory';
 import { SWITCH_TAB } from '../../services/actions';
 import { IIngredientItem } from '../../shared/types';
 
