@@ -9,13 +9,13 @@ import { Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import {
     addItemToConstructor,
     handlePlaceAnOrder,
     ORDER_REQUEST,
 } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/actions';
-import { ConstructorItem } from '../ConstructorItem';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { IIngredientItem } from '../../shared/types';
 

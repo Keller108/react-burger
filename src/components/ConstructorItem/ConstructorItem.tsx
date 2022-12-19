@@ -6,24 +6,34 @@ import { deleteItemFromConstructor, MOVE_ITEM } from '../../services/actions/bur
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ConstructorItem.module.css';
 import { ingredientPropType } from '../../shared/types/commonTypes';
+import { IIngredientItem } from '../../shared/types';
 
-export function ConstructorItem({ item, index }) {
-    const elementRef = useRef(null);
+interface IConstructorItem extends IIngredientItem {
+    uuid: string;
+}
+
+type TConstructorItemProps = {
+    item: IConstructorItem;
+    index: number;
+};
+
+export function ConstructorItem({ item, index }: TConstructorItemProps) {
+    const elementRef = useRef<HTMLLIElement>(null);
     const dispatch = useDispatch();
 
-    const removeItem = item => dispatch(deleteItemFromConstructor(item));
+    const removeItem = (item: IConstructorItem) => dispatch(deleteItemFromConstructor(item));
 
     const id = item._id;
 
-    const moveItem = (dragIndex, hoverIndex) => dispatch({
+    const moveItem = (dragIndex: number, hoverIndex: number) => dispatch({
 			type: MOVE_ITEM,
 			toIndex: hoverIndex,
 			fromIndex: dragIndex
-    })
+    });
 
 	const [, drop] = useDrop({
 		accept: 'item',
-		hover(item, monitor) {
+		hover(item: IIngredientItem & { index: number }, monitor) {
 			if (!elementRef.current) {
 				return;
 			}
@@ -35,21 +45,28 @@ export function ConstructorItem({ item, index }) {
 				return;
 			}
 
-			const hoverBoundingRect = elementRef.current?.getBoundingClientRect();
-			const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-			const clientOffset = monitor.getClientOffset();
-			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (elementRef.current) {
+                const hoverBoundingRect = elementRef.current.getBoundingClientRect();
+                const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+                const clientOffset = monitor.getClientOffset();
 
-			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-				return;
-			}
+                let hoverClientY: number;
 
-			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-				return;
-			}
+                if (clientOffset) {
+                    hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-			moveItem(dragIndex, hoverIndex);
-			item.index = hoverIndex;
+                    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                        return;
+                    }
+
+                    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                        return;
+                    }
+                }
+            }
+
+            moveItem(dragIndex, hoverIndex);
+            item.index = hoverIndex;
 		},
 	});
 
