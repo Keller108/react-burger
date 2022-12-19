@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ForgotPassword.module.css';
@@ -9,6 +9,7 @@ import { LOADER_OFF, LOADER_ON } from '../../services/actions';
 import { Preloader } from '../../components/Preloader';
 
 export function ForgotPassword() {
+    //@ts-ignore
     const { isLoading } = useSelector(store => store.appStore);
     const [emailInput, setEmailInput] = useState({
         value: '',
@@ -18,21 +19,21 @@ export function ForgotPassword() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleCheckIfUserExists = (data) => dispatch(
+    const handleCheckIfUserExists = (data: { email: string }) => dispatch(
+        //@ts-ignore
         forgotPasswordRequest(data)
     );
 
     const clearEmail = () => setEmailInput(prev => ({ ...prev, value: '' }));
 
-    const handleSubmitForgotForm = async evt => {
+    const handleSubmitForgotForm = async (evt: FormEvent) => {
         evt.preventDefault();
         dispatch({ type: LOADER_ON });
 
-        // Позже сделаю нормальную валидацию с регуляркой
         if (emailInput.value) {
             setEmailInput(prev => ({...prev, error: false }));
             handleCheckIfUserExists({ email: emailInput.value })
-                .then(res => {
+                .then((res: { message: string; success: true; }) => {
                     if (res && res.success) {
                         dispatch({ type: LOADER_OFF });
                         navigate(RESET_ROUTE);
@@ -53,13 +54,10 @@ export function ForgotPassword() {
                     <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
                     <EmailInput
                         onChange={e => setEmailInput(prev => ({ ...prev, value: e.target.value}))}
-                        onIconClick={clearEmail}
                         value={emailInput.value}
                         name='email'
-                        error={emailInput.error}
-                        errorText={emailInput.errText}
                         placeholder="Укажите email"
-                        icon='CloseIcon'
+                        isIcon={true}
                         extraClass="mb-6"
                     />
                     <Button
