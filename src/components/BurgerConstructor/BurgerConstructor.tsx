@@ -8,7 +8,7 @@ import { Button,
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { OrderDetails } from '../OrderDetails/OrderDetails';
+import { OrderDetails } from '../OrderDetails';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import {
     addItemToConstructor,
