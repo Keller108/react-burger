@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { IIngredientItem } from '../../shared/types';
 import ingredientsDetailsStyle from './IngredientDetails.module.css';
 
 export function IngredientDetails() {
-    const { ingredientId } = useParams();
+    const [currentItem, setCurrentItem] = useState<IIngredientItem | null>(null);
+    //@ts-ignore
     const { currentData } = useSelector(store => store.modal);
-    const [items,] = useState(JSON.parse(localStorage.getItem('ingredients')));
-    const [currentItem, setCurrentItem] = useState(null);
+    const [items,] = useState(
+        () => {
+            let item = localStorage.getItem('ingredients');
+            if (item) return [...JSON.parse(item)];
+        }
+    );
+    const { ingredientId } = useParams();
 
     useEffect(() => {
-        setCurrentItem(items.find(i => i._id === ingredientId));
+        setCurrentItem(items?.find(i => i._id === ingredientId));
     }, [items, ingredientId])
 
-    let card = {};
+    let card: IIngredientItem | null;
 
     if (!currentData) {
         card = currentItem;
