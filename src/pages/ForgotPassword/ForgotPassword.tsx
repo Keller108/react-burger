@@ -20,7 +20,7 @@ export function ForgotPassword() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleCheckIfUserExists = (data: { email: string }) => dispatch(
+    const handleCheckIfUserExists = async (data: { email: string }) => dispatch(
         //@ts-ignore
         forgotPasswordRequest(data)
     );
@@ -33,7 +33,6 @@ export function ForgotPassword() {
             setEmailInput(prev => ({...prev, error: false }));
             let res = await handleCheckIfUserExists({ email: emailInput.value });
 
-            dispatch({ type: LOADER_OFF });
             dispatch({ type: LOADER_OFF });
             setEmailInput(prev => ({ ...prev, value: '' }));
 

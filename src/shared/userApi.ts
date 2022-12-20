@@ -8,8 +8,19 @@ import {
     TOKEN_URL,
     USER_URL
 } from "./routes";
+import {
+    IUserModel,
+    IUserFormActionResponse,
+    IUserResponse,
+    IForgotResponse,
+    IResetResponse,
+    ILogoutResponse,
+    ITokenResponse
+} from "./types";
 
-export function createUser(newUser) {
+export const createUser = async (
+    newUser: IUserModel
+): Promise<IUserFormActionResponse> => {
     return fetch(REGISTER_URL, {
         method: 'POST',
         headers: {
@@ -18,9 +29,11 @@ export function createUser(newUser) {
         },
         body: JSON.stringify(newUser)
     }).then(handleResponse);
-}
+};
 
-export function login(user) {
+export const login = async (
+    user: IUserModel
+): Promise<IUserFormActionResponse> => {
     return fetch(LOGIN_URL, {
         method: 'POST',
         headers: {
@@ -31,7 +44,7 @@ export function login(user) {
     }).then(handleResponse);
 }
 
-export function getUser() {
+export const getUser = async (): Promise<IUserResponse> => {
     return fetch(USER_URL, {
         method: 'GET',
         headers: {
@@ -42,7 +55,9 @@ export function getUser() {
     }).then(handleResponse);
 }
 
-export function patchUser(form) {
+export const patchUser = async (
+    form: IUserModel
+): Promise<IUserResponse> => {
     return fetch(USER_URL, {
         method: 'PATCH',
         headers: {
@@ -54,18 +69,22 @@ export function patchUser(form) {
     }).then(handleResponse);
 }
 
-export function checkIfExist(email) {
+export const checkIfExist = async (
+    data: { email: string }
+): Promise<IForgotResponse> => {
     return fetch(FORGOT_URL, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify(email)
+        body: JSON.stringify(data)
     }).then(handleResponse);
 }
 
-export function resetPassword(data) {
+export const resetPassword = async (
+    data: { password: string, token: string }
+): Promise<IResetResponse> => {
     return fetch(PASSWORD_RESET_URL, {
         method: 'POST',
         headers: {
@@ -76,7 +95,7 @@ export function resetPassword(data) {
     }).then(handleResponse);
 }
 
-export function refreshToken() {
+export const refreshToken = async (): Promise<ITokenResponse> => {
     return fetch(TOKEN_URL, {
         method: 'POST',
         headers: {
@@ -87,7 +106,7 @@ export function refreshToken() {
     }).then(handleResponse);
 }
 
-export function logOut() {
+export const logOut = async (): Promise<ILogoutResponse> => {
     return fetch(LOGOUT_URL, {
         method: 'POST',
         headers: {

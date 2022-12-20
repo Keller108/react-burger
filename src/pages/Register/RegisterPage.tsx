@@ -6,16 +6,6 @@ import { useDispatch } from 'react-redux';
 import { signUp } from '../../services/actions/user';
 import { SHOP_ROUTE } from '../../shared/routes';
 
-interface IRegisterResponse {
-    accessToken: string;
-    refreshToken: string;
-    success: boolean;
-    user: {
-        email: string,
-        name: string
-    }
-}
-
 export function RegisterPage() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -39,9 +29,11 @@ export function RegisterPage() {
     const submitRegisterForm = async (evt: FormEvent) => {
         evt.preventDefault();
         let res = await handleRegister();
+
         clearEmail();
         clearName();
         setPassword('');
+
         if (res && res.success) navigate(SHOP_ROUTE);
     };
 

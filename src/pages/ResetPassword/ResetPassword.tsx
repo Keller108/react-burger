@@ -28,14 +28,14 @@ export function ResetPassword() {
     const handleSubmitResetForm = async (evt: FormEvent) => {
         evt.preventDefault();
         dispatch({ type: LOADER_ON });
+
         let result = await handleResetPassword({ password: password, token: code });
+
         setPassword('');
         clearCode();
         dispatch({ type: LOADER_OFF });
 
-        if (result && result.success) {
-            navigate(LOGIN_ROUTE);
-        }
+        if (result && result.success) navigate(LOGIN_ROUTE);
     };
 
     return (
