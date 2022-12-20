@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ResetPassword.module.css';
@@ -8,26 +8,32 @@ import { LOGIN_ROUTE } from '../../shared/routes';
 import { LOADER_OFF, LOADER_ON } from '../../services/actions';
 import { Preloader } from '../../components/Preloader';
 
+type TFormData = {
+    password: string;
+    token: string;
+};
+
 export function ResetPassword() {
+    //@ts-ignore
     const { isLoading } = useSelector(store => store.appStore);
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleResetPassword = (data) => dispatch(resetPasswordRequest(data));
+    //@ts-ignore
+    const handleResetPassword = (data: TFormData) => dispatch(resetPasswordRequest(data));
     const clearCode = () => setCode('');
 
-    const handleSubmitResetForm = async evt => {
+    const handleSubmitResetForm = async (evt: FormEvent) => {
         evt.preventDefault();
         dispatch({ type: LOADER_ON });
         let result = await handleResetPassword({ password: password, token: code });
+        setPassword('');
+        clearCode();
+        dispatch({ type: LOADER_OFF });
 
         if (result && result.success) {
-            setPassword('');
-            clearCode();
-            dispatch({ type: LOADER_OFF });
             navigate(LOGIN_ROUTE);
         }
     };

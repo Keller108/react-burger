@@ -16,6 +16,7 @@ export function ForgotPassword() {
         error: false,
         errText: 'Укажите валидный email'
     });
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -24,22 +25,19 @@ export function ForgotPassword() {
         forgotPasswordRequest(data)
     );
 
-    const clearEmail = () => setEmailInput(prev => ({ ...prev, value: '' }));
-
     const handleSubmitForgotForm = async (evt: FormEvent) => {
         evt.preventDefault();
         dispatch({ type: LOADER_ON });
 
         if (emailInput.value) {
             setEmailInput(prev => ({...prev, error: false }));
-            handleCheckIfUserExists({ email: emailInput.value })
-                .then((res: { message: string; success: true; }) => {
-                    if (res && res.success) {
-                        dispatch({ type: LOADER_OFF });
-                        navigate(RESET_ROUTE);
-                    }
-                })
-            clearEmail();
+            let res = await handleCheckIfUserExists({ email: emailInput.value });
+
+            dispatch({ type: LOADER_OFF });
+            dispatch({ type: LOADER_OFF });
+            setEmailInput(prev => ({ ...prev, value: '' }));
+
+            if (res && res.success) navigate(RESET_ROUTE);
         } else {
             setEmailInput(prev => ({...prev, error: true }));
             dispatch({ type: LOADER_OFF });

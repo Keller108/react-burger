@@ -4,7 +4,7 @@ import { LOGIN_ROUTE } from '../shared/routes';
 
 type TProtectedRoutesProps = {
   anonymous?: boolean;
-}
+};
 
 export const ProtectedRoutes = ({ anonymous = false }: TProtectedRoutesProps) => {
     //@ts-ignore

@@ -3,16 +3,14 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppHeader } from '../AppHeader';
 import {
-    HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage
+    HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage, IngredientPage, NotFound
 } from "../../pages";
 import appStyles from './App.module.css';
 import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
-import { NotFound } from "../../pages/NotFound/NotFound";
 import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
-import { Ingredient } from "../../pages/Ingredient/Ingredient";
 import { CLOSE_MODAL } from "../../services/actions";
 import { SHOP_ROUTE } from "../../shared/routes";
 
@@ -76,7 +74,7 @@ export const App = () => {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path='*' element={<NotFound />} />
-                    <Route path="/ingredients/:ingredientId" element={<Ingredient />} />
+                    <Route path="/ingredients/:ingredientId" element={<IngredientPage />} />
                 </Routes>
                 {state && isActive && <Routes>
                     <Route
