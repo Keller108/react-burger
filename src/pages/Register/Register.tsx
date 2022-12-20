@@ -1,17 +1,32 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Register.module.css';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../services/actions/user';
+import { SHOP_ROUTE } from '../../shared/routes';
+
+interface IRegisterResponse {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+    user: {
+        email: string,
+        name: string
+    }
+}
 
 export function Register() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleRegister = () => dispatch(signUp({ email: email, password: password, name: name }));
+    const handleRegister = () => dispatch(
+        //@ts-ignore
+        signUp({ email: email, password: password, name: name })
+    );
 
     const clearEmail = () => {
         setEmail('');
@@ -21,12 +36,13 @@ export function Register() {
         setName('');
     };
 
-    const submitRegisterForm = async evt => {
+    const submitRegisterForm = async (evt: FormEvent) => {
         evt.preventDefault();
-        await handleRegister();
+        let res = await handleRegister();
         clearEmail();
         clearName();
         setPassword('');
+        if (res && res.success) navigate(SHOP_ROUTE);
     };
 
     return (
@@ -48,11 +64,10 @@ export function Register() {
                 />
                 <EmailInput
                     onChange={e => setEmail(e.target.value)}
-                    onIconClick={clearEmail}
                     value={email}
                     placeholder='E-mail'
                     name='email'
-                    icon='CloseIcon'
+                    isIcon={true}
                     extraClass="mb-6"
                 />
                 <PasswordInput
