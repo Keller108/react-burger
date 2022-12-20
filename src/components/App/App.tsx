@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppHeader } from '../AppHeader';
 import {
-    HomePage, LoginPage, Register, ForgotPassword, ResetPassword, ProfilePage
+    HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage
 } from "../../pages";
 import appStyles from './App.module.css';
 import { userCheck } from "../../services/actions/user";
@@ -72,7 +72,7 @@ export const App = () => {
                     </Route>
                     <Route path="/" index element={<HomePage handleCloseModal={handleCloseModal}/>} />
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route path="/register" element={<RegisterPage />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path='*' element={<NotFound />} />

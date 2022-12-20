@@ -16,7 +16,7 @@ interface IRegisterResponse {
     }
 }
 
-export function Register() {
+export function RegisterPage() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
