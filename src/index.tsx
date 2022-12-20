@@ -10,13 +10,16 @@ import '@ya.praktikum/react-developer-burger-ui-components';
 import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+declare global {
+    interface Window {
+      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root')
+    document.getElementById('root') as HTMLDivElement
 );
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
