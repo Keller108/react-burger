@@ -1,4 +1,4 @@
-import { placeAnOrder } from "../../utils/burger-api";
+import { placeAnOrder } from "../../shared/burgerApi";
 
 export const ADD_ITEM_TO_CONSTRUCTOR = 'ADD_ITEM_TO_CONSTRUCTOR';
 export const DELETE_ITEM_FROM_CONTRUCTOR = 'DELETE_ITEM_FROM_CONTRUCTOR';
