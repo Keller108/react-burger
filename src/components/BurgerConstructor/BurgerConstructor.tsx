@@ -17,7 +17,7 @@ import {
 } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/actions';
 import { LOGIN_ROUTE } from '../../shared/routes';
-import { IIngredientItem } from '../../shared/types';
+import { IIngredientItem, TOrderData } from '../../shared/types';
 
 export function BurgerConstructor() {
     //@ts-ignore
@@ -42,7 +42,7 @@ export function BurgerConstructor() {
         }
     });
 
-    const orderData = useMemo(() => {
+    const orderData: TOrderData = useMemo(() => {
         return [...buns, ...otherItems, ...buns].map(item => item._id);
     },[buns, otherItems])
 

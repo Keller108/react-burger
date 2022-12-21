@@ -1,12 +1,15 @@
 import { handleResponse } from "./handlers/handleResponse";
 import { INGREDIENTS_PATH, ORDERS_PATH } from "./routes";
+import { IIngredientsResponse, TOrderData } from "./types";
 
-export async function fetchIngredients() {
+export const fetchIngredients = async (): Promise<IIngredientsResponse> => {
     return fetch(INGREDIENTS_PATH)
         .then(handleResponse);
-}
+};
 
-export async function placeAnOrder(orderData) {
+export const placeAnOrder = async (
+    orderData: TOrderData
+): Promise<{ success: boolean; name: string; order: { number: number } }> => {
     return fetch(ORDERS_PATH, {
         method: 'POST',
         headers: {
@@ -14,4 +17,4 @@ export async function placeAnOrder(orderData) {
         },
         body: JSON.stringify(orderData)
     }).then(handleResponse);
-}
+};

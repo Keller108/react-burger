@@ -1,4 +1,4 @@
-import { fetchIngredients } from "../../shared/burger-api";
+import { fetchIngredients } from "../../shared/burgerApi";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
