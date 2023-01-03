@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
-import { CLOSE_MODAL, LOADER_OFF, LOADER_ON, OPEN_MODAL, SWITCH_TAB } from '../actions';
+import { LOADER_OFF, LOADER_ON } from '../constants/loader';
+import { SWITCH_TAB } from '../constants/tab';
+import { CLOSE_MODAL, OPEN_MODAL } from '../constants/modal';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 import { userReducer } from './user';

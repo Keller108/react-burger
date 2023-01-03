@@ -1,12 +1,15 @@
 import {
     ADD_ITEM_TO_CONSTRUCTOR,
-    CLEAR_CART,
     DELETE_ITEM_FROM_CONTRUCTOR,
-    MOVE_ITEM,
+    MOVE_ITEM
+} from "../constants/burger-constructor";
+
+import {
+    CLEAR_CART,
     ORDER_FAILED,
     ORDER_REQUEST,
     ORDER_SUCCESS
-} from "../actions/burger-constructor"
+} from "../constants/order";
 
 const initialConstrState = {
     buns: [],

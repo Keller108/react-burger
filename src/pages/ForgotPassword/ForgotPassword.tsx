@@ -5,7 +5,7 @@ import styles from './ForgotPassword.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordRequest } from '../../services/actions/user';
 import { RESET_ROUTE } from '../../shared/routes';
-import { LOADER_OFF, LOADER_ON } from '../../services/actions';
+import { LOADER_OFF, LOADER_ON } from '../../services/constants/loader';
 import { Preloader } from '../../components/Preloader';
 
 export function ForgotPassword() {

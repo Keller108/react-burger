@@ -13,11 +13,11 @@ import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import {
     addItemToConstructor,
     handlePlaceAnOrder,
-    ORDER_REQUEST,
 } from '../../services/actions/burger-constructor';
-import { OPEN_MODAL } from '../../services/actions';
+import { OPEN_MODAL } from '../../services/constants/modal';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { IIngredientItem, TOrderData } from '../../shared/types';
+import { ORDER_REQUEST } from '../../services/constants/order';
 
 export function BurgerConstructor() {
     //@ts-ignore

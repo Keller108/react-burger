@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory';
-import { SWITCH_TAB } from '../../services/actions';
+import { SWITCH_TAB } from '../../services/constants/tab';
 import { IIngredientItem } from '../../shared/types';
 
 export function BurgerIngredients() {

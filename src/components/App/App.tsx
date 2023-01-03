@@ -11,7 +11,7 @@ import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
-import { CLOSE_MODAL } from "../../services/actions";
+import { CLOSE_MODAL } from "../../services/constants/modal";
 import { SHOP_ROUTE } from "../../shared/routes";
 
 export const App = () => {

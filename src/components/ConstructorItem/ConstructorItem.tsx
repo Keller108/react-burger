@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { deleteItemFromConstructor, MOVE_ITEM } from '../../services/actions/burger-constructor';
+import { MOVE_ITEM } from '../../services/constants/burger-constructor';
+import { deleteItemFromConstructor } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ConstructorItem.module.css';
 import { IIngredientItem } from '../../shared/types';

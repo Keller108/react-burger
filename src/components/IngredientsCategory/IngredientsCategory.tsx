@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import categoryStyle from './IngredientsCategory.module.css';
 import { Card } from '../Card';
 import { IngredientDetails } from '../IngredientDetails';
-import { OPEN_MODAL } from '../../services/actions';
 import { IIngredientItem } from '../../shared/types';
+import { OPEN_MODAL } from '../../services/constants/modal';
 
 type TIngredientsCategoryProps = {
     title: string;

@@ -5,8 +5,8 @@ import styles from './ResetPassword.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordRequest } from '../../services/actions/user';
 import { LOGIN_ROUTE } from '../../shared/routes';
-import { LOADER_OFF, LOADER_ON } from '../../services/actions';
 import { Preloader } from '../../components/Preloader';
+import { LOADER_OFF, LOADER_ON } from '../../services/constants/loader';
 
 type TFormData = {
     password: string;
