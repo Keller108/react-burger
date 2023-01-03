@@ -22,7 +22,7 @@ const initialConstrState = {
         success: false,
         error: false
     }
-}
+};
 
 export const constructorReducer = (state = initialConstrState, action) => {
     switch (action.type) {

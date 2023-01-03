@@ -1,4 +1,5 @@
 export type { IIngredientItem } from './IIngredientItem';
+export type { IConstructorItem } from './IConstructorItem';
 export type { IIngredientsResponse } from'./IIngredientsResponse';
 
 export type { TAppButtons } from './TAppButton';

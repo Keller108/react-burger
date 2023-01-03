@@ -5,11 +5,7 @@ import { MOVE_ITEM } from '../../services/constants/burger-constructor';
 import { deleteItemFromConstructor } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ConstructorItem.module.css';
-import { IIngredientItem } from '../../shared/types';
-
-interface IConstructorItem extends IIngredientItem {
-    uuid: string;
-}
+import { IConstructorItem } from '../../shared/types';
 
 type TConstructorItemProps = {
     item: IConstructorItem;
@@ -32,7 +28,7 @@ export function ConstructorItem({ item, index }: TConstructorItemProps) {
 
 	const [, drop] = useDrop({
 		accept: 'item',
-		hover(item: IIngredientItem & { index: number }, monitor) {
+		hover(item: IConstructorItem & { index: number }, monitor) {
 			if (!elementRef.current) {
 				return;
 			}
