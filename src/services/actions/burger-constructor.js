@@ -1,12 +1,8 @@
 import { placeAnOrder } from "../../shared/burgerApi";
+import { CLEAR_CART, ORDER_FAILED, ORDER_REQUEST, ORDER_SUCCESS } from "../constants/order/order";
 
 export const INCREASE_TOTAL_PRICE = 'INCREASE_TOTAL_PRICE';
 export const DECREASE_TOTAL_PRICE = 'DECREASE_TOTAL_PRICE';
-
-export const ORDER_REQUEST = 'ORDER_REQUEST';
-export const ORDER_SUCCESS = 'ORDER_SUCCESS';
-export const ORDER_FAILED = 'ORDER_FAILED';
-export const CLEAR_CART = 'CLEAR_CART';
 
 export function handlePlaceAnOrder(data) {
     return function(dispatch) {
