@@ -1,17 +1,5 @@
 import { IConstructorItem } from "../../shared/types";
 import { TConstructorActions } from "../actions/burger-constructor";
-import {
-    ADD_ITEM_TO_CONSTRUCTOR,
-    DELETE_ITEM_FROM_CONTRUCTOR,
-    MOVE_ITEM
-} from "../constants/burger-constructor";
-
-import {
-    CLEAR_CART,
-    ORDER_FAILED,
-    ORDER_REQUEST,
-    ORDER_SUCCESS
-} from "../constants/order";
 
 type TConstructorState = {
     buns: IConstructorItem[];
@@ -43,7 +31,7 @@ export const constructorReducer = (
     state = initialConstrState, action: TConstructorActions
 ) => {
     switch (action.type) {
-        case ADD_ITEM_TO_CONSTRUCTOR: {
+        case 'ADD_ITEM_TO_CONSTRUCTOR': {
             if (action.ingredient.type === 'bun') {
                 if (state.buns.length) {
                     state.totalPrice = 0;
@@ -67,7 +55,7 @@ export const constructorReducer = (
                 }
             }
         }
-        case DELETE_ITEM_FROM_CONTRUCTOR: {
+        case 'DELETE_ITEM_FROM_CONTRUCTOR': {
             let res = [...state.otherItems]
                 .find((item: IConstructorItem) => item._id === action.ingredient._id);
 
@@ -93,7 +81,7 @@ export const constructorReducer = (
                 }
             }
         }
-        case ORDER_REQUEST: {
+        case 'ORDER_REQUEST': {
             return {
                 ...state,
                 order: {
@@ -103,7 +91,7 @@ export const constructorReducer = (
                 }
             }
         }
-        case ORDER_SUCCESS: {
+        case 'ORDER_SUCCESS': {
             return {
                 ...state,
                 order: {
@@ -116,7 +104,7 @@ export const constructorReducer = (
                 }
             }
         }
-        case ORDER_FAILED: {
+        case 'ORDER_FAILED': {
             return {
                 ...state,
                 order: {
@@ -128,7 +116,7 @@ export const constructorReducer = (
                 }
             }
         }
-        case MOVE_ITEM: {
+        case 'MOVE_ITEM': {
 			let newItems = [...state.otherItems];
 			newItems.splice(action.toIndex, 0, newItems.splice(action.fromIndex, 1)[0]);
 			return {
@@ -136,7 +124,7 @@ export const constructorReducer = (
 				otherItems: [...newItems]
 			}
         }
-        case CLEAR_CART: {
+        case 'CLEAR_CART': {
             return {
                 ...initialConstrState,
                 totalPrice: 0

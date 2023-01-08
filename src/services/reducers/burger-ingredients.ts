@@ -1,8 +1,11 @@
-import {
-    GET_INGREDIENTS_REQUEST,
-    GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILED
-} from '../constants/burger-ingredients';
+import { IIngredientItem } from '../../shared/types';
+import { TIngredientsActions } from '../actions/burger-ingredients';
+
+type TInitialState = {
+    ingredientItems: IIngredientItem[];
+    ingredientRequest: boolean;
+    ingredientFailed: boolean;
+};
 
 const initialState = {
     ingredientItems: [],
@@ -10,15 +13,18 @@ const initialState = {
     ingredientFailed: false
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+    state: TInitialState = initialState,
+    action: TIngredientsActions
+) => {
     switch (action.type) {
-        case GET_INGREDIENTS_REQUEST: {
+        case 'GET_INGREDIENTS_REQUEST': {
             return {
                 ...state,
                 ingredientRequest: true
             }
         }
-        case GET_INGREDIENTS_SUCCESS: {
+        case 'GET_INGREDIENTS_SUCCESS': {
             return {
                 ...state,
                 ingredientItems: action.items,
@@ -26,7 +32,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ingredientFailed: false
             }
         }
-        case GET_INGREDIENTS_FAILED: {
+        case 'GET_INGREDIENTS_FAILED': {
             return {
                 ...state,
                 ingredientRequest: false,
