@@ -1,5 +1,7 @@
-import { IConstructorItem, TOrderData, TOrderID } from "../../shared/types";
-import { ADD_ITEM_TO_CONSTRUCTOR, DELETE_ITEM_FROM_CONTRUCTOR } from "../constants/burger-constructor";
+import { IConstructorItem, TOrderID } from "../../shared/types";
+import {
+    ADD_ITEM_TO_CONSTRUCTOR, DELETE_ITEM_FROM_CONTRUCTOR, MOVE_ITEM
+} from "../constants/burger-constructor";
 import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILED, CLEAR_CART } from '../../services/constants/order';
 import { placeAnOrder } from "../../shared/burgerApi";
 
@@ -13,8 +15,39 @@ export interface IDeleteItemFromConstructorAction {
     readonly ingredient: IConstructorItem;
 }
 
+export interface IMoveItemInConstructorAction {
+    readonly type: typeof MOVE_ITEM;
+    readonly toIndex: number;
+    readonly fromIndex: number;
+}
+
+export interface IOrderRequestAction {
+    readonly type: typeof ORDER_REQUEST;
+}
+
+export interface IOrderSuccessAction {
+    readonly type: typeof ORDER_SUCCESS;
+    readonly payload: {
+        number: number;
+        name: string;
+    }
+}
+
+export interface IOrderFailedAction {
+    readonly type: typeof ORDER_FAILED;
+}
+
+export interface IClearCartAction {
+    readonly type: typeof CLEAR_CART;
+}
+
 export type TConstructorActions = IAddItemToConstructorAction
-    | IDeleteItemFromConstructorAction;
+    | IDeleteItemFromConstructorAction
+    | IMoveItemInConstructorAction
+    | IOrderRequestAction
+    | IOrderSuccessAction
+    | IOrderFailedAction
+    | IClearCartAction;
 
 export const addItemToConstructor = (
     ingredient: IConstructorItem
@@ -31,6 +64,17 @@ export const deleteItemFromConstructor = (
     return ({
         type: DELETE_ITEM_FROM_CONTRUCTOR,
         ingredient: ingredient
+    });
+};
+
+export const moveItemInConstructor = (
+    toIndex: number,
+    fromIndex: number
+): IMoveItemInConstructorAction => {
+    return ({
+        type: MOVE_ITEM,
+        toIndex: toIndex,
+        fromIndex: fromIndex
     });
 };
 

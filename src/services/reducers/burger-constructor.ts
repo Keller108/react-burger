@@ -1,3 +1,5 @@
+import { IConstructorItem } from "../../shared/types";
+import { TConstructorActions } from "../actions/burger-constructor";
 import {
     ADD_ITEM_TO_CONSTRUCTOR,
     DELETE_ITEM_FROM_CONTRUCTOR,
@@ -11,7 +13,20 @@ import {
     ORDER_SUCCESS
 } from "../constants/order";
 
-const initialConstrState = {
+type TConstructorState = {
+    buns: IConstructorItem[];
+    otherItems: IConstructorItem[];
+    totalPrice: number;
+    order: {
+        name: string;
+        number: null | number;
+        request: boolean;
+        success: boolean;
+        error: boolean;
+    };
+};
+
+const initialConstrState: TConstructorState = {
     buns: [],
     otherItems: [],
     totalPrice: 0,
@@ -24,7 +39,9 @@ const initialConstrState = {
     }
 };
 
-export const constructorReducer = (state = initialConstrState, action) => {
+export const constructorReducer = (
+    state = initialConstrState, action: TConstructorActions
+) => {
     switch (action.type) {
         case ADD_ITEM_TO_CONSTRUCTOR: {
             if (action.ingredient.type === 'bun') {
@@ -51,8 +68,11 @@ export const constructorReducer = (state = initialConstrState, action) => {
             }
         }
         case DELETE_ITEM_FROM_CONTRUCTOR: {
-            const priceToDecrease = [...state.otherItems]
-                .find(item => item._id === action.ingredient._id).price;
+            let res = [...state.otherItems]
+                .find((item: IConstructorItem) => item._id === action.ingredient._id);
+
+            if (!res) return;
+            const priceToDecrease = res.price;
 
             const result = [...state.otherItems]
                 .filter(item => item._id === action.ingredient._id);
