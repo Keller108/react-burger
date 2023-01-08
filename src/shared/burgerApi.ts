@@ -10,6 +10,7 @@ export const fetchIngredients = async (): Promise<IIngredientsResponse> => {
 export const placeAnOrder = async (
     orderData: TOrderData
 ): Promise<{ success: boolean; name: string; order: { number: number } }> => {
+    console.log('orderData from api', orderData);
     return fetch(ORDERS_PATH, {
         method: 'POST',
         headers: {

@@ -16,4 +16,5 @@ export type { IForgotResponse } from './IForgotResponse';
 export type { IResetResponse } from './IResetResponse';
 export type { ILogoutResponse } from './ILogoutResponse';
 
+export type { TOrderIDs } from './TOrderIDs';
 export type { TOrderData } from './TOrderData';
