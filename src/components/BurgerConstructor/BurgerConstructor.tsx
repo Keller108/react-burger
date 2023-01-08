@@ -10,13 +10,10 @@ import { Button,
 import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
-import {
-    addItemToConstructor,
-    handlePlaceAnOrder,
-} from '../../services/actions/burger-constructor';
+import { addItemToConstructor, handlePlaceAnOrder } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/constants/modal';
 import { LOGIN_ROUTE } from '../../shared/routes';
-import { IIngredientItem, TOrderData } from '../../shared/types';
+import { IIngredientItem, TOrderIDs } from '../../shared/types';
 import { ORDER_REQUEST } from '../../services/constants/order';
 
 export function BurgerConstructor() {
@@ -30,8 +27,8 @@ export function BurgerConstructor() {
     );
 
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
-    //@ts-ignore
-    const placeOrder = data => dispatch(handlePlaceAnOrder(data));
+
+    const placeOrder = (data: TOrderIDs) => dispatch(handlePlaceAnOrder(data));
     //@ts-ignore
     const { buns, otherItems, totalPrice, order } = useSelector(store => store.burgerConstructor);
 
@@ -42,7 +39,7 @@ export function BurgerConstructor() {
         }
     });
 
-    const orderData: TOrderData = useMemo(() => {
+    const orderData: TOrderIDs = useMemo(() => {
         return [...buns, ...otherItems, ...buns].map(item => item._id);
     },[buns, otherItems])
 
@@ -50,6 +47,7 @@ export function BurgerConstructor() {
         if (isLogined) {
             prepareOrderData();
             placeOrder(orderData);
+            console.log('orderData', orderData);
         } else {
             navigate(LOGIN_ROUTE);
         }
