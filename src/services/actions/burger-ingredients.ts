@@ -1,8 +1,30 @@
 import { fetchIngredients } from "../../shared/burgerApi";
-import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS } from "../constants/burger-ingredients";
+import { IIngredientItem } from "../../shared/types";
+import {
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS
+} from "../constants/burger-ingredients";
+
+export interface IIngredientsRequestAction {
+    readonly type: typeof GET_INGREDIENTS_REQUEST;
+}
+
+export interface IIngredientsSuccessAction {
+    readonly type: typeof GET_INGREDIENTS_SUCCESS;
+    readonly items: IIngredientItem[];
+}
+
+export interface IIngredientsFailedAction {
+    readonly type: typeof GET_INGREDIENTS_FAILED;
+}
+
+export type IIngredientsActions = IIngredientsRequestAction
+    | IIngredientsSuccessAction
+    | IIngredientsFailedAction;
 
 export function getIngredients() {
-    return function(dispatch) {
+    return function(dispatch: any) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         });
