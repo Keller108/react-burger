@@ -1,4 +1,4 @@
-import { IConstructorItem, TOrderIDs } from "../../shared/types";
+import { IConstructorItem, TOrderData, TOrderID } from "../../shared/types";
 import { ADD_ITEM_TO_CONSTRUCTOR, DELETE_ITEM_FROM_CONTRUCTOR } from "../constants/burger-constructor";
 import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILED, CLEAR_CART } from '../../services/constants/order';
 import { placeAnOrder } from "../../shared/burgerApi";
@@ -34,7 +34,7 @@ export const deleteItemFromConstructor = (
     });
 };
 
-export function handlePlaceAnOrder(data: TOrderIDs) {
+export function handlePlaceAnOrder(data: TOrderID[]) {
     return function(dispatch: any) {
         return placeAnOrder({ ingredients: data })
             .then(res => {

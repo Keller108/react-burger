@@ -1,5 +1,5 @@
-import { TOrderIDs } from "./TOrderIDs"
+import { TOrderID } from "./TOrderID"
 
 export type TOrderData = {
-    ingredients: TOrderIDs;
+    ingredients: TOrderID[];
 };

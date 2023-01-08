@@ -13,7 +13,7 @@ import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import { addItemToConstructor, handlePlaceAnOrder } from '../../services/actions/burger-constructor';
 import { OPEN_MODAL } from '../../services/constants/modal';
 import { LOGIN_ROUTE } from '../../shared/routes';
-import { IIngredientItem, TOrderIDs } from '../../shared/types';
+import { IIngredientItem, TOrderID } from '../../shared/types';
 import { ORDER_REQUEST } from '../../services/constants/order';
 
 export function BurgerConstructor() {
@@ -27,8 +27,8 @@ export function BurgerConstructor() {
     );
 
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
-
-    const placeOrder = (data: TOrderIDs) => dispatch(handlePlaceAnOrder(data));
+    //@ts-ignore
+    const placeOrder = (data: TOrderID[]) => dispatch(handlePlaceAnOrder(data));
     //@ts-ignore
     const { buns, otherItems, totalPrice, order } = useSelector(store => store.burgerConstructor);
 
@@ -39,7 +39,7 @@ export function BurgerConstructor() {
         }
     });
 
-    const orderData: TOrderIDs = useMemo(() => {
+    const orderData: TOrderID[] = useMemo(() => {
         return [...buns, ...otherItems, ...buns].map(item => item._id);
     },[buns, otherItems])
 
