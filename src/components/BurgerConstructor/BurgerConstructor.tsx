@@ -47,7 +47,6 @@ export function BurgerConstructor() {
         if (isLogined) {
             prepareOrderData();
             placeOrder(orderData);
-            console.log('orderData', orderData);
         } else {
             navigate(LOGIN_ROUTE);
         }
