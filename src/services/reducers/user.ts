@@ -1,28 +1,15 @@
-import {
-    CHECK_USER_FAILED,
-    CHECK_USER_REQUEST,
-    CHECK_USER_SUCCESS,
-    LOGIN_FAILED,
-    LOGIN_REQUEST,
-    LOGIN_SUCCESS,
-    PASS_RESET_FAILED,
-    PASS_RESET_REQUEST,
-    PASS_RESET_SUCCESS,
-    REGISTER_FAILED,
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
-    PASS_FORGOT_FAILED,
-    PASS_FORGOT_REQUEST,
-    PASS_FORGOT_SUCCESS,
-    USER_LOGOUT_FAILED,
-    USER_LOGOUT_REQUEST,
-    USER_LOGOUT_SUCCESS,
-    USER_EDIT_REQUEST,
-    USER_EDIT_SUCCESS,
-    USER_EDIT_FAILED
-} from "../actions/user";
+import { IUserModel } from "../../shared/types";
+import { TUserActions } from "../actions/user";
 
-const initialUserState = {
+type TInitialState = {
+    user: IUserModel | null;
+    isLogined: boolean;
+    request: boolean;
+    success: boolean;
+    error: boolean;
+};
+
+const initialUserState: TInitialState = {
     user: null,
     isLogined: false,
     request: false,
@@ -30,16 +17,19 @@ const initialUserState = {
     error: false
 };
 
-export const userReducer = (state = initialUserState, action) => {
+export const userReducer = (
+    state: TInitialState = initialUserState,
+    action: TUserActions
+) => {
     switch (action.type) {
-        case REGISTER_REQUEST: {
+        case 'REGISTER_REQUEST': {
             return {
                 ...state,
                 request: true,
                 error: false
             }
         }
-        case REGISTER_SUCCESS: {
+        case 'REGISTER_SUCCESS': {
             return {
                 ...state,
                 user: action.user,
@@ -49,20 +39,20 @@ export const userReducer = (state = initialUserState, action) => {
                 isLogined: true
             }
         }
-        case REGISTER_FAILED: {
+        case 'REGISTER_FAILED': {
             return {
                 ...state,
                 request: false,
                 error: true
             }
         }
-        case LOGIN_REQUEST: {
+        case 'LOGIN_REQUEST': {
             return {
                 ...state,
                 request: true
             }
         }
-        case LOGIN_SUCCESS: {
+        case 'LOGIN_SUCCESS': {
             return {
                 ...state,
                 user: action.user,
@@ -72,7 +62,7 @@ export const userReducer = (state = initialUserState, action) => {
                 isLogined: true
             }
         }
-        case LOGIN_FAILED: {
+        case 'LOGIN_FAILED': {
             return {
                 ...state,
                 request: false,
@@ -80,7 +70,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: true
             }
         }
-        case CHECK_USER_REQUEST: {
+        case 'CHECK_USER_REQUEST': {
             return {
                 ...state,
                 request: true,
@@ -89,7 +79,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case CHECK_USER_SUCCESS: {
+        case 'CHECK_USER_SUCCESS': {
             return {
                 ...state,
                 request: false,
@@ -103,7 +93,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case CHECK_USER_FAILED: {
+        case 'CHECK_USER_FAILED': {
             return {
                 ...state,
                 request: false,
@@ -112,14 +102,14 @@ export const userReducer = (state = initialUserState, action) => {
                 error: true,
             }
         }
-        case PASS_FORGOT_REQUEST: {
+        case 'PASS_FORGOT_REQUEST': {
             return {
                 ...state,
                 request: true,
                 success: false
             }
         }
-        case PASS_FORGOT_SUCCESS: {
+        case 'PASS_FORGOT_SUCCESS': {
             return {
                 ...state,
                 request: false,
@@ -127,7 +117,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case PASS_FORGOT_FAILED: {
+        case 'PASS_FORGOT_FAILED': {
             return {
                 ...state,
                 request: false,
@@ -136,7 +126,7 @@ export const userReducer = (state = initialUserState, action) => {
             }
         }
 
-        case PASS_RESET_REQUEST: {
+        case 'PASS_RESET_REQUEST': {
             return {
                 ...state,
                 request: true,
@@ -144,7 +134,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case PASS_RESET_SUCCESS: {
+        case 'PASS_RESET_SUCCESS': {
             return {
                 ...state,
                 request: false,
@@ -152,7 +142,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case PASS_RESET_FAILED: {
+        case 'PASS_RESET_FAILED': {
             return {
                 ...state,
                 request: false,
@@ -160,7 +150,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: true
             }
         }
-        case USER_LOGOUT_REQUEST: {
+        case 'USER_LOGOUT_REQUEST': {
             return {
                 ...state,
                 request: true,
@@ -168,7 +158,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case USER_LOGOUT_SUCCESS: {
+        case 'USER_LOGOUT_SUCCESS': {
             return {
                 ...state,
                 user: null,
@@ -178,7 +168,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false
             }
         }
-        case USER_LOGOUT_FAILED: {
+        case 'USER_LOGOUT_FAILED': {
             return {
                 ...state,
                 request: false,
@@ -186,7 +176,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: true,
             }
         }
-        case USER_EDIT_REQUEST: {
+        case 'USER_EDIT_REQUEST': {
             return {
                 ...state,
                 request: true,
@@ -194,7 +184,7 @@ export const userReducer = (state = initialUserState, action) => {
                 error: false,
             }
         }
-        case USER_EDIT_SUCCESS: {
+        case 'USER_EDIT_SUCCESS': {
             return {
                 ...state,
                 request: false,
@@ -209,7 +199,7 @@ export const userReducer = (state = initialUserState, action) => {
                 isLogined: true,
             }
         }
-        case USER_EDIT_FAILED: {
+        case 'USER_EDIT_FAILED': {
             return {
                 ...state,
                 request: false,

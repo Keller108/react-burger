@@ -54,7 +54,7 @@ export interface ILoginSuccessAction {
     readonly user: IUserModel;
 }
 
-export interface ILoginFailedAction{
+export interface ILoginFailedAction {
     readonly type: typeof LOGIN_FAILED;
 }
 
@@ -79,44 +79,44 @@ export interface IPassResetSuccessAction{
     readonly type: typeof PASS_RESET_SUCCESS;
 }
 
-export interface IPassResetFailedAction{
+export interface IPassResetFailedAction {
     readonly type: typeof PASS_RESET_FAILED;
 }
 
-export interface IPassForgotRequestAction{
+export interface IPassForgotRequestAction {
     readonly type: typeof PASS_FORGOT_REQUEST;
 }
 
-export interface IPassForgotSuccessAction{
+export interface IPassForgotSuccessAction {
     readonly type: typeof PASS_FORGOT_SUCCESS;
 }
 
-export interface IPassForgotFailedAction{
+export interface IPassForgotFailedAction {
     readonly type: typeof PASS_FORGOT_FAILED;
 }
 
-export interface IUserLogoutRequestAction{
+export interface IUserLogoutRequestAction {
     readonly type: typeof USER_LOGOUT_REQUEST;
 }
 
-export interface IUserLogoutSuccessAction{
+export interface IUserLogoutSuccessAction {
     readonly type: typeof USER_LOGOUT_SUCCESS;
 }
 
-export interface IUserLogoutFailedAction{
+export interface IUserLogoutFailedAction {
     readonly type: typeof USER_LOGOUT_FAILED;
 }
 
-export interface IUserEditRequestAction{
+export interface IUserEditRequestAction {
     readonly type: typeof USER_EDIT_REQUEST;
 }
 
-export interface IUserEditSuccessAction{
+export interface IUserEditSuccessAction {
     readonly type: typeof USER_EDIT_SUCCESS;
     readonly user: IUserModel;
 }
 
-export interface IUserEditFailedAction{
+export interface IUserEditFailedAction {
     readonly type: typeof USER_EDIT_FAILED;
 }
 
@@ -265,6 +265,7 @@ export type TUserActions = IRegisterRequestAction
     | IRegisterSuccessAction
     | IRegisterFailedAction
     | ILoginRequestAction
+    | ILoginFailedAction
     | ILoginSuccessAction
     | ICheckUserRequestAction
     | ICheckUserSuccessAction
