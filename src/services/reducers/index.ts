@@ -6,6 +6,12 @@ import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 import { userReducer } from './user';
 
+type TInitialModalState = {
+    isActive: boolean;
+    content: JSX.Element | null;
+    currentData: null | string;
+};
+
 const initialModalState = {
     isActive: false,
     content: null,

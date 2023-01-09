@@ -5,6 +5,7 @@ import styles from './Register.module.css';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../services/actions/user';
 import { SHOP_ROUTE } from '../../shared/routes';
+import { IUserModel } from '../../shared/types';
 
 export function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ export function RegisterPage() {
 
     const handleRegister = () => dispatch(
         //@ts-ignore
-        signUp({ email: email, password: password, name: name })
+        signUp({ email: email, password: password, name: name } as IUserModel)
     );
 
     const clearEmail = () => {
