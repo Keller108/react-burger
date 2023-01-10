@@ -5,6 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory';
 import { SWITCH_TAB } from '../../services/constants/tab';
 import { IIngredientItem } from '../../shared/types';
+import { switchTab } from '../../services/actions/tab';
 
 export function BurgerIngredients() {
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export function BurgerIngredients() {
     };
 
     const handleSwitchTab = (type: string) => {
-        dispatch({ type: SWITCH_TAB, payload: type });
+        dispatch(switchTab(type));
         setCurrent(type);
     };
 
