@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import { LOADER_OFF, LOADER_ON } from '../constants/loader';
 import { SWITCH_TAB } from '../constants/tab';
-import { CLOSE_MODAL, OPEN_MODAL } from '../constants/modal';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 import { userReducer } from './user';
+import { TModalActions } from '../actions/modal';
+import { ITabSwitchAction } from '../actions/tab';
+import { TLoaderActions } from '../actions/loader';
 
 type TInitialModalState = {
     isActive: boolean;
@@ -12,15 +14,23 @@ type TInitialModalState = {
     currentData: null | string;
 };
 
-const initialModalState = {
+type TInitialTabState = {
+    readonly tabs: ReadonlyArray<string>;
+    readonly activeTab: string;
+};
+
+const initialModalState: TInitialModalState = {
     isActive: false,
     content: null,
     currentData: null
 };
 
-const modalReducer = (state = initialModalState, action) => {
+const modalReducer = (
+    state: TInitialModalState = initialModalState,
+    action: TModalActions
+) => {
     switch (action.type) {
-        case OPEN_MODAL: {
+        case 'OPEN_MODAL': {
             return {
                 ...state,
                 isActive: true,
@@ -28,7 +38,7 @@ const modalReducer = (state = initialModalState, action) => {
                 currentData: action.data
             }
         }
-        case CLOSE_MODAL: {
+        case 'CLOSE_MODAL': {
             return {
                 ...state,
                 isActive: false,
@@ -41,13 +51,15 @@ const modalReducer = (state = initialModalState, action) => {
     }
 };
 
-
-const initialTabState = {
+const initialTabState: TInitialTabState = {
     tabs: ['bun', 'sauce', 'main'],
     activeTab: 'bun'
 };
 
-const tabReducer = (state = initialTabState, action) => {
+const tabReducer = (
+    state: TInitialTabState = initialTabState,
+    action: ITabSwitchAction
+) => {
     switch (action.type) {
         case SWITCH_TAB: {
             return {
@@ -65,7 +77,7 @@ const initialAppState = {
     isLoading: false
 };
 
-const appReducer = (state = initialAppState, action) => {
+const appReducer = (state = initialAppState, action: TLoaderActions) => {
     switch (action.type) {
         case LOADER_ON: {
             return {
