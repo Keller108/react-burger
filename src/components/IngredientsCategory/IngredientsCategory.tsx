@@ -4,7 +4,7 @@ import categoryStyle from './IngredientsCategory.module.css';
 import { Card } from '../Card';
 import { IngredientDetails } from '../IngredientDetails';
 import { IIngredientItem } from '../../shared/types';
-import { OPEN_MODAL } from '../../services/constants/modal';
+import { openModal } from '../../services/actions/modal';
 
 type TIngredientsCategoryProps = {
     title: string;
@@ -21,11 +21,9 @@ export const IngredientsCategory = forwardRef<Ref, TIngredientsCategoryProps>(({
 }: TIngredientsCategoryProps, ref ) => {
     const dispatch = useDispatch();
 
-    const renderModal = (cardData: IIngredientItem) => dispatch({
-        type: OPEN_MODAL,
-        payload: <IngredientDetails />,
-        data: cardData
-    });
+    const renderModal = (cardData: IIngredientItem) => dispatch(
+        openModal(<IngredientDetails />, cardData)
+    );
 
     const renderElement = (item: IIngredientItem) => {
         renderModal(item);

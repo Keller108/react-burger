@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordRequest } from '../../services/actions/user';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { Preloader } from '../../components/Preloader';
-import { LOADER_OFF, LOADER_ON } from '../../services/constants/loader';
+import { loaderOff, loaderOn } from '../../services/actions/loader';
 
 type TFormData = {
     password: string;
@@ -27,13 +27,13 @@ export function ResetPassword() {
 
     const handleSubmitResetForm = async (evt: FormEvent) => {
         evt.preventDefault();
-        dispatch({ type: LOADER_ON });
+        dispatch(loaderOn());
 
         let result = await handleResetPassword({ password: password, token: code });
 
         setPassword('');
         clearCode();
-        dispatch({ type: LOADER_OFF });
+        dispatch(loaderOff());
 
         if (result && result.success) navigate(LOGIN_ROUTE);
     };

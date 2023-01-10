@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory';
-import { SWITCH_TAB } from '../../services/constants/tab';
 import { IIngredientItem } from '../../shared/types';
 import { switchTab } from '../../services/actions/tab';
 
@@ -48,7 +47,7 @@ export function BurgerIngredients() {
             return Math.abs(parentRef.current.getBoundingClientRect()
                 .top - elementRef.current.getBoundingClientRect().top);
         } else return 0;
-    }
+    };
 
 	const handleScroll = () => {
 		const bunDistance = getDistance(rootRef, bunRef);
