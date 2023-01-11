@@ -1,4 +1,4 @@
-import { IUserModel } from "../../shared/types";
+import { AppDispatch, AppThunk, IUserModel } from "../../shared/types";
 import {
     checkIfExist,
     createUser,
@@ -283,74 +283,63 @@ export type TUserActions = IRegisterRequestAction
     | IUserEditSuccessAction
     | IUserEditFailedAction;
 
-export function signUp(newUser: IUserModel) {
-    return function(dispatch: any) {
-        return createUser(newUser)
-            .then(res => {
-                dispatch(registerRequest());
-
-                if (res && res.success) {
-                    const userData = {
-                        email: res.user.email,
-                        name: res.user.name,
-                        password: newUser.password
-                    };
-                    dispatch(registerSuccess(userData));
-                    localStorage.setItem('refreshToken', res.refreshToken);
-                    localStorage.setItem('accessToken', res.accessToken);
-                } else {
-                    dispatch(registerFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при регистрации пользователя – ${err}`));
-    }
+export const signUp = (newUser: IUserModel): AppThunk => (dispatch: AppDispatch) => {
+    dispatch(registerRequest());
+    createUser(newUser)
+        .then(res => {
+            if (res && res.success) {
+                const userData = {
+                    email: res.user.email,
+                    name: res.user.name,
+                    password: newUser.password
+                };
+                dispatch(registerSuccess(userData));
+                localStorage.setItem('refreshToken', res.refreshToken);
+                localStorage.setItem('accessToken', res.accessToken);
+            } else {
+                dispatch(registerFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при регистрации пользователя – ${err}`));
 }
 
-export function signIn(user: IUserModel) {
-    return function(dispatch: any) {
-        return login(user)
-            .then(res => {
-                dispatch(loginRequest());
-
-                if (res && res.success) {
-                    dispatch(loginSuccess({
-                        email: res.user.email,
-                        name: res.user.name,
-                        password: user.password
-                    }));
-                    localStorage.setItem('refreshToken', res.refreshToken);
-                    localStorage.setItem('accessToken', res.accessToken);
-                } else {
-                    dispatch(loginFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`));
-    }
+export const signIn = (user: IUserModel): AppThunk => (dispatch: AppDispatch) => {
+    dispatch(loginRequest());
+    login(user)
+        .then(res => {
+            if (res && res.success) {
+                dispatch(loginSuccess({
+                    email: res.user.email,
+                    name: res.user.name,
+                    password: user.password
+                }));
+                localStorage.setItem('refreshToken', res.refreshToken);
+                localStorage.setItem('accessToken', res.accessToken);
+            } else {
+                dispatch(loginFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`));
 }
 
-export function userCheck() {
-    return async function(dispatch: any) {
-        return getUser()
-            .then(res => {
-                dispatch(checkUserRequest())
-
-                if (res && res.success) {
-                    dispatch(checkUserSuccess({
-                        email: res.user.email,
-                        name: res.user.name
-                    }));
-                } else {
-                    dispatch(checkUserFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при проверке пользователя – ${err}`));
-    }
+export const userCheck = (): AppThunk => (dispatch: AppDispatch) => {
+    dispatch(checkUserRequest());
+    getUser()
+        .then(res => {
+            dispatch(checkUserRequest())
+            if (res && res.success) {
+                dispatch(checkUserSuccess({
+                    email: res.user.email,
+                    name: res.user.name
+                }));
+            } else {
+                dispatch(checkUserFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при проверке пользователя – ${err}`));
 }
 
 export function resetPasswordRequest(data: { password: string; token: string; }) {

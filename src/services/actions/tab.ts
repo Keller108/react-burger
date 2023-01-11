@@ -9,4 +9,4 @@ export type TTabActions = ITabSwitchAction;
 
 export const switchTab = (
     activeTab: string
-): ITabSwitchAction => ({type: SWITCH_TAB, payload: activeTab });
+): ITabSwitchAction => ({ type: SWITCH_TAB, payload: activeTab });
