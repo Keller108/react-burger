@@ -1,5 +1,5 @@
 import { IConstructorItem } from "../../shared/types";
-import { TConstructorActions } from "../actions/burger-constructor";
+import { TConstructorActions } from "../actions";
 
 type TConstructorState = {
     buns: IConstructorItem[];

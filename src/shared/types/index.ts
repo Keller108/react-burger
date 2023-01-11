@@ -1,3 +1,8 @@
+import {
+    TConstructorActions, TIngredientsActions, TLoaderActions, TModalActions, TTabActions, TUserActions,
+} from '../../services/actions';
+import { store } from '../../services/store';
+
 export type { IIngredientItem } from './IIngredientItem';
 export type { IConstructorItem } from './IConstructorItem';
 export type { IIngredientsResponse } from'./IIngredientsResponse';
@@ -18,3 +23,12 @@ export type { ILogoutResponse } from './ILogoutResponse';
 
 export type { TOrderID } from './TOrderID';
 export type { TOrderData } from './TOrderData';
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type TApplicationActions = TConstructorActions
+    | TIngredientsActions
+    | TLoaderActions
+    | TModalActions
+    | TTabActions
+    | TUserActions;

@@ -1,5 +1,5 @@
 import { IIngredientItem } from '../../shared/types';
-import { TIngredientsActions } from '../actions/burger-ingredients';
+import { TIngredientsActions } from '../actions';
 
 type TInitialState = {
     ingredientItems: IIngredientItem[];

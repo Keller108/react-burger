@@ -1,5 +1,5 @@
 import { IUserModel } from "../../shared/types";
-import { TUserActions } from "../actions/user";
+import { TUserActions } from "../actions";
 
 type TInitialState = {
     user: IUserModel | null;
