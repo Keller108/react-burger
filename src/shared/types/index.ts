@@ -1,3 +1,5 @@
+import { Action, ActionCreator, Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import {
     TConstructorActions, TIngredientsActions, TLoaderActions, TModalActions, TTabActions, TUserActions,
 } from '../../services/actions';
@@ -32,3 +34,10 @@ export type TApplicationActions = TConstructorActions
     | TModalActions
     | TTabActions
     | TUserActions;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+    ThunkAction<TReturn, Action, RootState, TApplicationActions>
+
+>;
+
+export type AppDispatch = Dispatch<TApplicationActions>;
