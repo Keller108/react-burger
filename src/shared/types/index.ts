@@ -1,4 +1,3 @@
-import { Action, ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import {
     TConstructorActions, TIngredientsActions, TLoaderActions, TModalActions, TTabActions, TUserActions,
@@ -35,9 +34,6 @@ export type TApplicationActions = TConstructorActions
     | TTabActions
     | TUserActions;
 
-export type AppThunk<TReturn = void> = ActionCreator<
-    ThunkAction<TReturn, Action, RootState, TApplicationActions>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
 
->;
-
-export type AppDispatch = Dispatch<TApplicationActions>;
+export type AppDispatch<ReturnType = void> = (action: TApplicationActions | AppThunk<ReturnType>) => ReturnType;
