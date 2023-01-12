@@ -1,3 +1,4 @@
+import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
 import { AppDispatch, AppThunk, IUserModel } from "../../shared/types";
 import {
     checkIfExist,
@@ -237,15 +238,11 @@ function userLogOutSuccess(): IUserLogoutSuccessAction {
 }
 
 function userLogOutFailed(): IUserLogoutFailedAction {
-    return ({
-        type: USER_LOGOUT_FAILED
-    });
+    return ({ type: USER_LOGOUT_FAILED });
 }
 
 function userEditRequest(): IUserEditRequestAction {
-    return ({
-        type: USER_EDIT_REQUEST
-    });
+    return ({ type: USER_EDIT_REQUEST });
 }
 
 function userEditSuccess(userForm: IUserModel): IUserEditSuccessAction {
@@ -256,9 +253,7 @@ function userEditSuccess(userForm: IUserModel): IUserEditSuccessAction {
 }
 
 function userEditFailed(): IUserEditFailedAction {
-    return ({
-        type: USER_EDIT_FAILED
-    });
+    return ({ type: USER_EDIT_FAILED });
 }
 
 export type TUserActions = IRegisterRequestAction
@@ -329,11 +324,12 @@ export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
     getUser()
         .then(res => {
             if (res && res.success) {
-                let result = dispatch(checkUserSuccess({
+                dispatch(checkUserSuccess({
                     email: res.user.email,
                     name: res.user.name
                 }));
-                console.log('result from thunk', result);
+            } else if (res && !res.success) {
+                handleTokenRefresh();
             } else {
                 dispatch(checkUserFailed());
             }

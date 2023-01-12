@@ -7,6 +7,7 @@ type TInitialState = {
     request: boolean;
     success: boolean;
     error: boolean;
+    isLoading: boolean;
 };
 
 const initialUserState: TInitialState = {
@@ -14,7 +15,8 @@ const initialUserState: TInitialState = {
     isLogined: false,
     request: false,
     success: false,
-    error: false
+    error: false,
+    isLoading: false
 };
 
 export const userReducer = (
