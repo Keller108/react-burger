@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../shared/hooks";
 import { AppHeader } from '../AppHeader';
 import {
     HomePage, LoginPage, RegisterPage, ForgotPassword, ResetPassword, ProfilePage, IngredientPage, NotFound
@@ -16,14 +16,12 @@ import { SHOP_ROUTE } from "../../shared/routes";
 
 export const App = () => {
     const [isLoading, setIsLoading] = useState(false);
-    //@ts-ignore
     const { isActive } = useSelector((store) => store.modal);
 
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    //@ts-ignore
     const handleUserCheck = () => dispatch(userCheck());
 
     const state = location.state && location.state.background;

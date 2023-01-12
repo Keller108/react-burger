@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ResetPassword.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import { resetPasswordRequest } from '../../services/actions/user';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { Preloader } from '../../components/Preloader';
@@ -14,14 +14,13 @@ type TFormData = {
 };
 
 export function ResetPassword() {
-    //@ts-ignore
+
     const { isLoading } = useSelector(store => store.appStore);
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    //@ts-ignore
     const handleResetPassword = (data: TFormData) => dispatch(resetPasswordRequest(data));
     const clearCode = () => setCode('');
 

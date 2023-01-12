@@ -324,9 +324,8 @@ export const signIn = (user: IUserModel): AppThunk => async (dispatch: AppDispat
         .catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`));
 }
 
-export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
-    dispatch(checkUserRequest());
-    return await getUser()
+export const userCheck = (): AppThunk => (dispatch: AppDispatch) => {
+    return getUser()
         .then(res => {
             dispatch(checkUserRequest())
             if (res && res.success) {
