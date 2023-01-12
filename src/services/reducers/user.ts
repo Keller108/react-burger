@@ -7,7 +7,6 @@ type TInitialState = {
     request: boolean;
     success: boolean;
     error: boolean;
-    isLoading: boolean;
 };
 
 const initialUserState: TInitialState = {
@@ -16,7 +15,6 @@ const initialUserState: TInitialState = {
     request: false,
     success: false,
     error: false,
-    isLoading: false
 };
 
 export const userReducer = (
@@ -24,6 +22,14 @@ export const userReducer = (
     action: TUserActions
 ) => {
     switch (action.type) {
+        case 'SET_DEFAULT': {
+            return {
+                ...state,
+                request: false,
+                success: false,
+                error: false
+            }
+        }
         case 'REGISTER_REQUEST': {
             return {
                 ...state,

@@ -32,6 +32,7 @@ import {
     USER_LOGOUT_REQUEST,
     USER_LOGOUT_SUCCESS
 } from "../constants/user";
+import { SET_DEFAULT } from "../constants/user/user";
 
 export interface IRegisterRequestAction {
     readonly type: typeof REGISTER_REQUEST;
@@ -121,10 +122,12 @@ export interface IUserEditFailedAction {
     readonly type: typeof USER_EDIT_FAILED;
 }
 
+export interface ISetDefault {
+    readonly type: typeof SET_DEFAULT;
+}
+
 function registerRequest(): IRegisterRequestAction {
-    return ({
-        type: REGISTER_REQUEST,
-    });
+    return ({ type: REGISTER_REQUEST });
 }
 
 function registerSuccess(data: IUserModel): IRegisterSuccessAction {
@@ -139,15 +142,11 @@ function registerSuccess(data: IUserModel): IRegisterSuccessAction {
 }
 
 function registerFailed(): IRegisterFailedAction {
-    return ({
-        type: REGISTER_FAILED
-    });
+    return ({ type: REGISTER_FAILED });
 }
 
 function loginRequest(): ILoginRequestAction {
-    return ({
-        type: LOGIN_REQUEST
-    });
+    return ({ type: LOGIN_REQUEST });
 }
 
 function loginSuccess(data: IUserModel): ILoginSuccessAction {
@@ -162,15 +161,11 @@ function loginSuccess(data: IUserModel): ILoginSuccessAction {
 }
 
 function loginFailed(): ILoginFailedAction {
-    return ({
-        type: LOGIN_FAILED
-    });
+    return ({ type: LOGIN_FAILED });
 }
 
 function checkUserRequest(): ICheckUserRequestAction {
-    return ({
-        type: CHECK_USER_REQUEST
-    });
+    return ({ type: CHECK_USER_REQUEST });
 }
 
 function checkUserSuccess(data: IUserModel): ICheckUserSuccessAction {
@@ -184,51 +179,35 @@ function checkUserSuccess(data: IUserModel): ICheckUserSuccessAction {
 }
 
 function checkUserFailed(): ICheckUserFailedAction {
-    return ({
-        type: CHECK_USER_FAILED
-    });
+    return ({ type: CHECK_USER_FAILED });
 }
 
 function passResetRequest(): IPassResetRequestAction {
-    return ({
-        type: PASS_RESET_REQUEST
-    });
+    return ({ type: PASS_RESET_REQUEST });
 }
 
 function passResetSuccess(): IPassResetSuccessAction {
-    return ({
-        type: PASS_RESET_SUCCESS
-    });
+    return ({ type: PASS_RESET_SUCCESS });
 }
 
 function passResetFailed(): IPassResetFailedAction {
-    return ({
-        type: PASS_RESET_FAILED
-    });
+    return ({ type: PASS_RESET_FAILED });
 }
 
 function passForgotRequest(): IPassForgotRequestAction {
-    return ({
-        type: PASS_FORGOT_REQUEST
-    });
+    return ({ type: PASS_FORGOT_REQUEST });
 }
 
 function passForgotSuccess(): IPassForgotSuccessAction {
-    return ({
-        type: PASS_FORGOT_SUCCESS
-    });
+    return ({ type: PASS_FORGOT_SUCCESS });
 }
 
 function passForgotFailed(): IPassForgotFailedAction {
-    return ({
-        type: PASS_FORGOT_FAILED
-    });
+    return ({ type: PASS_FORGOT_FAILED });
 }
 
 function userLogOutRequest(): IUserLogoutRequestAction {
-    return ({
-        type: USER_LOGOUT_REQUEST
-    });
+    return ({ type: USER_LOGOUT_REQUEST });
 }
 
 function userLogOutSuccess(): IUserLogoutSuccessAction {
@@ -276,7 +255,12 @@ export type TUserActions = IRegisterRequestAction
     | IUserLogoutFailedAction
     | IUserEditRequestAction
     | IUserEditSuccessAction
-    | IUserEditFailedAction;
+    | IUserEditFailedAction
+    | ISetDefault;
+
+export const setDefault = () => (dispatch: AppDispatch) => {
+    dispatch({ type: SET_DEFAULT});
+};
 
 export const signUp = (newUser: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(registerRequest());
@@ -339,9 +323,9 @@ export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
 
 export const resetPasswordRequest = (
     data: { password: string; token: string; }
-): AppThunk => async (dispatch: AppDispatch) => {
+): AppThunk => (dispatch: AppDispatch) => {
     dispatch(passResetRequest());
-    return await resetPassword(data)
+    return resetPassword(data)
         .then(res => {
             if (res && res.success) {
                 dispatch(passResetSuccess());
@@ -355,16 +339,15 @@ export const resetPasswordRequest = (
 
 export const forgotPasswordRequest = (
     data: { email: string }
-): AppThunk => async (dispatch: AppDispatch) => {
+): AppThunk => (dispatch: AppDispatch) => {
     dispatch(passForgotRequest());
-    return await checkIfExist(data)
+    checkIfExist(data)
         .then(res => {
             if (res && res.success) {
                 dispatch(passForgotSuccess());
             } else {
                 dispatch(passForgotFailed());
             }
-            return res;
         })
         .catch(err => console.log(`Ошибка при проверке почты – ${err}`));
 }

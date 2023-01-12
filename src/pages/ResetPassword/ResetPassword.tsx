@@ -24,11 +24,11 @@ export function ResetPassword() {
     const handleResetPassword = (data: TFormData) => dispatch(resetPasswordRequest(data));
     const clearCode = () => setCode('');
 
-    const handleSubmitResetForm = async (evt: FormEvent) => {
+    const handleSubmitResetForm = (evt: FormEvent) => {
         evt.preventDefault();
         dispatch(loaderOn());
 
-        let result = await handleResetPassword({ password: password, token: code });
+        handleResetPassword({ password: password, token: code });
 
         setPassword('');
         clearCode();
