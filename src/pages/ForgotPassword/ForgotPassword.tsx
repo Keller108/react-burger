@@ -36,7 +36,7 @@ export function ForgotPassword() {
             dispatch(loaderOff());
             setEmailInput(prev => ({ ...prev, value: '' }));
 
-            if (res && res.success) navigate(RESET_ROUTE);
+            // if (res && res.success) navigate(RESET_ROUTE);
         } else {
             setEmailInput(prev => ({...prev, error: true }));
             dispatch(loaderOff());

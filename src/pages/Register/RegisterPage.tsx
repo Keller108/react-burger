@@ -35,7 +35,7 @@ export function RegisterPage() {
         clearName();
         setPassword('');
 
-        if (res && res.success) navigate(SHOP_ROUTE);
+        // if (res && res.success) navigate(SHOP_ROUTE);
     };
 
     return (

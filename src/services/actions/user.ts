@@ -324,19 +324,19 @@ export const signIn = (user: IUserModel): AppThunk => async (dispatch: AppDispat
         .catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`));
 }
 
-export const userCheck = (): AppThunk => (dispatch: AppDispatch) => {
-    return getUser()
+export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
+    dispatch(checkUserRequest())
+    getUser()
         .then(res => {
-            dispatch(checkUserRequest())
             if (res && res.success) {
-                dispatch(checkUserSuccess({
+                let result = dispatch(checkUserSuccess({
                     email: res.user.email,
                     name: res.user.name
                 }));
+                console.log('result from thunk', result);
             } else {
                 dispatch(checkUserFailed());
             }
-            return res;
         })
         .catch(err => console.log(`Ошибка при проверке пользователя – ${err}`));
 }

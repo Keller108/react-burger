@@ -26,9 +26,9 @@ export function LoginPage() {
         setEmail('');
         setPassword('');
 
-        if (result && result.success) {
-            navigate(state?.from || SHOP_ROUTE);
-        }
+        // if (result && result.success) {
+        //     navigate(state?.from || SHOP_ROUTE);
+        // }
     };
 
     useEffect(() => {

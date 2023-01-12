@@ -34,7 +34,7 @@ export function ResetPassword() {
         clearCode();
         dispatch(loaderOff());
 
-        if (result && result.success) navigate(LOGIN_ROUTE);
+        // if (result && result.success) navigate(LOGIN_ROUTE);
     };
 
     return (

@@ -6,7 +6,6 @@ export const handleTokenRefresh = () => {
             localStorage.setItem('refreshToken', res.refreshToken);
             localStorage.setItem('accessToken', res.accessToken);
         }
-
         return res;
     })
     .catch(err => console.log(`Ошибка при обновлении токена – ${err}`))

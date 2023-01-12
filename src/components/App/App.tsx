@@ -27,24 +27,24 @@ export const App = () => {
     const state = location.state && location.state.background;
 
     const handleCheckData = async () => {
-        setIsLoading(true);
-        let res = await handleUserCheck();
+        // setIsLoading(true);
+        await handleUserCheck();
 
-        if (res && res.success) {
-            setIsLoading(false);
-        } else if (res && !res.success) {
-            let result = await handleTokenRefresh();
+        // if (res && res.success) {
+        //     setIsLoading(false);
+        // } else if (res && !res.success) {
+        //     let result = await handleTokenRefresh();
 
-            if (result && result.success) {
-                setIsLoading(false);
-            } else {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 10000)
-            }
-        } else {
-            setIsLoading(false);
-        }
+        //     if (result && result.success) {
+        //         setIsLoading(false);
+        //     } else {
+        //         setTimeout(() => {
+        //             setIsLoading(false);
+        //         }, 10000)
+        //     }
+        // } else {
+        //     setIsLoading(false);
+        // }
     };
 
     const handleCloseModal = () => {
