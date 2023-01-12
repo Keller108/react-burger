@@ -134,7 +134,7 @@ function registerSuccess(data: IUserModel): IRegisterSuccessAction {
             name: data.name,
             password: data.password
         }
-    })
+    });
 }
 
 function registerFailed(): IRegisterFailedAction {
@@ -283,9 +283,9 @@ export type TUserActions = IRegisterRequestAction
     | IUserEditSuccessAction
     | IUserEditFailedAction;
 
-export const signUp = (newUser: IUserModel): AppThunk => (dispatch: AppDispatch) => {
+export const signUp = (newUser: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(registerRequest());
-    createUser(newUser)
+    return await createUser(newUser)
         .then(res => {
             if (res && res.success) {
                 const userData = {
@@ -304,9 +304,9 @@ export const signUp = (newUser: IUserModel): AppThunk => (dispatch: AppDispatch)
         .catch(err => console.log(`Ошибка при регистрации пользователя – ${err}`));
 }
 
-export const signIn = (user: IUserModel): AppThunk => (dispatch: AppDispatch) => {
+export const signIn = (user: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(loginRequest());
-    login(user)
+    return await login(user)
         .then(res => {
             if (res && res.success) {
                 dispatch(loginSuccess({
@@ -324,9 +324,9 @@ export const signIn = (user: IUserModel): AppThunk => (dispatch: AppDispatch) =>
         .catch(err => console.log(`Ошибка при авторизации пользователя – ${err}`));
 }
 
-export const userCheck = (): AppThunk => (dispatch: AppDispatch) => {
+export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(checkUserRequest());
-    getUser()
+    return await getUser()
         .then(res => {
             dispatch(checkUserRequest())
             if (res && res.success) {
@@ -342,82 +342,68 @@ export const userCheck = (): AppThunk => (dispatch: AppDispatch) => {
         .catch(err => console.log(`Ошибка при проверке пользователя – ${err}`));
 }
 
-export function resetPasswordRequest(data: { password: string; token: string; }) {
-    return function(dispatch: any) {
-        return resetPassword(data)
-            .then(res => {
-                dispatch(passResetRequest());
-
-                if (res && res.success) {
-                    dispatch(passResetSuccess());
-                } else {
-                    dispatch(passResetFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при восставновлении пароля – ${err}`));
-    }
+export const resetPasswordRequest = (
+    data: { password: string; token: string; }
+): AppThunk => async (dispatch: AppDispatch) => {
+    dispatch(passResetRequest());
+    return await resetPassword(data)
+        .then(res => {
+            if (res && res.success) {
+                dispatch(passResetSuccess());
+            } else {
+                dispatch(passResetFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при восставновлении пароля – ${err}`));
 }
 
-export function forgotPasswordRequest(data: { email: string }) {
-    return function(dispatch: any) {
-        return checkIfExist(data)
-            .then(res => {
-                dispatch(passForgotRequest());
-
-                if (res && res.success) {
-                    dispatch(passForgotSuccess());
-                } else {
-                    dispatch(passForgotFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при проверке почты – ${err}`));
-    }
+export const forgotPasswordRequest = (
+    data: { email: string }
+): AppThunk => async (dispatch: AppDispatch) => {
+    dispatch(passForgotRequest());
+    return await checkIfExist(data)
+        .then(res => {
+            if (res && res.success) {
+                dispatch(passForgotSuccess());
+            } else {
+                dispatch(passForgotFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при проверке почты – ${err}`));
 }
 
-export function signOut() {
-    return function(dispatch: any) {
-        return logOut()
-            .then(res => {
-                dispatch(userLogOutRequest())
-
-                if (res && res.success) {
-                    dispatch(userLogOutSuccess());
-
-                    localStorage.removeItem('refreshToken');
-                    localStorage.removeItem('accessToken');
-                } else {
-                    dispatch(userLogOutFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при разлогинивании – ${err}`));
-    }
+export const signOut = (): AppThunk => async (dispatch: AppDispatch) => {
+    dispatch(userLogOutRequest());
+    return await logOut()
+        .then(res => {
+            if (res && res.success) {
+                dispatch(userLogOutSuccess());
+                localStorage.removeItem('refreshToken');
+                localStorage.removeItem('accessToken');
+            } else {
+                dispatch(userLogOutFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при разлогинивании – ${err}`));
 }
 
-export function editUser(form: IUserModel) {
-    return function(dispatch: any) {
-        dispatch(userEditRequest());
-
-        return patchUser(form)
-            .then(res => {
-                if (res && res.success) {
-
-                    dispatch(userEditSuccess({
-                        email: form.email,
-                        name: form.name,
-                        password: form.password
-                    }))
-                } else {
-                    dispatch(userEditFailed());
-                }
-
-                return res;
-            })
-            .catch(err => console.log(`Ошибка при изменении данных юзера – ${err}`));
-    }
+export const editUser = (form: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
+    dispatch(userEditRequest());
+    return await patchUser(form)
+        .then(res => {
+            if (res && res.success) {
+                dispatch(userEditSuccess({
+                    email: form.email,
+                    name: form.name,
+                    password: form.password
+                }))
+            } else {
+                dispatch(userEditFailed());
+            }
+            return res;
+        })
+        .catch(err => console.log(`Ошибка при изменении данных юзера – ${err}`));
 }
