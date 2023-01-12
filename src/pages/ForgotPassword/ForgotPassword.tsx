@@ -10,7 +10,7 @@ import { loaderOff, loaderOn } from '../../services/actions/loader';
 
 export function ForgotPassword() {
     const { isLoading } = useSelector(store => store.appStore);
-    const { request, success } = useSelector(store => store.userStore);
+    const { success } = useSelector(store => store.userStore);
     const [emailInput, setEmailInput] = useState({
         value: '',
         error: false,
@@ -26,16 +26,14 @@ export function ForgotPassword() {
 
     const handleSubmitForgotForm = (evt: FormEvent) => {
         evt.preventDefault();
-        // dispatch(loaderOn());
+        dispatch(loaderOn());
 
         if (emailInput.value) {
             setEmailInput(prev => ({...prev, error: false }));
             handleCheckIfUserExists({ email: emailInput.value });
-            // dispatch(loaderOff());
             setEmailInput(prev => ({ ...prev, value: '' }));
         } else {
             setEmailInput(prev => ({...prev, error: true }));
-            // dispatch(loaderOff());
         }
     };
 
@@ -43,11 +41,10 @@ export function ForgotPassword() {
         if (success === true) {
             navigate(RESET_ROUTE);
             setDefault();
+            dispatch(loaderOff());
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [success]);
-
-    useEffect(() => console.log('success status', success), [success]);
 
     return (
         <section className={styles.page}>
