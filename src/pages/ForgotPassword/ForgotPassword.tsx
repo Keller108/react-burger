@@ -24,6 +24,8 @@ export function ForgotPassword() {
         forgotPasswordRequest(data)
     );
 
+    const handleSetDefault = () => dispatch(setDefault());
+
     const handleSubmitForgotForm = (evt: FormEvent) => {
         evt.preventDefault();
         dispatch(loaderOn());
@@ -40,7 +42,7 @@ export function ForgotPassword() {
     useEffect(() => {
         if (success === true) {
             navigate(RESET_ROUTE);
-            setDefault();
+            handleSetDefault();
             dispatch(loaderOff());
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
