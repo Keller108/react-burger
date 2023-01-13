@@ -3,11 +3,11 @@ import IMG_SUCCESS_PATH from './assets/img-done.png';
 
 type TOrderDetailsProps = {
     order: {
-        name: string
-        number: number
-        request: boolean
-        success: boolean
-        error: boolean
+        name: string;
+        number: number;
+        request: boolean;
+        success: boolean;
+        error: boolean;
     }
 };
 

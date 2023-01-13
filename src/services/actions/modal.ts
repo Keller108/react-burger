@@ -15,7 +15,7 @@ export type TModalActions = IOpenModalAction | ICloseModalAction;
 
 export const openModal = (
     payload: JSX.Element,
-    data: IIngredientItem
+    data: IIngredientItem | null
 ): IOpenModalAction => ({ type: OPEN_MODAL, payload, data });
 
 export const closeModal = (): ICloseModalAction => ({ type: CLOSE_MODAL });

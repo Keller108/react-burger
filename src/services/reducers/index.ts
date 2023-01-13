@@ -79,7 +79,7 @@ const initialAppState: TInitialAppState = {
     isLoading: false
 };
 
-const appReducer = (state: TInitialAppState = initialAppState, action: TLoaderActions) => {
+const appReducer = (state = initialAppState, action: TLoaderActions) => {
     switch (action.type) {
         case 'LOADER_ON': {
             return {

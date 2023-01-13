@@ -1,21 +1,13 @@
 import { IConstructorItem } from "../../shared/types";
 import { TConstructorActions } from "../actions";
 
-type TOrderModel = {
-    name: string;
-    number: null | number;
-    request: boolean;
-    success: boolean;
-    error: boolean;
-};
-
 type TInitialState = {
-    buns: IConstructorItem[] | [];
-    otherItems: IConstructorItem[] | [];
+    buns: IConstructorItem[] | null;
+    otherItems: IConstructorItem[] | null;
     totalPrice: number;
     order: {
         name: string;
-        number: null | number;
+        number: number;
         request: boolean;
         success: boolean;
         error: boolean;
@@ -36,12 +28,12 @@ const initialConstrState: TInitialState = {
 };
 
 export const constructorReducer = (
-    state: TInitialState = initialConstrState, action: TConstructorActions
+    state = initialConstrState, action: TConstructorActions
 ) => {
     switch (action.type) {
         case 'ADD_ITEM_TO_CONSTRUCTOR': {
             if (action.ingredient.type === 'bun') {
-                if (state.buns.length) {
+                if (state.buns?.length) {
                     state.totalPrice = 0;
                     state.buns = [];
                 }
@@ -56,7 +48,7 @@ export const constructorReducer = (
                 return {
                     ...state,
                     otherItems: [
-                        ...state.otherItems,
+                        ...state.otherItems ?? [],
                         action.ingredient
                     ],
                     totalPrice: state.totalPrice += action.ingredient.price
@@ -64,30 +56,36 @@ export const constructorReducer = (
             }
         }
         case 'DELETE_ITEM_FROM_CONTRUCTOR': {
-            let res = [...state.otherItems]
-                .find((item: IConstructorItem) => item._id === action.ingredient._id);
+            let res;
+            let result;
+            if (state.otherItems) {
+                res = [...state.otherItems]
+                    .find((item: IConstructorItem) => item._id === action.ingredient._id);
 
-            if (!res) return;
-            const priceToDecrease = res.price;
+                    const priceToDecrease = res?.price;
 
-            const result = [...state.otherItems]
-                .filter(item => item._id === action.ingredient._id);
+                    result = [...state.otherItems]
+                        .filter(item => item._id === action.ingredient._id);
 
-            if (result) {
-                return {
-                    ...state,
-                    otherItems: [...state.otherItems]
-                        .filter(item => item.uuid !== action.ingredient.uuid),
-                    totalPrice: state.totalPrice -= priceToDecrease
-                }
-            } else {
-                return {
-                    ...state,
-                    otherItems: [...state.otherItems]
-                        .filter(item => item._id !== action.ingredient._id),
-                    totalPrice: state.totalPrice -= priceToDecrease
-                }
+                    if (priceToDecrease) {
+                        if (result) {
+                            return {
+                                ...state,
+                                otherItems: [...state.otherItems]
+                                    .filter(item => item.uuid !== action.ingredient.uuid),
+                                totalPrice: state.totalPrice -= priceToDecrease
+                            }
+                        } else {
+                            return {
+                                ...state,
+                                otherItems: [...state.otherItems]
+                                    .filter(item => item._id !== action.ingredient._id),
+                                totalPrice: state.totalPrice -= priceToDecrease
+                            }
+                        }
+                    }
             }
+            break;
         }
         case 'ORDER_REQUEST': {
             return {
@@ -125,12 +123,17 @@ export const constructorReducer = (
             }
         }
         case 'MOVE_ITEM': {
-			let newItems = [...state.otherItems];
-			newItems.splice(action.toIndex, 0, newItems.splice(action.fromIndex, 1)[0]);
-			return {
-				...state,
-				otherItems: [...newItems]
-			}
+            let newItems;
+            if (state.otherItems) {
+                newItems = [...state.otherItems];
+                newItems.splice(action.toIndex, 0, newItems.splice(action.fromIndex, 1)[0]);
+
+                return {
+                    ...state,
+                    otherItems: [...newItems]
+                }
+            }
+            break;
         }
         case 'CLEAR_CART': {
             return {
