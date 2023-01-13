@@ -1,30 +1,26 @@
 import { IConstructorItem } from "../../shared/types";
 import { TConstructorActions } from "../actions";
 
+type TOrderModel = {
+    name: string;
+    number: null | number;
+    request: boolean;
+    success: boolean;
+    error: boolean;
+};
+
 type TConstructorState = {
-    buns: IConstructorItem[];
-    otherItems: IConstructorItem[];
+    buns: IConstructorItem[] | [];
+    otherItems: IConstructorItem[] | [];
     totalPrice: number;
-    order: {
-        name: string;
-        number: null | number;
-        request: boolean;
-        success: boolean;
-        error: boolean;
-    };
+    order: TOrderModel | null;
 };
 
 const initialConstrState: TConstructorState = {
     buns: [],
     otherItems: [],
     totalPrice: 0,
-    order: {
-        name: "",
-        number: null,
-        request: false,
-        success: false,
-        error: false
-    }
+    order: null
 };
 
 export const constructorReducer = (

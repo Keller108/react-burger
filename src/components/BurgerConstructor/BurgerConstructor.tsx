@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { Button,
@@ -11,13 +11,12 @@ import contructorStyles from './BurgerConstructor.module.css';
 import { OrderDetails } from '../OrderDetails';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import { addItemToConstructor, handlePlaceAnOrder } from '../../services/actions/burger-constructor';
-import { OPEN_MODAL } from '../../services/constants/modal';
 import { LOGIN_ROUTE } from '../../shared/routes';
-import { IIngredientItem, TOrderID } from '../../shared/types';
+import { IConstructorItem, IIngredientItem, TOrderID } from '../../shared/types';
 import { ORDER_REQUEST } from '../../services/constants/order';
+import { openModal } from '../../services/actions/modal';
 
 export function BurgerConstructor() {
-    //@ts-ignore
     const { isLogined } = useSelector(store => store.userStore);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -27,9 +26,7 @@ export function BurgerConstructor() {
     );
 
     const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
-    //@ts-ignore
     const placeOrder = (data: TOrderID[]) => dispatch(handlePlaceAnOrder(data));
-    //@ts-ignore
     const { buns, otherItems, totalPrice, order } = useSelector(store => store.burgerConstructor);
 
     const [, dropTarget] = useDrop({
@@ -40,7 +37,7 @@ export function BurgerConstructor() {
     });
 
     const orderData: TOrderID[] = useMemo(() => {
-        return [...buns, ...otherItems, ...buns].map(item => item._id);
+        return [...buns, ...otherItems, ...buns].map((item: IConstructorItem) => item._id);
     },[buns, otherItems])
 
     const handleModalState = () => {
@@ -53,14 +50,12 @@ export function BurgerConstructor() {
     };
 
     useEffect(() => {
-        if (order.success) {
-            dispatch({
-                type: OPEN_MODAL,
-                payload: <OrderDetails order={order}/>
-            });
+        if (order) {
+            if (order.success)
+            dispatch(openModal(<OrderDetails order={order}/>, order));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [order.success])
+    }, [order])
 
     return (
         <section ref={dropTarget}

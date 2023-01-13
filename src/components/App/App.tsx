@@ -8,7 +8,6 @@ import {
 import appStyles from './App.module.css';
 import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
-import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
 import { CLOSE_MODAL } from "../../services/constants/modal";
@@ -27,24 +26,7 @@ export const App = () => {
     const state = location.state && location.state.background;
 
     const handleCheckData = async () => {
-        // setIsLoading(true);
         await handleUserCheck();
-
-        // if (res && res.success) {
-        //     setIsLoading(false);
-        // } else if (res && !res.success) {
-        //     let result = await handleTokenRefresh();
-
-        //     if (result && result.success) {
-        //         setIsLoading(false);
-        //     } else {
-        //         setTimeout(() => {
-        //             setIsLoading(false);
-        //         }, 10000)
-        //     }
-        // } else {
-        //     setIsLoading(false);
-        // }
     };
 
     const handleCloseModal = () => {
