@@ -9,22 +9,34 @@ type TOrderModel = {
     error: boolean;
 };
 
-type TConstructorState = {
+type TInitialState = {
     buns: IConstructorItem[] | [];
     otherItems: IConstructorItem[] | [];
     totalPrice: number;
-    order: TOrderModel | null;
+    order: {
+        name: string;
+        number: null | number;
+        request: boolean;
+        success: boolean;
+        error: boolean;
+    };
 };
 
-const initialConstrState: TConstructorState = {
+const initialConstrState: TInitialState = {
     buns: [],
     otherItems: [],
     totalPrice: 0,
-    order: null
+    order: {
+        name: '',
+        number: 0,
+        request: false,
+        success: false,
+        error: false
+    }
 };
 
 export const constructorReducer = (
-    state = initialConstrState, action: TConstructorActions
+    state: TInitialState = initialConstrState, action: TConstructorActions
 ) => {
     switch (action.type) {
         case 'ADD_ITEM_TO_CONSTRUCTOR': {

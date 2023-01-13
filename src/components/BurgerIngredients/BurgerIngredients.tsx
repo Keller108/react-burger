@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory';
@@ -8,9 +8,7 @@ import { switchTab } from '../../services/actions/tab';
 
 export function BurgerIngredients() {
     const dispatch = useDispatch();
-    //@ts-ignore
     const ingredients = useSelector(store => store.ingredients.ingredientItems);
-    //@ts-ignore
     const { tabs, activeTab } = useSelector(store => store.tabs);
     const [current, setCurrent] = useState<string>(activeTab);
 

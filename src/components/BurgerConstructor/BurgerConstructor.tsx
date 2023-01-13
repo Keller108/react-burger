@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { useDrop } from 'react-dnd';
@@ -18,6 +18,7 @@ import { openModal } from '../../services/actions/modal';
 
 export function BurgerConstructor() {
     const { isLogined } = useSelector(store => store.userStore);
+    const [bunns, setBunns] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -49,18 +50,20 @@ export function BurgerConstructor() {
         }
     };
 
-    useEffect(() => {
-        if (order) {
-            if (order.success)
-            dispatch(openModal(<OrderDetails order={order}/>, order));
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [order])
+    console.log('order', order)
+
+
+    // useEffect(() => {
+    //     if (order.success) {
+    //         dispatch(openModal(<OrderDetails order={order}/>, order));
+    //     }
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [order])
 
     return (
         <section ref={dropTarget}
             className={`${contructorStyles.constructor} pt-25 pb-13`}>
-            <ul className={`${contructorStyles.items} pr-2`}>
+            {/* <ul className={`${contructorStyles.items} pr-2`}>
                 {buns.length !== 0 && <li
                     className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
@@ -105,7 +108,7 @@ export function BurgerConstructor() {
                 >
                     Оформить заказ
                 </Button>}
-            </div>
+            </div> */}
         </section>
     )
 }
