@@ -264,7 +264,7 @@ export const setDefault = () => (dispatch: AppDispatch) => {
 
 export const signUp = (newUser: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(registerRequest());
-    return await createUser(newUser)
+    await createUser(newUser)
         .then(res => {
             if (res && res.success) {
                 const userData = {
@@ -285,7 +285,7 @@ export const signUp = (newUser: IUserModel): AppThunk => async (dispatch: AppDis
 
 export const signIn = (user: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(loginRequest());
-    return await login(user)
+    await login(user)
         .then(res => {
             if (res && res.success) {
                 dispatch(loginSuccess({
@@ -305,7 +305,7 @@ export const signIn = (user: IUserModel): AppThunk => async (dispatch: AppDispat
 
 export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(checkUserRequest())
-    getUser()
+    await getUser()
         .then(res => {
             if (res && res.success) {
                 dispatch(checkUserSuccess({
@@ -317,15 +317,16 @@ export const userCheck = (): AppThunk => async (dispatch: AppDispatch) => {
             } else {
                 dispatch(checkUserFailed());
             }
+            return res;
         })
         .catch(err => console.log(`Ошибка при проверке пользователя – ${err}`));
 }
 
 export const resetPasswordRequest = (
     data: { password: string; token: string; }
-): AppThunk => (dispatch: AppDispatch) => {
+): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(passResetRequest());
-    return resetPassword(data)
+    await resetPassword(data)
         .then(res => {
             if (res && res.success) {
                 dispatch(passResetSuccess());
@@ -339,22 +340,23 @@ export const resetPasswordRequest = (
 
 export const forgotPasswordRequest = (
     data: { email: string }
-): AppThunk => (dispatch: AppDispatch) => {
+): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(passForgotRequest());
-    checkIfExist(data)
+    await checkIfExist(data)
         .then(res => {
             if (res && res.success) {
                 dispatch(passForgotSuccess());
             } else {
                 dispatch(passForgotFailed());
             }
+            return res;
         })
         .catch(err => console.log(`Ошибка при проверке почты – ${err}`));
 }
 
 export const signOut = (): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(userLogOutRequest());
-    return await logOut()
+    await logOut()
         .then(res => {
             if (res && res.success) {
                 dispatch(userLogOutSuccess());
@@ -370,7 +372,7 @@ export const signOut = (): AppThunk => async (dispatch: AppDispatch) => {
 
 export const editUser = (form: IUserModel): AppThunk => async (dispatch: AppDispatch) => {
     dispatch(userEditRequest());
-    return await patchUser(form)
+    await patchUser(form)
         .then(res => {
             if (res && res.success) {
                 dispatch(userEditSuccess({
