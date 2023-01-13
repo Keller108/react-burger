@@ -13,7 +13,7 @@ import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import { addItemToConstructor, handlePlaceAnOrder } from '../../services/actions/burger-constructor';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { IConstructorItem, IIngredientItem, TOrderID } from '../../shared/types';
-import { ORDER_REQUEST } from '../../services/constants/order';
+import { ORDER_REQUEST } from '../../services/constants/burger-constructor';
 import { openModal } from '../../services/actions/modal';
 
 export function BurgerConstructor() {

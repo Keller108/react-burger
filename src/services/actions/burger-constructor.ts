@@ -2,7 +2,7 @@ import { AppDispatch, AppThunk, IConstructorItem, TOrderID } from "../../shared/
 import {
     ADD_ITEM_TO_CONSTRUCTOR, DELETE_ITEM_FROM_CONTRUCTOR, MOVE_ITEM
 } from "../constants/burger-constructor";
-import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILED, CLEAR_CART } from '../../services/constants/order';
+import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_FAILED, CLEAR_CART } from '../../services/constants/burger-constructor';
 import { placeAnOrder } from "../../shared/burgerApi";
 
 export interface IAddItemToConstructorAction {
