@@ -1,8 +1,7 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
-import { MOVE_ITEM } from '../../services/constants/burger-constructor';
-import { deleteItemFromConstructor } from '../../services/actions/burger-constructor';
+import { useDispatch } from '../../shared/hooks';
+import { deleteItemFromConstructor, moveItemInConstructor } from '../../services/actions/burger-constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ConstructorItem.module.css';
 import { IConstructorItem } from '../../shared/types';
@@ -16,15 +15,15 @@ export function ConstructorItem({ item, index }: TConstructorItemProps) {
     const elementRef = useRef<HTMLLIElement>(null);
     const dispatch = useDispatch();
 
-    const removeItem = (item: IConstructorItem) => dispatch(deleteItemFromConstructor(item));
+    const removeItem = (item: IConstructorItem) => dispatch(
+        deleteItemFromConstructor(item)
+    );
 
     const id = item._id;
 
-    const moveItem = (dragIndex: number, hoverIndex: number) => dispatch({
-			type: MOVE_ITEM,
-			toIndex: hoverIndex,
-			fromIndex: dragIndex
-    });
+    const moveItem = (dragIndex: number, hoverIndex: number) => dispatch(
+        moveItemInConstructor(hoverIndex, dragIndex)
+    );
 
 	const [, drop] = useDrop({
 		accept: 'item',
