@@ -5,7 +5,7 @@ import { BurgerIcon,
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import appHeaderStyles from './AppHeader.module.css';
-import { SHOP_ROUTE } from '../../shared/routes';
+import { FEED_ROUTE, PROFILE_ROUTE, SHOP_ROUTE } from '../../shared/routes';
 
 export function AppHeader() {
     let location = useLocation();
@@ -23,7 +23,7 @@ export function AppHeader() {
                 <nav className={appHeaderStyles.navigation}>
                     <div className={appHeaderStyles.headerColumn}>
                         <NavLink
-                            to='/'
+                            to={SHOP_ROUTE}
                             className={({ isActive }) => isActive ? activeLinkClass : inactiveLinkClass}
                         >
                             <span className={`${appHeaderStyles.navigationIcon} mr-2`}>
@@ -32,7 +32,7 @@ export function AppHeader() {
                             Конструктор
                         </NavLink>
                         <Link
-                            to='/'
+                            to={FEED_ROUTE}
                             className={inactiveLinkClass}
                         >
                             <span className={`${appHeaderStyles.navigationIcon} mr-2`}>
@@ -43,7 +43,7 @@ export function AppHeader() {
                     </div>
                     <div className={appHeaderStyles.headerColumn}>
                         <Link
-                            to='/'
+                            to={SHOP_ROUTE}
                             className={`${appHeaderStyles.navigationItem}`}
                         >
                             <Logo />
@@ -51,7 +51,7 @@ export function AppHeader() {
                     </div>
                     <div className={appHeaderStyles.headerColumn}>
                         <NavLink
-                            to='/profile'
+                            to={PROFILE_ROUTE}
                             className={({ isActive }) => isActive ? activeLinkClass : inactiveLinkClass}
                         >
                             <span className={`${appHeaderStyles.navigationIcon} mr-2`}>

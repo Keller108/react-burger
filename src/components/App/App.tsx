@@ -12,6 +12,7 @@ import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
 import { CLOSE_MODAL } from "../../services/constants/modal";
 import { SHOP_ROUTE } from "../../shared/routes";
+import { OrderFeed } from "../../pages/OrderFeed";
 
 export const App = () => {
     const [isLoading,] = useState(false);
@@ -55,6 +56,7 @@ export const App = () => {
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path='*' element={<NotFound />} />
                     <Route path="/ingredients/:ingredientId" element={<IngredientPage />} />
+                    <Route path="/feed" element={<OrderFeed />} />
                 </Routes>
                 {state && isActive && <Routes>
                     <Route
