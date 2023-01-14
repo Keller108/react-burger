@@ -38,6 +38,7 @@ export function RegisterPage() {
 
     useEffect(() => {
         if (isLogined) navigate(SHOP_ROUTE);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLogined])
 
     return (
