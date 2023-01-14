@@ -102,7 +102,7 @@ export function BurgerConstructor() {
                     <p className="text text_type_main-large mr-3">{store?.totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </span>
-                {(store?.buns?.length || store?.otherItems?.length) && <Button
+                {(store?.buns?.length !== 0 || store?.otherItems?.length !== 0) && <Button
                     onClick={handleModalState}
                     htmlType="button"
                     type="primary"
