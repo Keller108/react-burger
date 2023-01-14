@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../shared/hooks';
 import { useDrag } from 'react-dnd';
 import cardStyle from './Card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,8 +13,7 @@ type TCardProps = {
 
 export function Card({ cardData, onCardClick }: TCardProps) {
     const [amount, setAmount] = useState(0);
-    //@ts-ignore
-    const { buns, otherItems } = useSelector(store => store.burgerConstructor);
+    const store = useSelector(store => store.burgerConstructor);
     const location = useLocation();
 
     const [, ref] = useDrag({
@@ -29,17 +28,17 @@ export function Card({ cardData, onCardClick }: TCardProps) {
     const ingredientId = cardData._id;
 
     let ingredientAmount = useMemo(() => {
-        return otherItems.filter((item: IIngredientItem) => item._id === cardData._id).length;
-    }, [otherItems, cardData._id]);
+        if (store && store.otherItems) {
+            return store.otherItems.filter((item: IIngredientItem) => item._id === cardData._id).length;
+        }
+    }, [store, cardData._id]);
 
     useEffect(() => {
-        if (otherItems.length > 0) {
-            setAmount(ingredientAmount);
-        } else if (!otherItems.length) {
-            setAmount(0);
-        }
+        if (store && store.otherItems) {
+            if (ingredientAmount) setAmount(ingredientAmount);
+        } else if (!store?.otherItems?.length) setAmount(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [otherItems])
+    }, [store?.otherItems])
 
     return (
         <Link
@@ -52,12 +51,12 @@ export function Card({ cardData, onCardClick }: TCardProps) {
             <li draggable
                 ref={ref}
                 className={cardStyle.card}>
-                    {(cardData.type === 'bun' && buns.length)
-                        && (buns.filter((item: IIngredientItem) => item._id === cardData._id)
-                        && buns.find((item: IIngredientItem) => item._id === cardData._id))
+                    {(cardData.type === 'bun' && store?.buns)
+                        && (store?.buns.filter((item: IIngredientItem) => item._id === cardData._id)
+                        && store?.buns.find((item: IIngredientItem) => item._id === cardData._id))
                         ? <span className={`${cardStyle.quantity}
                             "text text_type_main-medium"`}
-                        >{buns.length + 1}</span>
+                        >{store?.buns.length + 1}</span>
                         : (amount > 0) && <span
                         className={`${cardStyle.quantity} "text text_type_main-medium"`}
                         >{amount}</span>

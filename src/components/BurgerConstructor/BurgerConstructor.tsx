@@ -44,7 +44,7 @@ export function BurgerConstructor() {
             }
         }
 
-    },[store])
+    },[store]);
 
     const handleModalState = () => {
         if (isLogined) {
