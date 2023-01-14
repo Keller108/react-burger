@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector} from '../../shared/hooks';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerIngredients } from '../../components/BurgerIngredients';
@@ -13,12 +13,10 @@ type THomePageProps = {
 };
 
 export function HomePage({ handleCloseModal }: THomePageProps) {
-    //@ts-ignore
     const { isActive } = useSelector(store => store.modal);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getIngredients());
     }, [dispatch])
 

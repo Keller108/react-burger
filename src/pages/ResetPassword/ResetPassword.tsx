@@ -1,9 +1,9 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ResetPassword.module.css';
 import { useDispatch, useSelector } from '../../shared/hooks';
-import { resetPasswordRequest } from '../../services/actions/user';
+import { resetPasswordRequest, setDefault } from '../../services/actions/user';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { Preloader } from '../../components/Preloader';
 import { loaderOff, loaderOn } from '../../services/actions/loader';
@@ -14,8 +14,8 @@ type TFormData = {
 };
 
 export function ResetPassword() {
-
     const { isLoading } = useSelector(store => store.appStore);
+    const { success } = useSelector(store => store.userStore);
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
 
@@ -23,19 +23,24 @@ export function ResetPassword() {
     const navigate = useNavigate();
     const handleResetPassword = (data: TFormData) => dispatch(resetPasswordRequest(data));
     const clearCode = () => setCode('');
+    const handleSetDefault = () => dispatch(setDefault());
 
     const handleSubmitResetForm = (evt: FormEvent) => {
         evt.preventDefault();
         dispatch(loaderOn());
-
         handleResetPassword({ password: password, token: code });
-
         setPassword('');
         clearCode();
-        dispatch(loaderOff());
-
-        // if (result && result.success) navigate(LOGIN_ROUTE);
     };
+
+    useEffect(() => {
+        if (success === true) {
+            navigate(LOGIN_ROUTE);
+            handleSetDefault();
+            dispatch(loaderOff());
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [success]);
 
     return (
         <section className={styles.page}>

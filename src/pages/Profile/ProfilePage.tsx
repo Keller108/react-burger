@@ -1,24 +1,22 @@
 import { FormEvent, useState } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Profile.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { editUser, signOut } from '../../services/actions/user';
 
 export function ProfilePage() {
-    //@ts-ignore
-    const { name, email, password } = useSelector(state => state.userStore.user);
+    const store = useSelector(state => state.userStore);
 
-    const [userName, setUserName] = useState<string>(name ?? '');
-    const [userEmail, setUserEmail] = useState<string>(email ?? '');
-    const [userPassword, setUserPassword] = useState<string>(password ?? '');
+    const [userName, setUserName] = useState<string>(store?.user?.name ?? '');
+    const [userEmail, setUserEmail] = useState<string>(store?.user?.email ?? '');
+    const [userPassword, setUserPassword] = useState<string>(store?.user?.password ?? '');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSubmit = () => dispatch(
-        //@ts-ignore
         editUser({
             email: userEmail,
             name: userName,
@@ -27,7 +25,6 @@ export function ProfilePage() {
     );
 
     const handleLogOut = async () => {
-        //@ts-ignore
         await dispatch(signOut());
         navigate(LOGIN_ROUTE);
     };

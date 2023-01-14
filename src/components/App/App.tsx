@@ -14,7 +14,7 @@ import { CLOSE_MODAL } from "../../services/constants/modal";
 import { SHOP_ROUTE } from "../../shared/routes";
 
 export const App = () => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading,] = useState(false);
     const { isActive } = useSelector((store) => store.modal);
 
     const location = useLocation();

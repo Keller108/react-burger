@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Login.module.css';
 import { signIn } from '../../services/actions/user';
 import { SHOP_ROUTE } from '../../shared/routes';
+import { IUserModel } from '../../shared/types';
 
 export function LoginPage() {
-    //@ts-ignore
     const { isLogined } = useSelector(store => store.userStore);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -16,19 +16,13 @@ export function LoginPage() {
     const location = useLocation();
 
     const state = location.state;
-    //@ts-ignore
-    const handleLogin = data => dispatch(signIn(data));
+    const handleLogin = (data: IUserModel) => dispatch(signIn(data));
 
     const submitLoginForm = async (evt: FormEvent) => {
         evt.preventDefault();
-        let result = await handleLogin({ email: email, password: password });
-
+        await handleLogin({ email: email, password: password });
         setEmail('');
         setPassword('');
-
-        // if (result && result.success) {
-        //     navigate(state?.from || SHOP_ROUTE);
-        // }
     };
 
     useEffect(() => {

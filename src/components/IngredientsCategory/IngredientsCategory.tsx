@@ -1,5 +1,5 @@
 import { forwardRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../shared/hooks';
 import categoryStyle from './IngredientsCategory.module.css';
 import { Card } from '../Card';
 import { IngredientDetails } from '../IngredientDetails';

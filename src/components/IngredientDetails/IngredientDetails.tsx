@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../shared/hooks';
 import { useParams } from 'react-router-dom';
 import { IIngredientItem } from '../../shared/types';
 import ingredientsDetailsStyle from './IngredientDetails.module.css';
 
 export function IngredientDetails() {
     const [currentItem, setCurrentItem] = useState<IIngredientItem | null>(null);
-    //@ts-ignore
     const { currentData } = useSelector(store => store.modal);
     const [items,] = useState(
         () => {
