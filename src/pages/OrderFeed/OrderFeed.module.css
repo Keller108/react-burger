@@ -1,0 +1,28 @@
+.orderFeed {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 1280px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+.ordersWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 50%;
+    max-width: 600px;
+    max-height: calc(100vh - 80px - 88px - 40px);
+}
+
+.orders {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: stretch;
+}
