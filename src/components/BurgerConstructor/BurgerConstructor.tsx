@@ -55,9 +55,6 @@ export function BurgerConstructor() {
         }
     };
 
-    console.log('store', store)
-
-
     useEffect(() => {
         if (store?.order.success) {
             dispatch(openModal(<OrderDetails order={store.order}/>, null));
@@ -69,19 +66,19 @@ export function BurgerConstructor() {
         <section ref={dropTarget}
             className={`${contructorStyles.constructor} pt-25 pb-13`}>
             <ul className={`${contructorStyles.items} pr-2`}>
-                {store?.buns?.length && <li
+                {store?.buns?.length !== 0 ? <li
                     className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
-                        key={store?.buns[0]._id}
+                        key={store?.buns && store?.buns[0]._id}
                         type="top"
                         isLocked={true}
-                        text={`${store?.buns[0].name} (верх)`}
-                        price={store?.buns[0].price}
-                        thumbnail={store?.buns[0].image}
+                        text={`${store?.buns && store?.buns[0].name} (верх)`}
+                        price={store?.buns ? store?.buns[0].price : 0}
+                        thumbnail={store?.buns ? store?.buns[0].image : ''}
                     />
-                </li>}
+                </li> : null}
                 <div className={contructorStyles.itemWrapper}>
-                    {store?.otherItems?.length && store.otherItems
+                    {store?.otherItems && store?.otherItems
                         .map((item: IIngredientItem & { uuid: string}, index: number) => <ConstructorItem
                             item={item}
                             index={index}
@@ -89,16 +86,16 @@ export function BurgerConstructor() {
                         />)
                     }
                 </div>
-                {store?.buns?.length && <li className={`${contructorStyles.constructorItem} pl-8`}>
+                {store?.buns?.length !== 0 ? <li className={`${contructorStyles.constructorItem} pl-8`}>
                     <ConstructorElement
-                        key={store?.buns[0]._id}
+                        key={store?.buns && store?.buns[0]._id}
                         type="bottom"
                         isLocked={true}
-                        text={`${store?.buns[0].name} (низ)`}
-                        price={store?.buns[0].price}
-                        thumbnail={store?.buns[0].image}
+                        text={`${store?.buns && store?.buns[0].name} (низ)`}
+                        price={store?.buns ? store?.buns[0].price : 0}
+                        thumbnail={store?.buns ? store?.buns[0].image : ''}
                     />
-                </li>}
+                </li> : null}
             </ul>
             <div className={`${contructorStyles.total} mt-10`}>
                 <span className={`${contructorStyles.price} mr-10`}>
