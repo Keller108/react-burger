@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../shared/hooks';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../shared/routes';
 
@@ -7,7 +7,6 @@ type TProtectedRoutesProps = {
 };
 
 export const ProtectedRoutes = ({ anonymous = false }: TProtectedRoutesProps) => {
-    //@ts-ignore
     const isLoggedIn = useSelector((store) => store.userStore.isLogined);
 
     const location = useLocation();
