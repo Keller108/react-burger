@@ -17,16 +17,19 @@
     justify-content: flex-start;
     width: 50%;
     max-width: 600px;
-    max-height: calc(100vh - 80px - 88px - 40px);
 }
 
 .orders {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: stretch;
     padding: 0;
+    padding-right: 16px;
     list-style-type: none;
+    overflow-y: auto;
+    max-height: calc(100vh - 80px - 88px - 80px);
 }
 
 .info {
@@ -35,7 +38,7 @@
     height: auto;
     align-items: flex-start;
     justify-content: flex-start;
-    padding-top: 100px;
+    padding-top: 85px;
 }
 
 .statusWrapper {
@@ -56,6 +59,10 @@
 .statusList {
     padding: 0;
     margin: 0;
+}
+
+.statusListDone {
+    color: #00CCCC;
 }
 
 .statistics {
