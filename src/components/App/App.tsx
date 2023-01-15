@@ -48,6 +48,7 @@ export const App = () => {
                 <Routes location={state || location}>
                     <Route element={<ProtectedRoutes />}>
                         <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/orders" element={<ProfilePage />} />
                     </Route>
                     <Route path="/" index element={<HomePage handleCloseModal={handleCloseModal}/>} />
                     <Route path="/login" element={<LoginPage />} />

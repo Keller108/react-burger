@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from '../../shared/hooks';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { editUser, signOut } from '../../services/actions/user';
+import { Account } from '../../components/Account';
 
 export function ProfilePage() {
     const store = useSelector(state => state.userStore);
@@ -37,22 +38,7 @@ export function ProfilePage() {
     return (
         <section className={styles.page}>
             <div className={styles.wrapper}>
-                <div className={`${styles.sideColumn} pr-15`}>
-                    <ul className={`${styles.tabs} mb-20`}>
-                        <li>
-                            <p className="text text_type_main-medium">Профиль</p>
-                        </li>
-                        <li>
-                            <p className="text text_type_main-medium text_color_inactive">История заказов</p>
-                        </li>
-                        <li onClick={handleLogOut}>
-                            <p className="text text_type_main-medium text_color_inactive">Выход</p>
-                        </li>
-                    </ul>
-                    <p className={`${styles.description} text text_type_main-default`}>
-                        В этом разделе вы можете изменить свои персональные данные
-                    </p>
-                </div>
+                <Account logout={handleLogOut} />
                 <form
                     onSubmit={handleFormSubmit}
                     className={styles.form}>
