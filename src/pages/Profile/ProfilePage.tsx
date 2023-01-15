@@ -1,84 +1,32 @@
-import { FormEvent, useState } from 'react';
-import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Profile.module.css';
-import { useDispatch, useSelector } from '../../shared/hooks';
-import { useNavigate } from 'react-router-dom';
-import { LOGIN_ROUTE } from '../../shared/routes';
-import { editUser, signOut } from '../../services/actions/user';
+import { useDispatch } from '../../shared/hooks';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE, ORDERS_ROUTE, PROFILE_ROUTE } from '../../shared/routes';
+import { signOut } from '../../services/actions/user';
 import { Account } from '../../components/Account';
+import { Orders } from '../Orders';
+import { ProfileForm } from '../../components/ProfileForm/ProfileForm';
 
 export function ProfilePage() {
-    const store = useSelector(state => state.userStore);
-
-    const [userName, setUserName] = useState<string>(store?.user?.name ?? '');
-    const [userEmail, setUserEmail] = useState<string>(store?.user?.email ?? '');
-    const [userPassword, setUserPassword] = useState<string>(store?.user?.password ?? '');
-
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
-
-    const handleSubmit = () => dispatch(
-        editUser({
-            email: userEmail,
-            name: userName,
-            password: userPassword
-        })
-    );
 
     const handleLogOut = async () => {
         await dispatch(signOut());
         navigate(LOGIN_ROUTE);
     };
 
-    const handleFormSubmit = async (evt: FormEvent) => {
-        evt.preventDefault();
-        await handleSubmit();
-    };
-
     return (
         <section className={styles.page}>
             <div className={styles.wrapper}>
                 <Account logout={handleLogOut} />
-                <form
-                    onSubmit={handleFormSubmit}
-                    className={styles.form}>
-                    <Input
-                        onChange={e => setUserName(e.target.value)}
-                        error={false}
-                        value={userName}
-                        type='text'
-                        placeholder='Имя'
-                        icon='EditIcon'
-                        name='name'
-                        errorText='Ошибка'
-                        size='default'
-                        extraClass="mb-6"
-                    />
-                    <Input
-                        onChange={e => setUserEmail(e.target.value)}
-                        error={false}
-                        value={userEmail}
-                        type='text'
-                        placeholder='Логин'
-                        icon='EditIcon'
-                        name='email'
-                        errorText='Ошибка'
-                        size='default'
-                        extraClass="mb-6"
-                    />
-                    <PasswordInput
-                        onChange={e => setUserPassword(e.target.value)}
-                        value={userPassword}
-                        placeholder='Пароль'
-                        name='password'
-                    />
-                    <Button
-                        htmlType="submit"
-                        type="primary"
-                        size="medium"
-                        extraClass="mt-8"
-                    >Сохранить</Button>
-                </form>
+                {location.pathname === PROFILE_ROUTE
+                    ?  <ProfileForm />
+                    : location.pathname === ORDERS_ROUTE
+                    ? <Orders />
+                    : <ProfileForm />
+                }
                 <div className={styles.sideColumn}></div>
             </div>
         </section>
