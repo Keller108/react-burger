@@ -1,4 +1,4 @@
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Order } from '../../components/Order';
 import styles from './OrderFeed.module.css';
 
 const fakeOrders = [
@@ -78,52 +78,42 @@ export const OrderFeed = () => {
     return (
         <main className={styles.orderFeed}>
             <section className={styles.ordersWrapper}>
-                <h1 className="text text_type_main-large pb-5">
-                    Соберите бургер
+                <h1 className="text text_type_main-large mt-5 mb-6">
+                    Лента заказов
                 </h1>
                 <ul className={styles.orders}>
-                    {fakeOrders.map(item => <li className={styles.orderItem} key={item.name}>
-                        <div className={styles.orderItemDescription}>
-                            <span className='text text_type_main-small'>{item.number}</span>
-                            <span className='text text_type_main-small text_color_inactive'>{item.time}</span>
-                        </div>
-                        <h2 className='text text_type_main-medium'>{item.name}</h2>
-                        <div>
-                            <ul>
-                                {item.ingredients.map(item => <li className={styles.orderItem} key={item.name}>
-                                    <img src={item.image} alt={item.name} />
-                                </li>)}
-                            </ul>
-                            <span>
-                                <p>{item.price}</p>
-                                <CurrencyIcon type="primary" />
-                            </span>
-                        </div>
-                    </li>)}
+                    {fakeOrders.map(item => <Order
+                        key={item.name}
+                        number={item.number}
+                        name={item.name}
+                        time={item.time}
+                        ingredients={item.ingredients}
+                        price={item.price}
+                    />)}
                 </ul>
             </section>
-            <section>
+            <section className={`${styles.info} pl-15`}>
                 <div className={styles.statusWrapper}>
-                    <div className={styles.statusReady}>
-                        <h2 className='text text_type_main-default'>Готовы:</h2>
-                        <ul className={styles.statusList + '' + styles.statusListReady}>
+                    <div className={styles.statusCol}>
+                        <h2 className='text text_type_main-medium mb-6'>Готовы:</h2>
+                        <ul className={styles.statusList}>
                             {ready.map(item => <p className='text text_type_digits-default' key={item}>{item}</p>)}
                         </ul>
                     </div>
-                    <div className={styles.statusOnWork}>
-                        <h2 className='text text_type_main-default'>В работе:</h2>
-                        <ul className={styles.statusList + '' + styles.statusListReady}>
+                    <div className={`${styles.statusCol}`}>
+                        <h2 className='text text_type_main-medium mb-6'>В работе:</h2>
+                        <ul className={styles.statusList}>
                             {ready.map(item => <p className='text text_type_digits-default' key={item}>{item}</p>)}
                         </ul>
                     </div>
                 </div>
-                <div className={styles.statistics}>
-                    <h2 className='text_type_main-default'>Выполнено за все время:</h2>
-                    <p className='text text_type_main-large'>28 752</p>
+                <div className={`${styles.statistics} mt-15`}>
+                    <h2 className='text text_type_main-medium'>Выполнено за все время:</h2>
+                    <p className='text text_type_digits-large'>28 752</p>
                 </div>
-                <div className={styles.statistics}>
-                    <h2 className='text_type_main-default'>Выполнено за сегодня:</h2>
-                    <p className='text text_type_main-large'>138</p>
+                <div className={`${styles.statistics} mt-15`}>
+                    <h2 className='text text_type_main-medium'>Выполнено за сегодня:</h2>
+                    <p className='text text_type_digits-large'>138</p>
                 </div>
             </section>
         </main>

@@ -1,0 +1,23 @@
+.orderItem {
+    border-radius: 40px;
+    background-color: #1c1c21;
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.orderItem:last-of-type {
+    margin-bottom: 0;
+}
+
+.orderItemDescription {
+
+}
+
+.ingredientsEnumeration {
+    padding: 0;
+    list-style-type: none;
+}
+
+.ingredientItem {
+
+}
