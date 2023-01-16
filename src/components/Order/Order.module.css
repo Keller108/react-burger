@@ -1,3 +1,8 @@
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .orderItem {
     width: 100%;
     border-radius: 40px;
