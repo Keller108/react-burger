@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ORDERS_ROUTE, PROFILE_ROUTE } from '../../shared/routes';
 import styles from './Account.module.css';
 

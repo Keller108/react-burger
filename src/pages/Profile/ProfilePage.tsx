@@ -1,4 +1,4 @@
-import styles from './Profile.module.css';
+import styles from './ProfilePage.module.css';
 import { useDispatch } from '../../shared/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LOGIN_ROUTE, ORDERS_ROUTE, PROFILE_ROUTE } from '../../shared/routes';
@@ -27,7 +27,6 @@ export function ProfilePage() {
                     ? <Orders />
                     : <ProfileForm />
                 }
-                <div className={styles.sideColumn}></div>
             </div>
         </section>
     )

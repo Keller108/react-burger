@@ -1,6 +1,7 @@
 .account {
-    min-width: 30%;
+    max-width: 30%;
     height: 100%;
+    padding-top: 60px;
 }
 
 .tabs {

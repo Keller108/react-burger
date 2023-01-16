@@ -2,6 +2,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { FormEvent, useState } from 'react';
 import { editUser } from '../../services/actions/user';
 import { useDispatch, useSelector } from '../../shared/hooks';
+import styles from './ProfileForm.module.css';
 
 export const ProfileForm = () => {
     const store = useSelector(state => state.userStore);
@@ -26,7 +27,7 @@ export const ProfileForm = () => {
     };
 
     return (
-        <form onSubmit={handleFormSubmit}>
+        <form className={styles.form} onSubmit={handleFormSubmit}>
             <Input
                 onChange={e => setUserName(e.target.value)}
                 error={false}
