@@ -4,6 +4,7 @@
     background-color: #1c1c21;
     padding: 24px;
     margin-bottom: 16px;
+    cursor: pointer;
 }
 
 .orderItem:last-of-type {
