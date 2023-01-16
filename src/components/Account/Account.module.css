@@ -4,22 +4,27 @@
 }
 
 .tabs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
     line-height: 1.8;
     padding: 0;
     list-style-type: none;
 }
 
-.tabs li {
+.navItem {
     height: 64px;
     cursor: pointer;
-}
-
-.tabs a {
     text-decoration: none;
-    color: inherit;
+    color: #8585AD;
 }
 
-.tabs p:hover {
+.navItem_active {
+    color: white;
+}
+
+.navItem:hover {
     color: white;
 }
 

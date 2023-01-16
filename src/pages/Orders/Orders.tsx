@@ -5,8 +5,8 @@ import styles from './Orders.module.css';
 export const Orders = () => {
     return (
         <ul className={styles.orders}>
-            {fakeOrders.map(item => <Order
-                key={item.name}
+            {fakeOrders.map((item, i) => <Order
+                key={item.name + i}
                 number={item.number}
                 name={item.name}
                 time={item.time}

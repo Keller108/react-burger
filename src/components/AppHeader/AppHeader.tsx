@@ -31,15 +31,15 @@ export function AppHeader() {
                             </span>
                             Конструктор
                         </NavLink>
-                        <Link
+                        <NavLink
                             to={FEED_ROUTE}
-                            className={inactiveLinkClass}
+                            className={({ isActive }) => isActive ? activeLinkClass : inactiveLinkClass}
                         >
                             <span className={`${appHeaderStyles.navigationIcon} mr-2`}>
-                                <ListIcon type={location.pathname === '/orders' ? 'primary' : "secondary"} />
+                                <ListIcon type={location.pathname === '/feed' ? 'primary' : "secondary"} />
                             </span>
                             Лента заказов
-                        </Link>
+                        </NavLink>
                     </div>
                     <div className={appHeaderStyles.headerColumn}>
                         <Link
