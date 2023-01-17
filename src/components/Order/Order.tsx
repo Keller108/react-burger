@@ -20,13 +20,13 @@ export const Order = ({
 }: Props) => {
     return (
         <Link
-            to={{ pathname: `/order/${number}` }}
+            to={{ pathname: `/feed/${number}` }}
             className={styles.link}
         >
             <li className={styles.orderItem}>
                 <div className={`${styles.orderItemDescription} mb-6`}>
                     <span className='text text_type_main-small'>#{number}</span>
-                    <span className='text text_type_main- small text_color_inactive'>{time}</span>
+                    <span className='text text_type_main-small text_color_inactive'>{time}</span>
                 </div>
                 <h2 className='text text_type_main-medium mb-2'>{name}</h2>
                 <p className='text text_type_main-small mb-6'>Готовится</p>
