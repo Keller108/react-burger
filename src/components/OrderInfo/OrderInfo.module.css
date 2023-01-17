@@ -8,3 +8,27 @@
     height: 100%;
     max-height: 620px;
 }
+
+.statusDone {
+    color: #00CCCC;
+}
+
+.statusInProgress {
+    color: white;
+}
+
+.statusCanceled {
+    color: #C93C29;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    max-height: 304px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+}
