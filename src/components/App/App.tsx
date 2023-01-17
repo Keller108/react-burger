@@ -13,7 +13,6 @@ import { Modal } from "../Modal";
 import { CLOSE_MODAL } from "../../services/constants/modal";
 import { SHOP_ROUTE } from "../../shared/routes";
 import { OrderFeed } from "../../pages/OrderFeed";
-import { OrderInfo } from "../OrderInfo";
 import { OrderPage } from "../../pages/OrderPage";
 
 export const App = () => {

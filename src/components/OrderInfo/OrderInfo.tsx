@@ -13,8 +13,6 @@ const fakeOrder = {
     ]
 };
 
-type TOrderStatus = 'done' | 'inProgress' | 'canceled';
-
 export const OrderInfo = () => {
     const statusClass = fakeOrder.status === 'done'
         ? `${styles.statusDone}`
