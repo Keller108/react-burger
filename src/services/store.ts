@@ -17,6 +17,18 @@ const wsPublicMiddleware = socketMiddleware({
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(
+    thunk,
+    socketMiddleware({
+        wsConnect: wsPublicConnect,
+        wsDisconnect: wsPublicDisconnect,
+        wsConnecting: wsPublicConnecting,
+        onOpen: wsPublicOpen,
+        onClose: wsPublicClose,
+        onError: wsPublicError,
+        onData: wsPublicGetData,
+    })
+
+));
 
 export const store = createStore(rootReducer, enhancer);
