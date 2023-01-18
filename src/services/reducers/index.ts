@@ -5,6 +5,7 @@ import { userReducer } from './user';
 import { TModalActions } from '../actions/modal';
 import { ITabSwitchAction } from '../actions/tab';
 import { TLoaderActions } from '../actions/loader';
+import { wsPublicReducer } from './ws-public';
 
 type TInitialModalState = {
     isActive: boolean;
@@ -105,5 +106,6 @@ export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     burgerConstructor: constructorReducer,
     modal: modalReducer,
-    tabs: tabReducer
+    tabs: tabReducer,
+    wsPublic: wsPublicReducer
 });
