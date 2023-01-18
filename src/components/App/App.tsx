@@ -11,19 +11,24 @@ import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
 import { CLOSE_MODAL } from "../../services/constants/modal";
-import { SHOP_ROUTE } from "../../shared/routes";
+import { ORDERS_FEED_PATH, SHOP_ROUTE } from "../../shared/routes";
 import { OrderFeed } from "../../pages/OrderFeed";
 import { OrderPage } from "../../pages/OrderPage";
+import { wsPublicConnect, wsPublicDisconnect } from "../../services/actions/ws-public";
 
 export const App = () => {
     const [isLoading,] = useState(false);
     const { isActive } = useSelector((store) => store.modal);
+    const store = useSelector(store => store.wsPublic);
 
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleUserCheck = () => dispatch(userCheck());
+
+    const wsConnect = () => dispatch(wsPublicConnect(ORDERS_FEED_PATH));
+    const wsDisconnect = () => dispatch(wsPublicDisconnect());
 
     const state = location.state && location.state.background;
 
@@ -39,6 +44,7 @@ export const App = () => {
 
     useEffect(() => {
         handleCheckData();
+        wsConnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
