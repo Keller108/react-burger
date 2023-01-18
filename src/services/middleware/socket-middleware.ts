@@ -66,7 +66,7 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
 
         }
 
-        // next(action);
+        next(action);
       };
     };
   };
