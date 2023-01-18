@@ -1,9 +1,9 @@
 import { IConstructorItem } from "../../shared/types";
 import { TConstructorActions } from "../actions";
 
-type TInitialState = {
-    buns: IConstructorItem[] | null;
-    otherItems: IConstructorItem[] | null;
+type TInitialConstrState = {
+    buns: IConstructorItem[] | [];
+    otherItems: IConstructorItem[] | [];
     totalPrice: number;
     order: {
         name: string;
@@ -14,7 +14,7 @@ type TInitialState = {
     };
 };
 
-const initialConstrState: TInitialState = {
+const initialConstrState: TInitialConstrState = {
     buns: [],
     otherItems: [],
     totalPrice: 0,
@@ -29,7 +29,7 @@ const initialConstrState: TInitialState = {
 
 export const constructorReducer = (
     state = initialConstrState, action: TConstructorActions
-) => {
+): TInitialConstrState => {
     switch (action.type) {
         case 'ADD_ITEM_TO_CONSTRUCTOR': {
             if (action.ingredient.type === 'bun') {
@@ -85,7 +85,7 @@ export const constructorReducer = (
                         }
                     }
             }
-            break;
+            return state;
         }
         case 'ORDER_REQUEST': {
             return {
@@ -133,7 +133,7 @@ export const constructorReducer = (
                     otherItems: [...newItems]
                 }
             }
-            break;
+            return state;
         }
         case 'CLEAR_CART': {
             return {

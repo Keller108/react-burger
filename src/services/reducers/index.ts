@@ -6,11 +6,12 @@ import { TModalActions } from '../actions/modal';
 import { ITabSwitchAction } from '../actions/tab';
 import { TLoaderActions } from '../actions/loader';
 import { wsPublicReducer } from './ws-public';
+import { IIngredientItem } from '../../shared/types';
 
 type TInitialModalState = {
     isActive: boolean;
     content: JSX.Element | null;
-    currentData: null | string;
+    currentData: IIngredientItem | null;
 };
 
 const initialModalState: TInitialModalState = {
@@ -22,15 +23,18 @@ const initialModalState: TInitialModalState = {
 const modalReducer = (
     state: TInitialModalState = initialModalState,
     action: TModalActions
-) => {
+): TInitialModalState => {
     switch (action.type) {
         case 'OPEN_MODAL': {
-            return {
-                ...state,
-                isActive: true,
-                content: action.payload,
-                currentData: action.data
+            if (action.data) {
+                return {
+                    ...state,
+                    isActive: true,
+                    content: action.payload,
+                    currentData: action.data
+                }
             }
+            return state;
         }
         case 'CLOSE_MODAL': {
             return {
