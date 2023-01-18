@@ -1,2 +1,2 @@
-export * from './wsPublic';
-export * from './wsPrivate';
+export * from './ws-public';
+export * from './ws-private';

@@ -28,6 +28,7 @@ export type { TOrderData } from './TOrderData';
 export type { IWSOrderData } from './IWSOrderData';
 export type { TORderStatus } from './TORderStatus';
 export type { IWSServerResponse } from './IWSServerResponse';
+export { WebSocketStatus } from './WebSocketStatus';
 
 export type RootState = ReturnType<typeof store.getState>;
 

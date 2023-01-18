@@ -1,1 +1,1 @@
-export { socketMiddleware } from './socketMiddleware';
+export { socketMiddleware } from './socket-middleware';

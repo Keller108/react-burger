@@ -3,6 +3,7 @@ import { IWSServerResponse } from "../../shared/types";
 
 export const connect = createAction<string, 'WS_PUBLIC_CONNECT'>('WS_PUBLIC_CONNECT');
 export const disconnect = createAction('WS_PUBLIC_DISCONNECT');
+
 export const wsPublicConnecting = createAction('WS_PUBLIC_CONNECTING');
 export const wsPublicOpen = createAction('WS_PUBLIC_OPEN');
 export const wsPublicClose = createAction('WS_PUBLIC_CLOSE');
