@@ -1,3 +1,4 @@
+import { configureStore } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "@reduxjs/toolkit/dist/devtoolsExtension";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
@@ -5,20 +6,37 @@ import { wsPublicClose, wsPublicConnect, wsPublicConnecting, wsPublicDisconnect,
 import { socketMiddleware } from "./middleware";
 import { rootReducer } from "./reducers";
 
-export const store = createStore(
+const wsPublicMiddleware = socketMiddleware({
+    wsConnect: wsPublicConnect,
+    wsDisconnect: wsPublicDisconnect,
+    wsConnecting: wsPublicConnecting,
+    onOpen: wsPublicOpen,
+    onClose: wsPublicClose,
+    onError: wsPublicError,
+    onData: wsPublicGetData,
+});
+
+export const store = configureStore({
     rootReducer,
-    composeWithDevTools(
-        applyMiddleware(
-            thunk,
-            socketMiddleware({
-                wsConnect: wsPublicConnect,
-                wsDisconnect: wsPublicDisconnect,
-                wsConnecting: wsPublicConnecting,
-                onOpen: wsPublicOpen,
-                onClose: wsPublicClose,
-                onError: wsPublicError,
-                onData: wsPublicGetData,
-            })
-        )
-    )
-)
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(wsPublicMiddleware)
+    }
+})
+
+// export const store = createStore(
+//     rootReducer,
+//     composeWithDevTools(
+//         applyMiddleware(
+//             thunk,
+//             socketMiddleware({
+//                 wsConnect: wsPublicConnect,
+//                 wsDisconnect: wsPublicDisconnect,
+//                 wsConnecting: wsPublicConnecting,
+//                 onOpen: wsPublicOpen,
+//                 onClose: wsPublicClose,
+//                 onError: wsPublicError,
+//                 onData: wsPublicGetData,
+//             })
+//         )
+//     )
+// )
