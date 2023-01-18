@@ -1,8 +1,8 @@
 import { createAction } from "@reduxjs/toolkit";
 import { IWSServerResponse } from "../../shared/types";
 
-export const connect = createAction<string, 'WS_PUBLIC_CONNECT'>('WS_PUBLIC_CONNECT');
-export const disconnect = createAction('WS_PUBLIC_DISCONNECT');
+export const wsPublicConnect = createAction<string, 'WS_PUBLIC_CONNECT'>('WS_PUBLIC_CONNECT');
+export const wsPublicDisconnect = createAction('WS_PUBLIC_DISCONNECT');
 
 export const wsPublicConnecting = createAction('WS_PUBLIC_CONNECTING');
 export const wsPublicOpen = createAction('WS_PUBLIC_OPEN');
@@ -11,8 +11,8 @@ export const wsPublicError = createAction<string, 'WS_PUBLIC_ERROR'>('WS_PUBLIC_
 export const wsPublicGetData = createAction<IWSServerResponse, 'WS_PUBLIC_GET_DATA'>('WS_PUBLIC_GET_DATA');
 
 export type TWSPublicActions =
-    | ReturnType<typeof connect>
-    | ReturnType<typeof disconnect>
+    | ReturnType<typeof wsPublicConnect>
+    | ReturnType<typeof wsPublicDisconnect>
     | ReturnType<typeof wsPublicConnecting>
     | ReturnType<typeof wsPublicOpen>
     | ReturnType<typeof wsPublicClose>
