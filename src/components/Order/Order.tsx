@@ -1,23 +1,52 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { TOrderData } from '../../shared/types';
+import { useSelector } from '../../shared/hooks';
+import { TOrderData, TORderStatus } from '../../shared/types';
 import styles from './Order.module.css';
 
-type TOrderStatus = 'Создан' | 'Готовится' | 'Выполнен';
+type TStatus = {
+    done: 'Выполнен',
+    pending: 'Готовиться',
+    created: 'Создан'
+};
 
 type Props = {
     number: number;
     name: string;
     time: string;
     ingredients: TOrderData[];
-    price: number;
     maxItems: number;
-    status?: TOrderStatus | null;
+    status?: TORderStatus | null;
 };
 
 export const Order = ({
-    number, name, time, ingredients, price, maxItems, status = null
+    number, name, time, ingredients, maxItems, status = null
 }: Props) => {
+    const { ingredientItems } = useSelector(store => store.ingredients);
+    let orderStatus;
+
+    switch (status) {
+        case 'done': {
+            orderStatus = 'Выполнен';
+            break
+        }
+        case 'canceled': {
+            orderStatus = 'Отменен'
+            break
+        }
+        case 'peding': {
+            orderStatus = 'Готовится'
+            break
+        }
+        case 'created': {
+            orderStatus = 'Создан'
+            break
+        }
+        default: {
+            orderStatus = null
+        }
+    }
+
     return (
         <Link
             to={{ pathname: `/feed/${number}` }}
@@ -29,7 +58,9 @@ export const Order = ({
                     <span className='text text_type_main-small text_color_inactive'>{time}</span>
                 </div>
                 <h2 className='text text_type_main-medium mb-2'>{name}</h2>
-                <p className='text text_type_main-small mb-6'>Готовится</p>
+                <p className='text text_type_main-small mb-6'>{
+
+                }</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
                         {ingredients.map((item, i) => <li key={item + i.toString()}
@@ -40,7 +71,7 @@ export const Order = ({
                         </li>)}
                     </ul>
                     <span className={styles.price}>
-                        <p className='text text_type_digits-default mr-2'>{price}</p>
+                        <p className='text text_type_digits-default mr-2'>{status && orderStatus}</p>
                         <CurrencyIcon type="primary" />
                     </span>
                 </div>
