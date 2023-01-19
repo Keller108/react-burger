@@ -1,6 +1,6 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { IIngredientItem } from '../../shared/types';
+import { TOrderData } from '../../shared/types';
 import styles from './Order.module.css';
 
 type TOrderStatus = 'Создан' | 'Готовится' | 'Выполнен';
@@ -9,7 +9,7 @@ type Props = {
     number: number;
     name: string;
     time: string;
-    ingredients: IIngredientItem[];
+    ingredients: TOrderData[];
     price: number;
     maxItems: number;
     status?: TOrderStatus | null;
@@ -32,10 +32,10 @@ export const Order = ({
                 <p className='text text_type_main-small mb-6'>Готовится</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
-                        {ingredients.map(item => <li key={item.name}
+                        {ingredients.map((item, i) => <li key={item + i.toString()}
                             className={styles.ingredientItem} style={{zIndex: maxItems + 1}}>
                             <span className={styles.ingredientBackground}><img
-                                className={styles.ingredientImg} src={item.image} alt={item.name} />
+                                className={styles.ingredientImg} src='https://aba.ru/' alt="Картинка ингредиента" />
                             </span>
                         </li>)}
                     </ul>

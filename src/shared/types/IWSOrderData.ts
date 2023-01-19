@@ -2,10 +2,11 @@ import { TOrderData } from "./TOrderData";
 import { TORderStatus } from "./TORderStatus";
 
 export interface IWSOrderData {
-    ingredients: TOrderData[] | [];
     _id: string;
-    status: TORderStatus | null;
+    name: string;
     number: number;
+    status: TORderStatus;
+    ingredients: TOrderData[];
     createdAt: string;
     updatedAt: string;
 }

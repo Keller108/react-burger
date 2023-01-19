@@ -13,10 +13,11 @@ const initialState: WSPublicStore = {
     wsStatus: WebSocketStatus.OFFLINE,
     success: false,
     orderData: [{
-        ingredients: [],
         _id: '',
-        status: null,
+        name: '',
         number: 0,
+        status: 'none',
+        ingredients: [],
         createdAt: '',
         updatedAt: ''
     }],
