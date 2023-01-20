@@ -59,8 +59,8 @@ export const Order = (item: IWSOrderData) => {
                 }</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
-                        {ingredients.map((item, i) => <li key={item + i.toString()}
-                            className={styles.ingredientItem} style={{zIndex: ingredients.length + 1}}>
+                        {ingredients.slice(0, 6).map((item, i) => <li key={item + i.toString()}
+                            className={styles.ingredientItem} style={{zIndex: ingredients.length + 1, }}>
                             <span className={styles.ingredientBackground}><img
                                 className={styles.ingredientImg} src='https://aba.ru/' alt="Картинка ингредиента" />
                             </span>

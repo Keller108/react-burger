@@ -7,9 +7,6 @@ import styles from './OrderFeed.module.css';
 export const OrderFeed = () => {
     const wsStore = useSelector(store => store.wsPublic);
     const { total, totalToday, orderData } = wsStore;
-    const ready = [12345, 54321, 67890, 9876];
-
-    console.log('orderData', orderData);
 
     const readyOrders = useMemo(() => {
         return orderData.filter(item => item.status === 'done');
