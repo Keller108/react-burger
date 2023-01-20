@@ -7,6 +7,8 @@ export type WSPublicStore = {
     success: boolean;
     orderData: IWSOrderData[];
     connectingError: string;
+    total: number;
+    totalToday: number;
 };
 
 const initialState: WSPublicStore = {
@@ -21,7 +23,9 @@ const initialState: WSPublicStore = {
         createdAt: '',
         updatedAt: ''
     }],
-    connectingError: ''
+    connectingError: '',
+    total: 0,
+    totalToday: 0
 };
 
 export const wsPublicReducer = createReducer(initialState, builder => {
@@ -42,5 +46,7 @@ export const wsPublicReducer = createReducer(initialState, builder => {
         .addCase(wsPublicGetData, (state, action) => {
             state.orderData = action.payload.orders;
             state.success = action.payload.success;
+            state.total = action.payload.total;
+            state.totalToday = action.payload.totalToday;
         })
 })

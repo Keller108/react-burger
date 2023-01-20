@@ -35,35 +35,34 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
         }
 
         if (socket) {
-          socket.onopen = event => {
-            dispatch(onOpen());
-          };
+            socket.onopen = event => {
+                dispatch(onOpen());
+            };
 
-          socket.onerror = event => {
-            dispatch(onError('Error'));
-          };
+            socket.onerror = event => {
+                dispatch(onError('Error'));
+            };
 
-          socket.onmessage = event => {
-            const { data } = event;
-            const parsedData = JSON.parse(data);
+            socket.onmessage = event => {
+                const { data } = event;
+                const parsedData = JSON.parse(data);
 
-            dispatch(onData(parsedData));
-          };
+                dispatch(onData(parsedData));
+            };
 
-          socket.onclose = event => {
-            dispatch(onClose());
-          };
+            socket.onclose = event => {
+                dispatch(onClose());
+            };
 
-        //   if (wsSendData?.match(action)) {
-        //     const data = { ...payload, token: user.token };
-        //     socket.send(JSON.stringify(data));
-        //   }
+            //   if (wsSendData?.match(action)) {
+            //     const data = { ...payload, token: user.token };
+            //     socket.send(JSON.stringify(data));
+            //   }
 
-        if (wsDisconnect.match(action)) {
-            socket.close();
-            socket = null;
-        }
-
+            if (wsDisconnect.match(action)) {
+                socket.close();
+                socket = null;
+            }
         }
 
         next(action);

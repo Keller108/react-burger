@@ -1,4 +1,4 @@
-import { TOrderData } from "./TOrderData";
+import { TOrderID } from "./TOrderID";
 import { TORderStatus } from "./TORderStatus";
 
 export interface IWSOrderData {
@@ -6,7 +6,7 @@ export interface IWSOrderData {
     name: string;
     number: number;
     status: TORderStatus;
-    ingredients: string[];
+    ingredients: TOrderID[];
     createdAt: string;
     updatedAt: string;
 }

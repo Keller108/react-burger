@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Order } from '../../components/Order';
 import { useSelector } from '../../shared/hooks';
 import { IWSOrderData } from '../../shared/types';
@@ -5,8 +6,18 @@ import styles from './OrderFeed.module.css';
 
 export const OrderFeed = () => {
     const wsStore = useSelector(store => store.wsPublic);
-    const orders = wsStore.orderData;
+    const { total, totalToday, orderData } = wsStore;
     const ready = [12345, 54321, 67890, 9876];
+
+    console.log('orderData', orderData);
+
+    const readyOrders = useMemo(() => {
+        return orderData.filter(item => item.status === 'done');
+    }, [orderData])
+
+    const createdOrders = useMemo(() => {
+        return orderData.filter(item => item.status === 'created');
+    }, [orderData])
 
     return (
         <main className={styles.orderFeed}>
@@ -15,7 +26,7 @@ export const OrderFeed = () => {
                     Лента заказов
                 </h1>
                 <ul className={styles.orders}>
-                    {orders.map((item: IWSOrderData) => <Order
+                    {orderData.map((item: IWSOrderData) => <Order
                         key={item.number}
                         {...item}
                     />)}
@@ -26,23 +37,29 @@ export const OrderFeed = () => {
                     <div className={styles.statusCol}>
                         <h2 className='text text_type_main-medium mb-6'>Готовы:</h2>
                         <ul className={`${styles.statusList} ${styles.statusListDone}`}>
-                            {ready.map(item => <p className='text text_type_digits-default' key={item}>{item}</p>)}
+                            {readyOrders?.map(item => <p
+                                className='text text_type_digits-default mb-2'
+                                key={item._id}
+                            >{item.number}</p>)}
                         </ul>
                     </div>
                     <div className={`${styles.statusCol}`}>
                         <h2 className='text text_type_main-medium mb-6'>В работе:</h2>
-                        <ul className={styles.statusList}>
-                            {ready.map(item => <p className='text text_type_digits-default' key={item}>{item}</p>)}
+                        <ul className={`${styles.statusList} ${styles.statusListDone}`}>
+                            {createdOrders?.map(item => <p
+                                className='text text_type_digits-default mb-2'
+                                key={item._id}
+                            >{item.number}</p>)}
                         </ul>
                     </div>
                 </div>
                 <div className={`${styles.statistics} mt-15`}>
                     <h2 className='text text_type_main-medium'>Выполнено за все время:</h2>
-                    <p className='text text_type_digits-large'>28 752</p>
+                    <p className='text text_type_digits-large'>{total}</p>
                 </div>
                 <div className={`${styles.statistics} mt-15`}>
                     <h2 className='text text_type_main-medium'>Выполнено за сегодня:</h2>
-                    <p className='text text_type_digits-large'>138</p>
+                    <p className='text text_type_digits-large'>{totalToday}</p>
                 </div>
             </section>
         </main>
