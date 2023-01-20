@@ -6,7 +6,7 @@ export interface IWSOrderData {
     name: string;
     number: number;
     status: TORderStatus;
-    ingredients: TOrderData[];
+    ingredients: string[];
     createdAt: string;
     updatedAt: string;
 }

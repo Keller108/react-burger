@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IWSOrderData } from '../../shared/types';
+import { IIngredientItem, IWSOrderData, TOrderData } from '../../shared/types';
 import styles from './OrderInfo.module.css';
+import { useDispatch, useSelector } from '../../shared/hooks';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
 export const OrderInfo = () => {
     const [currentOrder, ] = useState<IWSOrderData | null>(() => {
@@ -10,6 +12,32 @@ export const OrderInfo = () => {
         else return null;
     });
     const [orderStatus, setOrderStatus] = useState('');
+    // const [orderIngredients, setOrderIngredients] = useState([]);
+    const { ingredientItems } = useSelector(store => store.ingredients);
+    const dispatch = useDispatch();
+    const getAppIngredients = () => dispatch(getIngredients());
+
+    const getBurgerIngredients = (ids: string[], ingrdients: IIngredientItem[]) => ids?.map(
+        (id: string) => ingrdients.filter((item: IIngredientItem) => item._id === id)
+    )?.flat();
+
+    useEffect(() => {
+        getAppIngredients();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const orderIngredients = useMemo(() => {
+        let ingredients: IIngredientItem | [] = [];
+        let ingredientsIds: string[] | [] = [];
+        let ids: IIngredientItem[] | [] = [];
+
+        if (currentOrder && currentOrder.ingredients) {
+            ingredientsIds = [...currentOrder.ingredients];
+            ids = getBurgerIngredients(ingredientsIds, ingredientItems);
+            return ids;
+        }
+        return ids;
+    }, [currentOrder, ingredientItems])
 
     useEffect(() => {
         if (currentOrder) setOrderStatus(currentOrder.status);
@@ -45,25 +73,25 @@ export const OrderInfo = () => {
         }
     }
 
-    console.log('ingre', currentOrder);
+    console.log('orderIngredients', orderIngredients);
 
     return (
         <article className={styles.orderInfo}>
-            <b className={`${styles.orderId} text text_type_digits-default`}>#{currentOrder?._id}</b>
+            <b className={`${styles.orderId} text text_type_digits-default`}>#{currentOrder?.number}</b>
             <h1 className="text text_type_main-medium mt-0 mb-3">Black Hole Singularity острый бургер</h1>
             <span className={`text text_type_main-default ${orderStyle} mt-0 mb-15`}>{statusText}</span>
             <h2 className="text text_type_main-medium mt-0 mb-6">Состав:</h2>
             <ul className={styles.list}>
-                {currentOrder?.ingredients.map((item) => <li className={styles.ingredient}>
+                {orderIngredients.map((item: IIngredientItem) => <li className={styles.ingredient}>
                     <span className={styles.ingredientFigure}>
                         <div className={styles.ingredientBackground}>
                             <img className={styles.ingredientImg}
-                                src="https://code.s3.yandex.net/react/code/bun-02.png" alt="ingredient" />
+                                src={item.image} alt={item.name} />
                         </div>
                     </span>
-                    <h3 className={`${styles.ingredientTitle} text text_type_main-default`} >Флюоресцентная булка R2-D3</h3>
+                    <h3 className={`${styles.ingredientTitle} text text_type_main-default`} >{item.name}</h3>
                     <span className={styles.ingredientCost}>
-                        <p className="text text_type_digits-default mt-0 mb-0 mr-2">2 X 20</p>
+                        <p className="text text_type_digits-default mt-0 mb-0 mr-2">{item.price}</p>
                         <CurrencyIcon type="primary" />
                     </span>
                 </li>)}

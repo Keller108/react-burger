@@ -1,4 +1,4 @@
-import { handleTokenRefresh } from "../../shared/handlers/handleTokenRefresh";
+import { handleTokenRefresh } from "../../shared/handlers";
 import { AppDispatch, AppThunk, IUserModel } from "../../shared/types";
 import {
     checkIfExist,

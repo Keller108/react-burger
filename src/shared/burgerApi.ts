@@ -1,4 +1,4 @@
-import { handleResponse } from "./handlers/handleResponse";
+import { handleResponse } from "./handlers";
 import { INGREDIENTS_PATH, ORDERS_PATH } from "./routes";
 import { IIngredientsResponse, TOrderData } from "./types";
 
