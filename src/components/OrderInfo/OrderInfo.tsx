@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredientItem, IWSOrderData, TOrderData } from '../../shared/types';
+import { IIngredientItem, IWSOrderData, TOrderID } from '../../shared/types';
 import styles from './OrderInfo.module.css';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { getIngredients } from '../../services/actions/burger-ingredients';
@@ -12,22 +12,20 @@ export const OrderInfo = () => {
         else return null;
     });
     const [orderStatus, setOrderStatus] = useState('');
-    // const [orderIngredients, setOrderIngredients] = useState([]);
+
     const { ingredientItems } = useSelector(store => store.ingredients);
+
     const dispatch = useDispatch();
     const getAppIngredients = () => dispatch(getIngredients());
 
-    const getBurgerIngredients = (ids: string[], ingrdients: IIngredientItem[]) => ids?.map(
+    let statusText;
+    let orderStyle;
+
+    const getBurgerIngredients = (ids: TOrderID[], ingrdients: IIngredientItem[]) => ids?.map(
         (id: string) => ingrdients.filter((item: IIngredientItem) => item._id === id)
     )?.flat();
 
-    useEffect(() => {
-        getAppIngredients();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
     const orderIngredients = useMemo(() => {
-        let ingredients: IIngredientItem | [] = [];
         let ingredientsIds: string[] | [] = [];
         let ids: IIngredientItem[] | [] = [];
 
@@ -38,13 +36,6 @@ export const OrderInfo = () => {
         }
         return ids;
     }, [currentOrder, ingredientItems])
-
-    useEffect(() => {
-        if (currentOrder) setOrderStatus(currentOrder.status);
-    }, [currentOrder])
-
-    let statusText;
-    let orderStyle;
 
     switch (orderStatus) {
         case 'done': {
@@ -73,7 +64,14 @@ export const OrderInfo = () => {
         }
     }
 
-    console.log('orderIngredients', orderIngredients);
+    useEffect(() => {
+        getAppIngredients();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        if (currentOrder) setOrderStatus(currentOrder.status);
+    }, [currentOrder])
 
     return (
         <article className={styles.orderInfo}>
