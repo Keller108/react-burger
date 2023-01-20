@@ -1,7 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useSelector } from '../../shared/hooks';
-import { TOrderData, TORderStatus } from '../../shared/types';
+import { IWSOrderData, TOrderData, TORderStatus } from '../../shared/types';
 import styles from './Order.module.css';
 
 type TStatus = {
@@ -10,19 +10,9 @@ type TStatus = {
     created: 'Создан'
 };
 
-type Props = {
-    number: number;
-    name: string;
-    time: string;
-    ingredients: TOrderData[];
-    maxItems: number;
-    status?: TORderStatus | null;
-};
-
-export const Order = ({
-    number, name, time, ingredients, maxItems, status = null
-}: Props) => {
+export const Order = (item: IWSOrderData) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
+    const { _id, number, name, ingredients, status = null, createdAt, updatedAt } = item;
     let orderStatus;
 
     switch (status) {
@@ -47,15 +37,21 @@ export const Order = ({
         }
     }
 
+    const setCurrentOrder = (item: IWSOrderData) => {
+        let data = JSON.stringify(item);
+        localStorage.setItem('currentOrder', data);
+    };
+
     return (
         <Link
             to={{ pathname: `/feed/${number}` }}
             className={styles.link}
+            onClick={() => setCurrentOrder(item as IWSOrderData)}
         >
             <li className={styles.orderItem}>
                 <div className={`${styles.orderItemDescription} mb-6`}>
                     <span className='text text_type_main-small'>#{number}</span>
-                    <span className='text text_type_main-small text_color_inactive'>{time}</span>
+                    <span className='text text_type_main-small text_color_inactive'>{updatedAt}</span>
                 </div>
                 <h2 className='text text_type_main-medium mb-2'>{name}</h2>
                 <p className='text text_type_main-small mb-6'>{
@@ -64,7 +60,7 @@ export const Order = ({
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
                         {ingredients.map((item, i) => <li key={item + i.toString()}
-                            className={styles.ingredientItem} style={{zIndex: maxItems + 1}}>
+                            className={styles.ingredientItem} style={{zIndex: ingredients.length + 1}}>
                             <span className={styles.ingredientBackground}><img
                                 className={styles.ingredientImg} src='https://aba.ru/' alt="Картинка ингредиента" />
                             </span>

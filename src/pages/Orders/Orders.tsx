@@ -1,5 +1,4 @@
 import { Order } from '../../components/Order';
-import { fakeOrders } from '../../shared/const';
 import styles from './Orders.module.css';
 
 export const Orders = () => {

@@ -1,35 +1,60 @@
+import { useEffect, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IWSOrderData } from '../../shared/types';
 import styles from './OrderInfo.module.css';
 
-const fakeOrder = {
-    _id: '034533',
-    status: 'done',
-    number: 1,
-    createdAt: '2021-06-23T20:11:01.403Z',
-    updatedAt: '2021-06-23T20:11:01.406Z',
-    ingredients: [
-        '60d3463f7034a000269f45e9',
-        '60d3463f7034a000269f45e7'
-    ]
-};
-
 export const OrderInfo = () => {
-    const statusClass = fakeOrder.status === 'done'
-        ? `${styles.statusDone}`
-        : fakeOrder.status === 'inProgress'
-        ? `${styles.statusInProgress}`
-        : fakeOrder.status === 'canceled'
-        ? `${styles.statusCanceled}`
-        : fakeOrder.status === 'inProgress';
+    const [currentOrder, ] = useState<IWSOrderData | null>(() => {
+        let item = localStorage.getItem('currentOrder');
+        if (item) return JSON.parse(item);
+        else return null;
+    });
+    const [orderStatus, setOrderStatus] = useState('');
+
+    useEffect(() => {
+        if (currentOrder) setOrderStatus(currentOrder.status);
+    }, [currentOrder])
+
+    let statusText;
+    let orderStyle;
+
+    switch (orderStatus) {
+        case 'done': {
+            statusText = 'Выполнен';
+            orderStyle = styles.statusDone;
+            break
+        }
+        case 'canceled': {
+            statusText = 'Отменен';
+            orderStyle = styles.statusCanceled;
+            break
+        }
+        case 'peding': {
+            statusText = 'Готовится';
+            orderStyle = styles.statusInProgress;
+            break
+        }
+        case 'created': {
+            statusText = 'Создан';
+            orderStyle = styles.statusInProgress;
+            break
+        }
+        default: {
+            statusText = '';
+            orderStyle = '';
+        }
+    }
+
+    console.log('ingre', currentOrder);
 
     return (
         <article className={styles.orderInfo}>
-            <b className={`${styles.orderId} text text_type_digits-default`}>#{fakeOrder._id}</b>
+            <b className={`${styles.orderId} text text_type_digits-default`}>#{currentOrder?._id}</b>
             <h1 className="text text_type_main-medium mt-0 mb-3">Black Hole Singularity острый бургер</h1>
-            <span className={`text text_type_main-default ${statusClass} mt-0 mb-15`}>{fakeOrder.status}</span>
+            <span className={`text text_type_main-default ${orderStyle} mt-0 mb-15`}>{statusText}</span>
             <h2 className="text text_type_main-medium mt-0 mb-6">Состав:</h2>
             <ul className={styles.list}>
-                <li className={styles.ingredient}>
+                {currentOrder?.ingredients.map((item) => <li className={styles.ingredient}>
                     <span className={styles.ingredientFigure}>
                         <div className={styles.ingredientBackground}>
                             <img className={styles.ingredientImg}
@@ -41,7 +66,7 @@ export const OrderInfo = () => {
                         <p className="text text_type_digits-default mt-0 mb-0 mr-2">2 X 20</p>
                         <CurrencyIcon type="primary" />
                     </span>
-                </li>
+                </li>)}
             </ul>
             <div className={`${styles.footer}`}>
                 <p className="text text_type_main-small text_color_inactive mt-0 mb-0">Вчера, 13:50 i-GMT+3</p>

@@ -8,8 +8,6 @@ export const OrderFeed = () => {
     const orders = wsStore.orderData;
     const ready = [12345, 54321, 67890, 9876];
 
-    console.log('statuses', orders.map(item => item.status));
-
     return (
         <main className={styles.orderFeed}>
             <section className={styles.ordersWrapper}>
@@ -19,11 +17,7 @@ export const OrderFeed = () => {
                 <ul className={styles.orders}>
                     {orders.map((item: IWSOrderData) => <Order
                         key={item.number}
-                        number={item.number}
-                        name={item.name}
-                        time={item.createdAt}
-                        ingredients={item.ingredients}
-                        maxItems={item.ingredients.length}
+                        {...item}
                     />)}
                 </ul>
             </section>
