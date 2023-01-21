@@ -15,15 +15,11 @@ import { ORDERS_FEED_PATH, SHOP_ROUTE } from "../../shared/routes";
 import { OrderFeed } from "../../pages/OrderFeed";
 import { OrderPage } from "../../pages/OrderPage";
 import { wsPublicConnect, wsPublicDisconnect } from "../../services/actions/ws-public";
-import { IngredientDetails } from "../IngredientDetails";
-import { OrderDetails } from "../OrderDetails";
+import { useModalType } from "../../shared/hooks/useModalType";
 
 export const App = () => {
     const [isLoading,] = useState(false);
     const { isActive } = useSelector((store) => store.modal);
-    const store = useSelector(store => store.wsPublic);
-    const { modalType } = useSelector(store => store.modal);
-    const { order } = useSelector(store => store.burgerConstructor);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -52,21 +48,7 @@ export const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    let component: JSX.Element | null = null;
-
-    switch (modalType) {
-        case 'ingredient': {
-            component = <IngredientDetails />
-            break
-        }
-        case 'order': {
-            component = <OrderDetails order={order}/>
-            break
-        }
-        default: {
-            component = null
-        }
-    }
+    let component: JSX.Element | null = useModalType();
 
     return (
         <div className={appStyles.app}>

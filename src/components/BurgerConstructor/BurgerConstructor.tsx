@@ -8,7 +8,6 @@ import { Button,
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
-import { OrderDetails } from '../OrderDetails';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import { addItemToConstructor, handlePlaceAnOrder } from '../../services/actions/burger-constructor';
 import { LOGIN_ROUTE } from '../../shared/routes';
@@ -57,6 +56,7 @@ export function BurgerConstructor() {
 
     useEffect(() => {
         if (store?.order.success) {
+            console.log('order success = true', store.order.success);
             dispatch(openModal('order'));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
