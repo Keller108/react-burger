@@ -32,17 +32,21 @@ export const constructorReducer = (
 ): TInitialConstrState => {
     switch (action.type) {
         case 'ADD_ITEM_TO_CONSTRUCTOR': {
+            let price = state.totalPrice;
             if (action.ingredient.type === 'bun') {
                 if (state.buns?.length) {
-                    state.totalPrice = 0;
-                    state.buns = [];
+                    return {
+                        ...state,
+                        totalPrice: 0,
+                        buns: []
+                    }
                 }
                 return {
                     ...state,
                     buns: [
                         action.ingredient
                     ],
-                    totalPrice: state.totalPrice += (action.ingredient.price * 2)
+                    totalPrice: price += (action.ingredient.price * 2)
                 }
             } else {
                 return {
@@ -51,13 +55,14 @@ export const constructorReducer = (
                         ...state.otherItems ?? [],
                         action.ingredient
                     ],
-                    totalPrice: state.totalPrice += action.ingredient.price
+                    totalPrice: price += action.ingredient.price
                 }
             }
         }
         case 'DELETE_ITEM_FROM_CONTRUCTOR': {
             let res;
             let result;
+            let price = state.totalPrice;
             if (state.otherItems) {
                 res = [...state.otherItems]
                     .find((item: IConstructorItem) => item._id === action.ingredient._id);
@@ -73,14 +78,14 @@ export const constructorReducer = (
                                 ...state,
                                 otherItems: [...state.otherItems]
                                     .filter(item => item.uuid !== action.ingredient.uuid),
-                                totalPrice: state.totalPrice -= priceToDecrease
+                                totalPrice: price -= priceToDecrease
                             }
                         } else {
                             return {
                                 ...state,
                                 otherItems: [...state.otherItems]
                                     .filter(item => item._id !== action.ingredient._id),
-                                totalPrice: state.totalPrice -= priceToDecrease
+                                totalPrice: price -= priceToDecrease
                             }
                         }
                     }
