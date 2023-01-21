@@ -41,13 +41,21 @@ export const Order = (item: IWSOrderData) => {
     const orderIngredients = useMemo(() => {
         let ingredientsIds: string[] | [] = [];
         let ingredients: IIngredientItem[] | [] = [];
+        let filteredIngredients: IIngredientItem[] | [] = [];
 
         if (item && item.ingredients) {
             ingredientsIds = [...item.ingredients];
             ingredients = getBurgerIngredients(ingredientsIds, ingredientItems);
-            return ingredients;
+            let res = ingredients.reduce((o, i) => {
+                if (!o.find((v: IIngredientItem) => v.name === i.name)) {
+                    //@ts-ignore
+                    o.push(i);
+                }
+                return o;
+              }, []);
+            return res;
         }
-        return ingredients;
+        return filteredIngredients;
     }, [item, ingredientItems])
 
     const price = useMemo(() => {
