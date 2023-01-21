@@ -1,7 +1,7 @@
 import { IConstructorItem } from "../../shared/types";
 import { TConstructorActions } from "../actions";
 
-type TInitialConstrState = {
+type TConstructorStore = {
     buns: IConstructorItem[] | [];
     otherItems: IConstructorItem[] | [];
     totalPrice: number;
@@ -14,7 +14,7 @@ type TInitialConstrState = {
     };
 };
 
-const initialConstrState: TInitialConstrState = {
+const initialConstrState: TConstructorStore = {
     buns: [],
     otherItems: [],
     totalPrice: 0,
@@ -29,16 +29,17 @@ const initialConstrState: TInitialConstrState = {
 
 export const constructorReducer = (
     state = initialConstrState, action: TConstructorActions
-): TInitialConstrState => {
+): TConstructorStore => {
     switch (action.type) {
         case 'ADD_ITEM_TO_CONSTRUCTOR': {
             let price = state.totalPrice;
             if (action.ingredient.type === 'bun') {
-                if (state.buns?.length) {
+                if (state.buns.length) {
                     return {
                         ...state,
-                        totalPrice: 0,
-                        buns: []
+                        buns: [
+                            action.ingredient
+                        ]
                     }
                 }
                 return {
