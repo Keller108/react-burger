@@ -1,10 +1,9 @@
-import { IIngredientItem } from "../../shared/types";
+import { TModal } from "../../shared/types/TModal";
 import { CLOSE_MODAL, OPEN_MODAL } from "../constants/modal";
 
 export interface IOpenModalAction {
     readonly type: typeof OPEN_MODAL;
-    readonly payload: JSX.Element | null;
-    readonly data: IIngredientItem | null;
+    readonly payload: TModal;
 }
 
 export interface ICloseModalAction {
@@ -13,9 +12,6 @@ export interface ICloseModalAction {
 
 export type TModalActions = IOpenModalAction | ICloseModalAction;
 
-export const openModal = (
-    payload: JSX.Element,
-    data: IIngredientItem | null
-): IOpenModalAction => ({ type: OPEN_MODAL, payload, data });
+export const openModal = (type: TModal): IOpenModalAction => ({ type: OPEN_MODAL, payload: type });
 
 export const closeModal = (): ICloseModalAction => ({ type: CLOSE_MODAL });

@@ -57,7 +57,7 @@ export function BurgerConstructor() {
 
     useEffect(() => {
         if (store?.order.success) {
-            dispatch(openModal(<OrderDetails order={store.order}/>, null));
+            dispatch(openModal('order'));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store?.order])

@@ -2,52 +2,10 @@ import { combineReducers } from 'redux';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 import { userReducer } from './user';
-import { TModalActions } from '../actions/modal';
 import { ITabSwitchAction } from '../actions/tab';
 import { TLoaderActions } from '../actions/loader';
 import { wsPublicReducer } from './ws-public';
-import { IIngredientItem } from '../../shared/types';
-
-type TInitialModalState = {
-    isActive: boolean;
-    content: JSX.Element | null;
-    currentData: IIngredientItem | null;
-};
-
-const initialModalState: TInitialModalState = {
-    isActive: false,
-    content: null,
-    currentData: null
-};
-
-const modalReducer = (
-    state: TInitialModalState = initialModalState,
-    action: TModalActions
-): TInitialModalState => {
-    switch (action.type) {
-        case 'OPEN_MODAL': {
-            if (action.data) {
-                return {
-                    ...state,
-                    isActive: true,
-                    content: action.payload,
-                    currentData: action.data
-                }
-            }
-            return state;
-        }
-        case 'CLOSE_MODAL': {
-            return {
-                ...state,
-                isActive: false,
-                content: null
-            }
-        }
-        default: {
-            return state;
-        }
-    }
-};
+import { modalReducer } from './modal';
 
 type TInitialTabState = {
     readonly tabs: ReadonlyArray<string>;

@@ -5,6 +5,7 @@ import { Card } from '../Card';
 import { IngredientDetails } from '../IngredientDetails';
 import { IIngredientItem } from '../../shared/types';
 import { openModal } from '../../services/actions/modal';
+import { setCurrentIngredient } from '../../services/actions/burger-ingredients';
 
 type TIngredientsCategoryProps = {
     title: string;
@@ -21,9 +22,10 @@ export const IngredientsCategory = forwardRef<Ref, TIngredientsCategoryProps>(({
 }: TIngredientsCategoryProps, ref ) => {
     const dispatch = useDispatch();
 
-    const renderModal = (cardData: IIngredientItem) => dispatch(
-        openModal(<IngredientDetails />, cardData)
-    );
+    const renderModal = (cardData: IIngredientItem) => {
+        dispatch(openModal('ingredient'));
+        dispatch(setCurrentIngredient(cardData));
+    };
 
     const renderElement = (item: IIngredientItem) => {
         renderModal(item);

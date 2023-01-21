@@ -1,19 +1,17 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector} from '../../shared/hooks';
+import { useDispatch } from '../../shared/hooks';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerIngredients } from '../../components/BurgerIngredients';
 import { BurgerConstructor } from '../../components/BurgerConstructor';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import styles from './Home.module.css';
-import { Modal } from '../../components/Modal';
 
 type THomePageProps = {
     handleCloseModal: () => void;
 };
 
 export function HomePage({ handleCloseModal }: THomePageProps) {
-    const { isActive } = useSelector(store => store.modal);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,7 +24,6 @@ export function HomePage({ handleCloseModal }: THomePageProps) {
                 <BurgerIngredients />
                 <BurgerConstructor />
             </DndProvider>
-            {isActive && <Modal onClose={handleCloseModal}/>}
         </main>
     )
 }
