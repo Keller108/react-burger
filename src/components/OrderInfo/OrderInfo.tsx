@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredientItem, IWSOrderData, TOrderID } from '../../shared/types';
+import { IIngredientItem, IWSOrderData } from '../../shared/types';
 import styles from './OrderInfo.module.css';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { getIngredients } from '../../services/actions/burger-ingredients';
+import { getBurgerIngredients } from '../../shared/handlers';
 
 export const OrderInfo = () => {
     const [currentOrder, ] = useState<IWSOrderData | null>(() => {
@@ -21,20 +22,16 @@ export const OrderInfo = () => {
     let statusText;
     let orderStyle;
 
-    const getBurgerIngredients = (ids: TOrderID[], ingrdients: IIngredientItem[]) => ids?.map(
-        (id: string) => ingrdients.filter((item: IIngredientItem) => item._id === id)
-    )?.flat();
-
     const orderIngredients = useMemo(() => {
         let ingredientsIds: string[] | [] = [];
-        let ids: IIngredientItem[] | [] = [];
+        let ingredients: IIngredientItem[] | [] = [];
 
         if (currentOrder && currentOrder.ingredients) {
             ingredientsIds = [...currentOrder.ingredients];
-            ids = getBurgerIngredients(ingredientsIds, ingredientItems);
-            return ids;
+            ingredients = getBurgerIngredients(ingredientsIds, ingredientItems);
+            return ingredients;
         }
-        return ids;
+        return ingredients;
     }, [currentOrder, ingredientItems])
 
     switch (orderStatus) {

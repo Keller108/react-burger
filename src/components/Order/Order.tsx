@@ -1,14 +1,10 @@
+import { CSSProperties, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
+import { getBurgerIngredients } from '../../shared/handlers';
 import { useSelector } from '../../shared/hooks';
-import { IWSOrderData, TOrderData, TORderStatus } from '../../shared/types';
+import { IIngredientItem, IWSOrderData } from '../../shared/types';
 import styles from './Order.module.css';
-
-type TStatus = {
-    done: 'Выполнен',
-    pending: 'Готовиться',
-    created: 'Создан'
-};
 
 export const Order = (item: IWSOrderData) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
@@ -42,6 +38,38 @@ export const Order = (item: IWSOrderData) => {
         localStorage.setItem('currentOrder', data);
     };
 
+    const orderIngredients = useMemo(() => {
+        let ingredientsIds: string[] | [] = [];
+        let ingredients: IIngredientItem[] | [] = [];
+
+        if (item && item.ingredients) {
+            ingredientsIds = [...item.ingredients];
+            ingredients = getBurgerIngredients(ingredientsIds, ingredientItems);
+            return ingredients;
+        }
+        return ingredients;
+    }, [item, ingredientItems])
+
+    const price = useMemo(() => {
+        return orderIngredients.reduce((acc, curr) => {
+            return acc += curr.price
+        }, 0)
+    }, [orderIngredients])
+
+    const translateIngredient = (array: IIngredientItem[], item: IIngredientItem): CSSProperties => {
+        let index = array.indexOf(item);
+
+        if (index === 0) {
+            return {
+                transform: 'unset',
+                zIndex: `${array.length}`
+            }
+        } else return {
+            transform: `translateX(${index * -20}px)`,
+            zIndex: `${array.length + 1}`
+        }
+    };
+
     return (
         <Link
             to={{ pathname: `/feed/${number}` }}
@@ -59,15 +87,15 @@ export const Order = (item: IWSOrderData) => {
                 }</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
-                        {ingredients.slice(0, 6).map((item, i) => <li key={item + i.toString()}
-                            className={styles.ingredientItem} style={{zIndex: ingredients.length + 1, }}>
+                        {orderIngredients.slice(0, 6).map((item, i) => <li key={item + i.toString()}
+                            className={styles.ingredientItem} style={translateIngredient(orderIngredients, item)}>
                             <span className={styles.ingredientBackground}><img
-                                className={styles.ingredientImg} src='https://aba.ru/' alt="Картинка ингредиента" />
+                                className={styles.ingredientImg} src={item.image} alt="Картинка ингредиента" />
                             </span>
                         </li>)}
                     </ul>
                     <span className={styles.price}>
-                        <p className='text text_type_digits-default mr-2'>{status && orderStatus}</p>
+                        <p className='text text_type_digits-default mr-2'>{price}</p>
                         <CurrencyIcon type="primary" />
                     </span>
                 </div>
