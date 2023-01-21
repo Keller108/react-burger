@@ -46,12 +46,12 @@ export const Order = (item: IWSOrderData) => {
         if (item && item.ingredients) {
             ingredientsIds = [...item.ingredients];
             ingredients = getBurgerIngredients(ingredientsIds, ingredientItems);
-            let res = ingredients.reduce((o, i) => {
-                if (!o.find((v: IIngredientItem) => v.name === i.name)) {
+            let res = ingredients.reduce((acc, curr) => {
+                if (!acc.find((item: IIngredientItem) => item.name === curr.name)) {
                     //@ts-ignore
-                    o.push(i);
+                    acc.push(curr);
                 }
-                return o;
+                return acc;
               }, []);
             return res;
         }
