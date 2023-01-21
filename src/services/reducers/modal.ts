@@ -1,9 +1,9 @@
 import { TModalActions } from '../actions/modal';
-import { IIngredientItem } from '../../shared/types';
+import { TModal } from '../../shared/types/TModal';
 
 type TModalState = {
     isActive: boolean;
-    modalType: 'ingredient' | 'order' | null;
+    modalType: TModal | null;
 };
 
 const initialModalState: TModalState = {

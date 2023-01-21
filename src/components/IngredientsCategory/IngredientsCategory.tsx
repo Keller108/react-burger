@@ -2,7 +2,6 @@ import { forwardRef, useEffect } from 'react';
 import { useDispatch } from '../../shared/hooks';
 import categoryStyle from './IngredientsCategory.module.css';
 import { Card } from '../Card';
-import { IngredientDetails } from '../IngredientDetails';
 import { IIngredientItem } from '../../shared/types';
 import { openModal } from '../../services/actions/modal';
 import { setCurrentIngredient } from '../../services/actions/burger-ingredients';
@@ -23,7 +22,7 @@ export const IngredientsCategory = forwardRef<Ref, TIngredientsCategoryProps>(({
     const dispatch = useDispatch();
 
     const renderModal = (cardData: IIngredientItem) => {
-        dispatch(openModal('ingredient'));
+        dispatch(openModal('INGREDIENT_VIEW'));
         dispatch(setCurrentIngredient(cardData));
     };
 

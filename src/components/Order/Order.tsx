@@ -2,13 +2,16 @@ import { CSSProperties, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { getBurgerIngredients } from '../../shared/handlers';
-import { useSelector } from '../../shared/hooks';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import { IIngredientItem, IWSOrderData } from '../../shared/types';
 import styles from './Order.module.css';
+import { openModal } from '../../services/actions/modal';
 
 export const Order = (item: IWSOrderData) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
     const { _id, number, name, ingredients, status = null, createdAt, updatedAt } = item;
+    const dispatch = useDispatch();
+
     let orderStatus;
 
     switch (status) {
@@ -80,9 +83,12 @@ export const Order = (item: IWSOrderData) => {
 
     return (
         <Link
-            to={{ pathname: `/feed/${number}` }}
+            to={{ pathname: `/feed/${_id}` }}
             className={styles.link}
-            onClick={() => setCurrentOrder(item as IWSOrderData)}
+            onClick={() => {
+                setCurrentOrder(item as IWSOrderData);
+                dispatch(openModal('ORDER_VIEW'));
+            }}
         >
             <li className={styles.orderItem}>
                 <div className={`${styles.orderItemDescription} mb-6`}>
