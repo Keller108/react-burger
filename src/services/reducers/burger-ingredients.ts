@@ -1,22 +1,24 @@
 import { IIngredientItem } from '../../shared/types';
 import { TIngredientsActions } from '../actions';
 
-type TInitialState = {
+type TIngredientStore = {
     ingredientItems: IIngredientItem[];
     ingredientRequest: boolean;
     ingredientFailed: boolean;
+    currentIngredient: IIngredientItem | null;
 };
 
-const initialState = {
+const initialState: TIngredientStore = {
     ingredientItems: [],
     ingredientRequest: false,
-    ingredientFailed: false
+    ingredientFailed: false,
+    currentIngredient: null
 };
 
 export const ingredientsReducer = (
-    state: TInitialState = initialState,
+    state: TIngredientStore = initialState,
     action: TIngredientsActions
-) => {
+): TIngredientStore => {
     switch (action.type) {
         case 'GET_INGREDIENTS_REQUEST': {
             return {
@@ -37,6 +39,12 @@ export const ingredientsReducer = (
                 ...state,
                 ingredientRequest: false,
                 ingredientFailed: true
+            }
+        }
+        case 'SET_CURRENT_INGREDIENT': {
+            return {
+                ...state,
+                currentIngredient: action.payload
             }
         }
         default: {
