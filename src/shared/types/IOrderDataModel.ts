@@ -1,7 +1,7 @@
 import { TOrderID } from "./TOrderID";
 import { TORderStatus } from "./TORderStatus";
 
-export interface IWSOrderData {
+export interface IOrderDataModel {
     _id: string;
     name: string;
     number: number;

@@ -3,11 +3,11 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Link, useLocation } from 'react-router-dom';
 import { getBurgerIngredients } from '../../shared/handlers';
 import { useDispatch, useSelector } from '../../shared/hooks';
-import { IIngredientItem, IWSOrderData } from '../../shared/types';
+import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './Order.module.css';
 import { openModal } from '../../services/actions/modal';
 
-export const Order = (item: IWSOrderData) => {
+export const Order = (item: IOrderDataModel) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
     const { _id, number, name, ingredients, status = null, createdAt, updatedAt } = item;
 
@@ -38,7 +38,7 @@ export const Order = (item: IWSOrderData) => {
         }
     }
 
-    const setCurrentOrder = (item: IWSOrderData) => {
+    const setCurrentOrder = (item: IOrderDataModel) => {
         let data = JSON.stringify(item);
         localStorage.setItem('currentOrder', data);
     };
@@ -87,7 +87,7 @@ export const Order = (item: IWSOrderData) => {
             to={{ pathname: `/feed/${_id}` }}
             className={styles.link}
             onClick={() => {
-                setCurrentOrder(item as IWSOrderData);
+                setCurrentOrder(item as IOrderDataModel);
                 dispatch(openModal('ORDER_VIEW'));
             }}
             state={{ background: location }}

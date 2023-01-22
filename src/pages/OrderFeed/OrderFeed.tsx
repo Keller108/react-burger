@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Order } from '../../components/Order';
 import { useSelector } from '../../shared/hooks';
-import { IWSOrderData } from '../../shared/types';
+import { IOrderDataModel } from '../../shared/types';
 import styles from './OrderFeed.module.css';
 
 export const OrderFeed = () => {
@@ -23,7 +23,7 @@ export const OrderFeed = () => {
                     Лента заказов
                 </h1>
                 <ul className={styles.orders}>
-                    {orderData.map((item: IWSOrderData) => <Order
+                    {orderData.map((item: IOrderDataModel) => <Order
                         key={item.number}
                         {...item}
                     />)}

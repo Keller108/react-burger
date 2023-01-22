@@ -1,11 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { IWSOrderData, WebSocketStatus } from "../../shared/types";
+import { IOrderDataModel, WebSocketStatus } from "../../shared/types";
 import { wsPublicClose, wsPublicConnecting, wsPublicError, wsPublicGetData, wsPublicOpen } from "../actions/ws-public";
 
 export type WSPublicStore = {
     wsStatus: WebSocketStatus;
     success: boolean;
-    orderData: IWSOrderData[];
+    orderData: IOrderDataModel[];
     connectingError: string;
     total: number;
     totalToday: number;

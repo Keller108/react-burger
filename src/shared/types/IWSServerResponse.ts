@@ -1,8 +1,8 @@
-import { IWSOrderData } from "./IWSOrderData";
+import { IOrderDataModel } from "./IOrderDataModel";
 
 export interface IWSServerResponse {
     success: boolean;
-    orders: IWSOrderData[];
+    orders: IOrderDataModel[];
     total: number;
     totalToday: number;
 }

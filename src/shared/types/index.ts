@@ -26,7 +26,7 @@ export type { ILogoutResponse } from './ILogoutResponse';
 export type { TOrderID } from './TOrderID';
 export type { TOrderData } from './TOrderData';
 
-export type { IWSOrderData } from './IWSOrderData';
+export type { IOrderDataModel } from './IOrderDataModel';
 export type { TORderStatus } from './TORderStatus';
 export type { IWSServerResponse } from './IWSServerResponse';
 export { WebSocketStatus } from './WebSocketStatus';

@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredientItem, IWSOrderData } from '../../shared/types';
+import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './OrderInfo.module.css';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { getBurgerIngredients } from '../../shared/handlers';
 
 export const OrderInfo = () => {
-    const [currentOrder, ] = useState<IWSOrderData | null>(() => {
+    const [currentOrder, ] = useState<IOrderDataModel | null>(() => {
         let item = localStorage.getItem('currentOrder');
         if (item) return JSON.parse(item);
         else return null;
