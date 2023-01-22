@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from '../../shared/hooks';
 import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './Order.module.css';
 import { openModal } from '../../services/actions/modal';
-import { conversionDateForCard } from '../../shared/handlers/convertDate';
+import { conversionDateForCard } from '../../shared/handlers';
 
 export const Order = (item: IOrderDataModel) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
-    const { _id, number, name, status = null, updatedAt } = item;
+    const { _id, number, name, status = null } = item;
 
     const location = useLocation();
     const dispatch = useDispatch();
