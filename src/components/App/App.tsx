@@ -7,7 +7,7 @@ import {
 } from "../../pages";
 import appStyles from './App.module.css';
 import { userCheck } from "../../services/actions/user";
-import { ProtectedRoutes } from "../../HOC/ProtectedRoutes";
+import { ProtectedRoutes } from "../../HOC";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
 import { CLOSE_MODAL } from "../../services/constants/modal";
@@ -72,6 +72,12 @@ export const App = () => {
                 {state && isActive && <Routes>
                     <Route
                         path="/ingredients/:ingredientId"
+                        element={<Modal onClose={handleCloseModal}>
+                            {component}
+                        </Modal>}
+                    />
+                    <Route
+                        path="/feed/:id"
                         element={<Modal onClose={handleCloseModal}>
                             {component}
                         </Modal>}

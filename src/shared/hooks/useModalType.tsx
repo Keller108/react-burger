@@ -2,6 +2,7 @@ import { useSelector } from ".";
 import { IngredientDetails } from "../../components/IngredientDetails";
 import { OrderDetails } from "../../components/OrderDetails";
 import { OrderInfo } from "../../components/OrderInfo";
+import { WithModalPadding } from "../../HOC";
 
 export const useModalType = () => {
     const { modalType } = useSelector(store => store.modal);
@@ -19,7 +20,7 @@ export const useModalType = () => {
             break
         }
         case 'ORDER_VIEW': {
-            component = <OrderInfo />
+            component = <WithModalPadding children={<OrderInfo />} />
             break
         }
         default: {

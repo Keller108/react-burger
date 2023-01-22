@@ -1,0 +1,6 @@
+.withModalPadding {
+    padding: 64px 36px 44px 36px;
+    margin: 0;
+    box-sizing: border-box;
+    z-index: 99;
+}
