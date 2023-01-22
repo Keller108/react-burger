@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from '../../shared/hooks';
 import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './Order.module.css';
 import { openModal } from '../../services/actions/modal';
+import { conversionDateForCard } from '../../shared/handlers/convertDate';
 
 export const Order = (item: IOrderDataModel) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
@@ -83,6 +84,8 @@ export const Order = (item: IOrderDataModel) => {
         }
     };
 
+    const dateForOrder = conversionDateForCard(item.createdAt);
+
     return (
         <Link
             to={{ pathname: `/feed/${_id}` }}
@@ -96,7 +99,7 @@ export const Order = (item: IOrderDataModel) => {
             <li className={styles.orderItem}>
                 <div className={`${styles.orderItemDescription} mb-6`}>
                     <span className='text text_type_main-small'>#{number}</span>
-                    <span className='text text_type_main-small text_color_inactive'>{updatedAt}</span>
+                    <span className='text text_type_main-small text_color_inactive'>{dateForOrder}</span>
                 </div>
                 <h2 className='text text_type_main-medium mb-2'>{name}</h2>
                 <p className='text text_type_main-small mb-6'>{

@@ -5,6 +5,7 @@ import styles from './OrderInfo.module.css';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 import { getBurgerIngredients } from '../../shared/handlers';
+import { conversionDateForCard } from '../../shared/handlers/convertDate';
 
 export const OrderInfo = () => {
     const [currentOrder, ] = useState<IOrderDataModel | null>(() => {
@@ -18,6 +19,12 @@ export const OrderInfo = () => {
 
     const dispatch = useDispatch();
     const getAppIngredients = () => dispatch(getIngredients());
+
+    let dateForOrder;
+
+    if (currentOrder) {
+        dateForOrder = conversionDateForCard(currentOrder.createdAt);
+    }
 
     let statusText;
     let orderStyle;
@@ -92,7 +99,7 @@ export const OrderInfo = () => {
                 </li>)}
             </ul>
             <div className={`${styles.footer}`}>
-                <p className="text text_type_main-small text_color_inactive mt-0 mb-0">Вчера, 13:50 i-GMT+3</p>
+                <p className="text text_type_main-small text_color_inactive mt-0 mb-0">{dateForOrder}</p>
                 <span className={`${styles.price}`}>
                     <p className="text text_type_digits-default mt-0 mb-0 mr-2">510</p>
                     <CurrencyIcon type="primary"/>
