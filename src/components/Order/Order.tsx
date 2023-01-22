@@ -80,11 +80,23 @@ export const Order = (item: IOrderDataModel) => {
             }
         } else return {
             transform: `translateX(${index * -20}px)`,
-            zIndex: `${array.length + 1}`
+            zIndex: `${array.length - 1 - array.indexOf(item)}`
         }
     };
 
     const dateForOrder = conversionDateForCard(item.createdAt);
+
+    const getIngredientsWithSkip = () => {
+        let items;
+        if (orderIngredients.length > 5) {
+            let skipItem = orderIngredients[orderIngredients.length - 1];
+            items = [...orderIngredients.slice(0, 5), skipItem];
+            return items
+        }
+        return orderIngredients;
+    };
+
+    const ingredientsItems = getIngredientsWithSkip();
 
     return (
         <Link
@@ -107,12 +119,22 @@ export const Order = (item: IOrderDataModel) => {
                 }</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
-                        {orderIngredients.slice(0, 6).map((item, i) => <li key={item + i.toString()}
+                        {ingredientsItems?.map((item, i) => {
+                            if (ingredientsItems.length > 5 && ingredientsItems.indexOf(item) === ingredientsItems.length - 1) {
+                                return <li key={item + i.toString()} className={styles.ingredientItem}
+                                    style={{transform: 'translateX(-100px)'}}>
+                                    <p className={styles.skipText}>+{orderIngredients.length - ingredientsItems.length}</p>
+                                    <span className={styles.ingredientBackground}><div className={styles.overlay}></div>
+                                        <img className={styles.ingredientImg} src={item.image} alt="Картинка ингредиента"/>
+                                    </span>
+                                </li>
+                            } else return <li key={item + i.toString()}
                             className={styles.ingredientItem} style={translateIngredient(orderIngredients, item)}>
-                            <span className={styles.ingredientBackground}><img
-                                className={styles.ingredientImg} src={item.image} alt="Картинка ингредиента" />
-                            </span>
-                        </li>)}
+                                <span className={styles.ingredientBackground}><img
+                                    className={styles.ingredientImg} src={item.image} alt="Картинка ингредиента" />
+                                </span>
+                            </li>
+                        })}
                     </ul>
                     <span className={styles.price}>
                         <p className='text text_type_digits-default mr-2'>{price}</p>
