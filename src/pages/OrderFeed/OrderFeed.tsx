@@ -9,11 +9,13 @@ export const OrderFeed = () => {
     const { total, totalToday, orderData } = wsStore;
 
     const readyOrders = useMemo(() => {
-        return orderData.filter(item => item.status === 'done');
+        let array = [...orderData];
+        return array.filter(item => item.status === 'done');
     }, [orderData])
 
     const createdOrders = useMemo(() => {
-        return orderData.filter(item => item.status === 'pending');
+        let array = [...orderData];
+        return array.filter(item => item.status === 'pending');
     }, [orderData])
 
     return (
@@ -34,7 +36,7 @@ export const OrderFeed = () => {
                     <div className={styles.statusCol}>
                         <h2 className='text text_type_main-medium mb-6'>Готовы:</h2>
                         <ul className={`${styles.statusList} ${styles.statusListDone}`}>
-                            {readyOrders?.map(item => <p
+                            {readyOrders?.slice(0, 9).map(item => <p
                                 className='text text_type_digits-default mb-2'
                                 key={item._id}
                             >{item.number}</p>)}
@@ -43,7 +45,7 @@ export const OrderFeed = () => {
                     <div className={`${styles.statusCol}`}>
                         <h2 className='text text_type_main-medium mb-6'>В работе:</h2>
                         <ul className={`${styles.statusList}`}>
-                            {createdOrders?.map(item => <p
+                            {createdOrders?.slice(0, 9).map(item => <p
                                 className='text text_type_digits-default mb-2'
                                 key={item._id}
                             >{item.number}</p>)}

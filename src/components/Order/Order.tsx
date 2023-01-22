@@ -9,7 +9,7 @@ import { openModal } from '../../services/actions/modal';
 
 export const Order = (item: IOrderDataModel) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
-    const { _id, number, name, ingredients, status = null, createdAt, updatedAt } = item;
+    const { _id, number, name, status = null, updatedAt } = item;
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -34,6 +34,7 @@ export const Order = (item: IOrderDataModel) => {
             break
         }
         default: {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             orderStatus = null;
         }
     }
