@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "../../shared/hooks";
 import { AppHeader } from '../AppHeader';
 import {
@@ -10,25 +10,23 @@ import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
-import { CLOSE_MODAL } from "../../services/constants/modal";
-import { ORDERS_FEED_PATH, SHOP_ROUTE } from "../../shared/routes";
+import { ORDERS_FEED_PATH  } from "../../shared/routes";
 import { OrderFeed } from "../../pages/OrderFeed";
 import { OrderPage } from "../../pages/OrderPage";
-import { wsPublicConnect, wsPublicDisconnect } from "../../services/actions/ws-public";
+import { wsPublicConnect } from "../../services/actions/ws-public";
 import { useModalType } from "../../shared/hooks/useModalType";
+import { closeModal } from "../../services/actions/modal";
 
 export const App = () => {
     const [isLoading,] = useState(false);
-    const { isActive } = useSelector((store) => store.modal);
+    const { isActive, modalType } = useSelector((store) => store.modal);
 
     const location = useLocation();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleUserCheck = () => dispatch(userCheck());
 
     const wsConnect = () => dispatch(wsPublicConnect(ORDERS_FEED_PATH));
-    const wsDisconnect = () => dispatch(wsPublicDisconnect());
 
     const state = location.state && location.state.background;
 
@@ -37,9 +35,13 @@ export const App = () => {
     };
 
     const handleCloseModal = () => {
-        navigate(SHOP_ROUTE);
-        localStorage.removeItem('currentItem');
-        return dispatch({ type: CLOSE_MODAL });
+        if (modalType === 'INGREDIENT_VIEW') {
+            let currentItem = localStorage.getItem('currentItem');
+            if (currentItem) {
+                localStorage.removeItem('currentItem');
+            }
+        }
+        dispatch(closeModal());
     };
 
     useEffect(() => {
