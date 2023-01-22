@@ -25,7 +25,7 @@ export const Order = (item: IOrderDataModel) => {
             orderStatus = 'Отменен';
             break
         }
-        case 'peding': {
+        case 'pending': {
             orderStatus = 'Готовится';
             break
         }

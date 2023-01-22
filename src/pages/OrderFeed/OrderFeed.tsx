@@ -13,7 +13,7 @@ export const OrderFeed = () => {
     }, [orderData])
 
     const createdOrders = useMemo(() => {
-        return orderData.filter(item => item.status === 'created');
+        return orderData.filter(item => item.status === 'pending');
     }, [orderData])
 
     return (
@@ -42,7 +42,7 @@ export const OrderFeed = () => {
                     </div>
                     <div className={`${styles.statusCol}`}>
                         <h2 className='text text_type_main-medium mb-6'>В работе:</h2>
-                        <ul className={`${styles.statusList} ${styles.statusListDone}`}>
+                        <ul className={`${styles.statusList}`}>
                             {createdOrders?.map(item => <p
                                 className='text text_type_digits-default mb-2'
                                 key={item._id}

@@ -45,7 +45,7 @@ export const OrderInfo = () => {
             orderStyle = styles.statusCanceled;
             break
         }
-        case 'peding': {
+        case 'pending': {
             statusText = 'Готовится';
             orderStyle = styles.statusInProgress;
             break
