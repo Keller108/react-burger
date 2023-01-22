@@ -9,7 +9,7 @@
 }
 
 .orderId {
-    align-self: center;
+    align-self: inherit;
     margin: 0;
     margin-bottom: 40px;
 }

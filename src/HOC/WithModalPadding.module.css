@@ -4,3 +4,7 @@
     box-sizing: border-box;
     z-index: 99;
 }
+
+.withModalPadding b {
+    text-align: left;
+}

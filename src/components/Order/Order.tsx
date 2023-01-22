@@ -51,9 +51,8 @@ export const Order = (item: IWSOrderData) => {
         if (item && item.ingredients) {
             ingredientsIds = [...item.ingredients];
             ingredients = getBurgerIngredients(ingredientsIds, ingredientItems);
-            let res = ingredients.reduce((acc, curr) => {
+            let res = ingredients.reduce((acc: IIngredientItem[], curr: IIngredientItem) => {
                 if (!acc.find((item: IIngredientItem) => item.name === curr.name)) {
-                    //@ts-ignore
                     acc.push(curr);
                 }
                 return acc;
