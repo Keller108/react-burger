@@ -58,7 +58,7 @@ export const Order = (item: IOrderDataModel) => {
                     acc.push(curr);
                 }
                 return acc;
-              }, []);
+            }, []);
             return res;
         }
         return filteredIngredients;

@@ -6,4 +6,3 @@ export const WS_PUBLIC_OPEN = 'WS_PUBLIC_OPEN';
 export const WS_PUBLIC_CLOSE = 'WS_PUBLIC_CLOSE';
 
 export const WS_PUBLIC_GET_DATA = 'WS_PUBLIC_GET_DATA';
-export const WS_PUBLIC_SEND_DATA = 'WS_PUBLIC_SEND_DATA';

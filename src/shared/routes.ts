@@ -22,3 +22,4 @@ export const INGREDIENTS_PATH = `${BASE_URL}/ingredients`;
 export const ORDERS_PATH = `${BASE_URL}/orders`;
 
 export const ORDERS_FEED_PATH = 'wss://norma.nomoreparties.space/orders/all';
+export const ORDERS_PROFILE_PATH = 'wss://norma.nomoreparties.space/orders';
