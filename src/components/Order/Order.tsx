@@ -1,7 +1,7 @@
 import { CSSProperties, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
-import { getBurgerIngredients } from '../../shared/handlers';
+import { countOrderPrice, getBurgerIngredients } from '../../shared/handlers';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './Order.module.css';
@@ -64,11 +64,8 @@ export const Order = (item: IOrderDataModel) => {
         return filteredIngredients;
     }, [item, ingredientItems])
 
-    const price = useMemo(() => {
-        return orderIngredients.reduce((acc, curr) => {
-            return acc += curr.price
-        }, 0)
-    }, [orderIngredients])
+    const dateForOrder = conversionDateForCard(item.createdAt);
+    const price = countOrderPrice(orderIngredients);
 
     const translateIngredient = (array: IIngredientItem[], item: IIngredientItem): CSSProperties => {
         let index = array.indexOf(item);
@@ -83,8 +80,6 @@ export const Order = (item: IOrderDataModel) => {
             zIndex: `${array.length - 1 - array.indexOf(item)}`
         }
     };
-
-    const dateForOrder = conversionDateForCard(item.createdAt);
 
     const getIngredientsWithSkip = () => {
         let items;
