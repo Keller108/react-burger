@@ -4,7 +4,7 @@ import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './OrderInfo.module.css';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { getIngredients } from '../../services/actions/burger-ingredients';
-import { getBurgerIngredients } from '../../shared/handlers';
+import { countOrderPrice, getBurgerIngredients } from '../../shared/handlers';
 import { conversionDateForCard } from '../../shared/handlers/convertDate';
 
 export const OrderInfo = () => {
@@ -40,6 +40,19 @@ export const OrderInfo = () => {
         }
         return ingredients;
     }, [currentOrder, ingredientItems])
+
+    const price = countOrderPrice(orderIngredients);
+    const countQuantity = (item: IIngredientItem) => {
+        let quantity = 0;
+        let array = [...orderIngredients];
+        quantity = array.reduce((acc: IIngredientItem[], curr: IIngredientItem) => {
+            if (!acc.find(() => item.name === curr.name)) {
+                acc.push(curr);
+            }
+            return acc;
+        }, []).length;
+        return quantity;
+    };
 
     switch (orderStatus) {
         case 'done': {
@@ -93,7 +106,7 @@ export const OrderInfo = () => {
                     </span>
                     <h3 className={`${styles.ingredientTitle} text text_type_main-default`} >{item.name}</h3>
                     <span className={styles.ingredientCost}>
-                        <p className="text text_type_digits-default mt-0 mb-0 mr-2">{item.price}</p>
+                        <p className="text text_type_digits-default mt-0 mb-0 mr-2">{countQuantity(item)} x {item.price}</p>
                         <CurrencyIcon type="primary" />
                     </span>
                 </li>)}
@@ -101,7 +114,7 @@ export const OrderInfo = () => {
             <div className={`${styles.footer}`}>
                 <p className="text text_type_main-small text_color_inactive mt-0 mb-0">{dateForOrder}</p>
                 <span className={`${styles.price}`}>
-                    <p className="text text_type_digits-default mt-0 mb-0 mr-2">510</p>
+                    <p className="text text_type_digits-default mt-0 mb-0 mr-2">{price}</p>
                     <CurrencyIcon type="primary"/>
                 </span>
             </div>
