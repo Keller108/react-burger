@@ -6,6 +6,7 @@ import { ITabSwitchAction } from '../actions/tab';
 import { TLoaderActions } from '../actions/loader';
 import { wsPublicReducer } from './ws-public';
 import { modalReducer } from './modal';
+import { wsPrivateReducer } from './ws-private';
 
 type TInitialTabState = {
     readonly tabs: ReadonlyArray<string>;
@@ -69,5 +70,6 @@ export const rootReducer = combineReducers({
     burgerConstructor: constructorReducer,
     modal: modalReducer,
     tabs: tabReducer,
-    wsPublic: wsPublicReducer
+    wsPublic: wsPublicReducer,
+    wsPrivate: wsPrivateReducer
 });

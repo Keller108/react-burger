@@ -2,6 +2,7 @@ import { ThunkAction } from 'redux-thunk';
 import {
     TConstructorActions, TIngredientsActions, TLoaderActions, TModalActions, TTabActions, TUserActions,
 } from '../../services/actions';
+import { TWSPrivateActions } from '../../services/actions/ws-private';
 import { TWSPublicActions } from '../../services/actions/ws-public';
 import { rootReducer } from '../../services/reducers';
 
@@ -33,13 +34,15 @@ export { WebSocketStatus } from './WebSocketStatus';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export type TApplicationActions = TConstructorActions
+export type TApplicationActions =
+    | TConstructorActions
     | TIngredientsActions
     | TLoaderActions
     | TModalActions
     | TTabActions
     | TUserActions
-    | TWSPublicActions;
+    | TWSPublicActions
+    | TWSPrivateActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
 

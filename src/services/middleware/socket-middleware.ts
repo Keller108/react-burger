@@ -3,13 +3,13 @@ import { RootState } from "../../shared/types";
 
 export type TWSActionTypes = {
     wsConnect: ActionCreatorWithPayload<string>,
-    wsSendData?: ActionCreatorWithPayload<any>,
     wsDisconnect: ActionCreatorWithoutPayload,
     wsConnecting: ActionCreatorWithoutPayload,
     onOpen: ActionCreatorWithoutPayload,
     onClose: ActionCreatorWithoutPayload,
     onError: ActionCreatorWithPayload<string>,
-    onData: ActionCreatorWithPayload<any>
+    onData: ActionCreatorWithPayload<any>,
+    wsSendData?: ActionCreatorWithPayload<any>
 }
 
 export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, RootState>=> {
@@ -54,10 +54,10 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
                 dispatch(onClose());
             };
 
-            //   if (wsSendData?.match(action)) {
-            //     const data = { ...payload, token: user.token };
-            //     socket.send(JSON.stringify(data));
-            //   }
+            // if (wsSendData?.match(action)) {
+            //     const message = { ...payload, token: user.token };
+            //     socket.send(JSON.stringify(message));
+            // }
 
             if (wsDisconnect.match(action)) {
                 socket.close();
