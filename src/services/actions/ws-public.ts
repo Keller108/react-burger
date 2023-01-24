@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 import { IWSServerResponse } from "../../shared/types";
 
-export const wsPublicConnect = createAction<string, 'WS_PUBLIC_CONNECT'>('WS_PUBLIC_CONNECT');
+export const wsPublicConnect = createAction<{ url: string }, 'WS_PUBLIC_CONNECT'>('WS_PUBLIC_CONNECT');
 export const wsPublicDisconnect = createAction('WS_PUBLIC_DISCONNECT');
 
 export const wsPublicConnecting = createAction('WS_PUBLIC_CONNECTING');

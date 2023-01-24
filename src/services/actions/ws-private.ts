@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 import { IWSServerResponse } from "../../shared/types";
 
-export const wsPrivateConnect = createAction<string, 'WS_PRIVATE_CONNECT'>('WS_PRIVATE_CONNECT');
+export const wsPrivateConnect = createAction<{ url:string, token?: string }, 'WS_PRIVATE_CONNECT'>('WS_PRIVATE_CONNECT');
 export const wsPrivateDisconnect = createAction('WS_PRIVATE_DISCONNECT');
 
 export const wsPrivateConnecting = createAction('WS_PRIVATE_CONNECTING');

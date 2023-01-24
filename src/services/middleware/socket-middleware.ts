@@ -2,7 +2,7 @@ import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, Middleware } fro
 import { RootState } from "../../shared/types";
 
 export type TWSActionTypes = {
-    wsConnect: ActionCreatorWithPayload<string>,
+    wsConnect: ActionCreatorWithPayload<{ url: string; token?: string; }>,
     wsDisconnect: ActionCreatorWithoutPayload,
     wsConnecting: ActionCreatorWithoutPayload,
     onOpen: ActionCreatorWithoutPayload,
@@ -30,8 +30,15 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
         } = wsActions;
 
         if (wsConnect.match(action)) {
-          socket = new WebSocket(action.payload);
-          dispatch(wsConnecting);
+
+          if (action.payload.token) {
+            socket = new WebSocket(action.payload.url);
+            dispatch(wsConnecting());
+          } else {
+            socket = new WebSocket(action.payload.url);
+            dispatch(wsConnecting());
+          }
+
         }
 
         if (socket) {

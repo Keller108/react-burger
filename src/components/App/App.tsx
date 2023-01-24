@@ -26,7 +26,7 @@ export const App = () => {
 
     const handleUserCheck = () => dispatch(userCheck());
 
-    const wsConnect = () => dispatch(wsPublicConnect(ORDERS_FEED_PATH));
+    const wsConnect = () => dispatch(wsPublicConnect({ url: ORDERS_FEED_PATH }));
 
     const state = location.state && location.state.background;
 
