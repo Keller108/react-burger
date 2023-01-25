@@ -28,6 +28,7 @@ export const OrderFeed = () => {
                     {orderData.map((item: IOrderDataModel) => <Order
                         key={item.number}
                         {...item}
+                        status="none"
                     />)}
                 </ul>
             </section>

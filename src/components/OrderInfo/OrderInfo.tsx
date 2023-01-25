@@ -97,7 +97,7 @@ export const OrderInfo = () => {
             <span className={`text text_type_main-default ${orderStyle} mt-0 mb-15`}>{statusText}</span>
             <h2 className="text text_type_main-medium mt-0 mb-6">Состав:</h2>
             <ul className={styles.list}>
-                {orderIngredients.map((item: IIngredientItem) => <li className={styles.ingredient}>
+                {orderIngredients.map((item: IIngredientItem) => <li key={item._id} className={styles.ingredient}>
                     <span className={styles.ingredientFigure}>
                         <div className={styles.ingredientBackground}>
                             <img className={styles.ingredientImg}

@@ -19,11 +19,23 @@
     margin-bottom: 0;
 }
 
+.statusDone {
+    color: #00CCCC;
+}
+
+.statusInProgress {
+    color: white;
+}
+
+.statusCanceled {
+    color: #C93C29;
+}
+
 .skipText {
     position: absolute;
     line-height: 1;
-    top: 14%;
-    left: 34%;
+    top: 25%;
+    left: 25%;
     z-index: 3;
 }
 

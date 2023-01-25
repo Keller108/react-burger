@@ -8,6 +8,13 @@ import styles from './Order.module.css';
 import { openModal } from '../../services/actions/modal';
 import { conversionDateForCard } from '../../shared/handlers';
 
+enum OrderStatus {
+    DONE = 'Выполнен',
+    CANCELED = 'Отменен',
+    CREATED = 'Создан',
+    PENDING = 'Готовится'
+}
+
 export const Order = (item: IOrderDataModel) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
     const { _id, number, name, status = null } = item;
@@ -15,28 +22,33 @@ export const Order = (item: IOrderDataModel) => {
     const location = useLocation();
     const dispatch = useDispatch();
 
-    let orderStatus;
+    let statusText;
+    let orderClass;
 
     switch (status) {
         case 'done': {
-            orderStatus = 'Выполнен';
+            statusText = OrderStatus.DONE;
+            orderClass = styles.statusDone;
             break
         }
         case 'canceled': {
-            orderStatus = 'Отменен';
+            statusText = OrderStatus.CANCELED;
+            orderClass = styles.statusCanceled;
             break
         }
         case 'pending': {
-            orderStatus = 'Готовится';
+            statusText = OrderStatus.PENDING;
+            orderClass = styles.statusInProgress;
             break
         }
         case 'created': {
-            orderStatus = 'Создан';
+            statusText = OrderStatus.CREATED;
+            orderClass = styles.statusInProgress;
             break
         }
         default: {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            orderStatus = null;
+            statusText = '';
+            orderClass = '';
         }
     }
 
@@ -109,16 +121,14 @@ export const Order = (item: IOrderDataModel) => {
                     <span className='text text_type_main-small text_color_inactive'>{dateForOrder}</span>
                 </div>
                 <h2 className='text text_type_main-medium mb-2'>{name}</h2>
-                <p className='text text_type_main-small mb-6'>{
-
-                }</p>
+                <p className={`text text_type_main-small mb-6 ${orderClass}`}>{status && statusText}</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
                         {ingredientsItems?.map((item, i) => {
                             if (ingredientsItems.length > 5 && ingredientsItems.indexOf(item) === ingredientsItems.length - 1) {
                                 return <li key={item + i.toString()} className={styles.ingredientItem}
                                     style={{transform: 'translateX(-100px)'}}>
-                                    <p className={styles.skipText}>+{orderIngredients.length - ingredientsItems.length}</p>
+                                    <p className={`${styles.skipText} text text_type_digits-default`}>+{orderIngredients.length + 1 - ingredientsItems.length}</p>
                                     <span className={styles.ingredientBackground}><div className={styles.overlay}></div>
                                         <img className={styles.ingredientImg} src={item.image} alt="Картинка ингредиента"/>
                                     </span>
