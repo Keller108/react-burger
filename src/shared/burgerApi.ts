@@ -13,7 +13,8 @@ export const placeAnOrder = async (
     return fetch(ORDERS_PATH, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `${localStorage.getItem('accessToken')}`
         },
         body: JSON.stringify(orderData)
     }).then(handleResponse);
