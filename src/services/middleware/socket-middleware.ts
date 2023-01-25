@@ -32,7 +32,8 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
         if (wsConnect.match(action)) {
 
           if (action.payload.token) {
-            socket = new WebSocket(action.payload.url);
+            let accessToken = action.payload.token;
+            socket = new WebSocket(`${action.payload.url}?token=${accessToken}`);
             dispatch(wsConnecting());
           } else {
             socket = new WebSocket(action.payload.url);

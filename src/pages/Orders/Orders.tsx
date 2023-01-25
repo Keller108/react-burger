@@ -8,13 +8,14 @@ import styles from './Orders.module.css';
 export const Orders = () => {
     const { orderData } = useSelector(store => store.wsPrivate);
     const dispatch = useDispatch();
+
     const wsConnect = () => {
         let token = localStorage.getItem('accessToken');
-        let data = token?.replace(/Bearer/g, '');
+        let data = token?.replace(/Bearer /g, '');
         if (data !== undefined && data !== null) {
             return dispatch(wsPrivateConnect({ url: ORDERS_PROFILE_PATH, token: data }))
         }
-        return dispatch(wsPrivateError('Ошибка соелинения'));
+        return dispatch(wsPrivateError('Ошибка соединения'));
 
     };
 
@@ -22,9 +23,6 @@ export const Orders = () => {
         wsConnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    console.log('orderData', orderData);
-
 
     return (
         <ul className={styles.orders}>
