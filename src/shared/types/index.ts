@@ -32,6 +32,8 @@ export type { TORderStatus } from './TORderStatus';
 export type { IWSServerResponse } from './IWSServerResponse';
 export { WebSocketStatus } from './WebSocketStatus';
 
+export type { TOrderDetails } from './TORderDetails';
+
 export type RootState = ReturnType<typeof rootReducer>;
 
 export type TApplicationActions =

@@ -3,12 +3,9 @@ import { IngredientDetails } from "../../components/IngredientDetails";
 import { OrderDetails } from "../../components/OrderDetails";
 import { OrderInfo } from "../../components/OrderInfo";
 import { WithModalPadding } from "../../HOC";
-import { useOrderData } from "./useOrderData";
 
 export const useModalType = () => {
     const { modalType } = useSelector(store => store.modal);
-    const orderData = useOrderData();
-
     let component: JSX.Element | null = null;
 
     switch (modalType) {
@@ -17,7 +14,7 @@ export const useModalType = () => {
             break
         }
         case 'ORDER_SUCCESS': {
-            component = <OrderDetails order={orderData}/>
+            component = <OrderDetails />
             break
         }
         case 'ORDER_VIEW': {

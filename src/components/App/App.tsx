@@ -16,6 +16,7 @@ import { OrderPage } from "../../pages/OrderPage";
 import { wsPublicConnect } from "../../services/actions/ws-public";
 import { useModalType } from "../../shared/hooks/useModalType";
 import { closeModal } from "../../services/actions/modal";
+import { clearCart } from "../../services/actions/burger-constructor";
 
 export const App = () => {
     const [isLoading,] = useState(false);
@@ -41,6 +42,7 @@ export const App = () => {
                 localStorage.removeItem('currentItem');
             }
         }
+        dispatch(clearCart());
         dispatch(closeModal());
     };
 

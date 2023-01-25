@@ -112,6 +112,6 @@ export const handlePlaceAnOrder = (data: TOrderID[]): AppThunk => (dispatch: App
                 dispatch(orderFailed());
             }
         })
-        .then(() => dispatch(clearCart()))
+        // .then(() => dispatch(clearCart()))
         .catch(err => alert(`Ошибка при создании заказа ${err}`));
 }

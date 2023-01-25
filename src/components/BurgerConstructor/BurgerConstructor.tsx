@@ -9,10 +9,9 @@ import { Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import contructorStyles from './BurgerConstructor.module.css';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
-import { addItemToConstructor, handlePlaceAnOrder } from '../../services/actions/burger-constructor';
+import { addItemToConstructor, handlePlaceAnOrder, orderRequest } from '../../services/actions/burger-constructor';
 import { LOGIN_ROUTE } from '../../shared/routes';
 import { IConstructorItem, IIngredientItem, TOrderID } from '../../shared/types';
-import { ORDER_REQUEST } from '../../services/constants/burger-constructor';
 import { openModal } from '../../services/actions/modal';
 
 export function BurgerConstructor() {
@@ -24,8 +23,6 @@ export function BurgerConstructor() {
         addItemToConstructor({ ...item, uuid: uuidv4() })
     );
 
-    const prepareOrderData = () => dispatch({ type: ORDER_REQUEST });
-    const placeOrder = (data: TOrderID[]) => dispatch(handlePlaceAnOrder(data));
     const store = useSelector(store => store.burgerConstructor);
 
     const [, dropTarget] = useDrop({
@@ -47,8 +44,10 @@ export function BurgerConstructor() {
 
     const handleModalState = () => {
         if (isLogined) {
-            prepareOrderData();
-            if (orderData) placeOrder(orderData);
+            dispatch(orderRequest());
+            if (orderData) dispatch(
+                handlePlaceAnOrder(orderData as TOrderID[])
+            );
         } else {
             navigate(LOGIN_ROUTE);
         }
