@@ -83,11 +83,11 @@ export const OrderInfo = () => {
     return (
         <article className={styles.orderInfo}>
             <b className={`${styles.orderId} text text_type_digits-default`}>#{currentOrder?.number}</b>
-            <h1 className="text text_type_main-medium mt-0 mb-3">Black Hole Singularity острый бургер</h1>
+            <h1 className="text text_type_main-medium mt-0 mb-3">{currentOrder?.name}</h1>
             <span className={`text text_type_main-default ${orderStyle} mt-0 mb-15`}>{statusText}</span>
             <h2 className="text text_type_main-medium mt-0 mb-6">Состав:</h2>
             <ul className={styles.list}>
-                {orderIngredients.map((item: IIngredientItem) => <li key={item._id} className={styles.ingredient}>
+                {orderIngredients.map((item: IIngredientItem, i: number) => <li key={item._id + i} className={styles.ingredient}>
                     <span className={styles.ingredientFigure}>
                         <div className={styles.ingredientBackground}>
                             <img className={styles.ingredientImg}

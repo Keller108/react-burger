@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "../../shared/hooks";
 import { AppHeader } from '../AppHeader';
 import {
@@ -23,6 +23,7 @@ export const App = () => {
 
     const location = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleUserCheck = () => dispatch(userCheck());
 
@@ -41,6 +42,7 @@ export const App = () => {
         }
         dispatch(clearCart());
         dispatch(closeModal());
+        navigate(-1);
     };
 
     useEffect(() => {

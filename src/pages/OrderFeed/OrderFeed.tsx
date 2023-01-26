@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Order } from '../../components/Order';
+import { openModal } from '../../services/actions/modal';
 import { wsPrivateDisconnect } from '../../services/actions/ws-private';
 import { wsPublicConnect } from '../../services/actions/ws-public';
 import { useDispatch, useSelector } from '../../shared/hooks';
@@ -29,6 +30,11 @@ export const OrderFeed = () => {
             dispatch(wsPrivateDisconnect());
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        let currentOrder = localStorage.getItem('currentOrder');
+        if (currentOrder) dispatch(openModal('ORDER_VIEW'));
     }, [])
 
     return (
