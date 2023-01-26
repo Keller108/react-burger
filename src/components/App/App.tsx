@@ -15,6 +15,7 @@ import { OrderPage } from "../../pages/OrderPage";
 import { useModalType } from "../../shared/hooks/useModalType";
 import { closeModal } from "../../services/actions/modal";
 import { clearCart } from "../../services/actions/burger-constructor";
+import { getIngredients } from "../../services/actions/burger-ingredients";
 
 export const App = () => {
     const [isLoading,] = useState(false);
@@ -41,6 +42,11 @@ export const App = () => {
         dispatch(clearCart());
         dispatch(closeModal());
     };
+
+    useEffect(() => {
+        dispatch(getIngredients());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         handleCheckData();

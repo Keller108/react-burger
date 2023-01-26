@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './OrderInfo.module.css';
-import { useDispatch, useSelector } from '../../shared/hooks';
-import { getIngredients } from '../../services/actions/burger-ingredients';
+import { useSelector } from '../../shared/hooks';
 import { countOrderPrice, getBurgerIngredients } from '../../shared/handlers';
 import { conversionDateForCard } from '../../shared/handlers/convertDate';
 
@@ -14,11 +13,7 @@ export const OrderInfo = () => {
         else return null;
     });
     const [orderStatus, setOrderStatus] = useState('');
-
     const { ingredientItems } = useSelector(store => store.ingredients);
-
-    const dispatch = useDispatch();
-    const getAppIngredients = () => dispatch(getIngredients());
 
     let dateForOrder;
 
@@ -80,11 +75,6 @@ export const OrderInfo = () => {
             orderStyle = '';
         }
     }
-
-    useEffect(() => {
-        getAppIngredients();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     useEffect(() => {
         if (currentOrder) setOrderStatus(currentOrder.status);
