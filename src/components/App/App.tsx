@@ -10,10 +10,8 @@ import { userCheck } from "../../services/actions/user";
 import { ProtectedRoutes } from "../../HOC";
 import { Preloader } from "../Preloader";
 import { Modal } from "../Modal";
-import { ORDERS_FEED_PATH  } from "../../shared/routes";
 import { OrderFeed } from "../../pages/OrderFeed";
 import { OrderPage } from "../../pages/OrderPage";
-import { wsPublicConnect } from "../../services/actions/ws-public";
 import { useModalType } from "../../shared/hooks/useModalType";
 import { closeModal } from "../../services/actions/modal";
 import { clearCart } from "../../services/actions/burger-constructor";
@@ -26,8 +24,6 @@ export const App = () => {
     const dispatch = useDispatch();
 
     const handleUserCheck = () => dispatch(userCheck());
-
-    const wsConnect = () => dispatch(wsPublicConnect({ url: ORDERS_FEED_PATH }));
 
     const state = location.state && location.state.background;
 
@@ -48,7 +44,6 @@ export const App = () => {
 
     useEffect(() => {
         handleCheckData();
-        wsConnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

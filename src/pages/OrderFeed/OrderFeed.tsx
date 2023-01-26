@@ -1,10 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Order } from '../../components/Order';
-import { useSelector } from '../../shared/hooks';
+import { wsPrivateDisconnect } from '../../services/actions/ws-private';
+import { wsPublicConnect } from '../../services/actions/ws-public';
+import { useDispatch, useSelector } from '../../shared/hooks';
+import { ORDERS_FEED_PATH } from '../../shared/routes';
 import { IOrderDataModel } from '../../shared/types';
 import styles from './OrderFeed.module.css';
 
 export const OrderFeed = () => {
+    const dispatch = useDispatch();
     const wsStore = useSelector(store => store.wsPublic);
     const { total, totalToday, orderData } = wsStore;
 
@@ -17,6 +21,15 @@ export const OrderFeed = () => {
         let array = [...orderData];
         return array.filter(item => item.status === 'pending');
     }, [orderData])
+
+    useEffect(() => {
+        dispatch(wsPublicConnect({ url: ORDERS_FEED_PATH }));
+
+        return () => {
+            dispatch(wsPrivateDisconnect());
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <main className={styles.orderFeed}>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Order } from '../../components/Order';
-import { wsPrivateConnect, wsPrivateError } from '../../services/actions/ws-private';
+import { wsPrivateConnect, wsPrivateDisconnect, wsPrivateError } from '../../services/actions/ws-private';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { ORDERS_PROFILE_PATH } from '../../shared/routes';
 import styles from './Orders.module.css';
@@ -21,6 +21,10 @@ export const Orders = () => {
 
     useEffect(() => {
         wsConnect();
+
+        return () => {
+            dispatch(wsPrivateDisconnect());
+        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

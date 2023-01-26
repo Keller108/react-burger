@@ -25,8 +25,7 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
             onError,
             onData,
             wsConnecting,
-            wsDisconnect,
-            wsSendData
+            wsDisconnect
         } = wsActions;
 
         if (wsConnect.match(action)) {
@@ -61,11 +60,6 @@ export const socketMiddleware = (wsActions: TWSActionTypes): Middleware<{}, Root
             socket.onclose = event => {
                 dispatch(onClose());
             };
-
-            // if (wsSendData?.match(action)) {
-            //     const message = { ...payload, token: user.token };
-            //     socket.send(JSON.stringify(message));
-            // }
 
             if (wsDisconnect.match(action)) {
                 socket.close();
