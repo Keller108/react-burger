@@ -1,22 +1,23 @@
 import { TModalActions } from '../actions/modal';
 import { TModal } from '../../shared/types/TModal';
+import { CLOSE_MODAL, OPEN_MODAL } from '../constants/modal';
 
-type TModalState = {
+type TModalStore = {
     isActive: boolean;
     modalType: TModal | null;
 };
 
-const initialModalState: TModalState = {
+const initialModalState: TModalStore = {
     isActive: false,
     modalType: null
 };
 
 export const modalReducer = (
-    state: TModalState = initialModalState,
+    state: TModalStore = initialModalState,
     action: TModalActions
-): TModalState => {
+): TModalStore => {
     switch (action.type) {
-        case 'OPEN_MODAL': {
+        case OPEN_MODAL: {
             if (action) {
                 return {
                     ...state,
@@ -26,7 +27,7 @@ export const modalReducer = (
             }
             return state;
         }
-        case 'CLOSE_MODAL': {
+        case CLOSE_MODAL: {
             return {
                 ...state,
                 isActive: false,

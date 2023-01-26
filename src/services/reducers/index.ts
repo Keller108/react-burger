@@ -7,6 +7,7 @@ import { TLoaderActions } from '../actions/loader';
 import { wsPublicReducer } from './ws-public';
 import { modalReducer } from './modal';
 import { wsPrivateReducer } from './ws-private';
+import { LOADER_OFF, LOADER_ON } from '../constants/loader';
 
 type TInitialTabState = {
     readonly tabs: ReadonlyArray<string>;
@@ -45,13 +46,13 @@ const initialAppState: TInitialAppState = {
 
 const appReducer = (state = initialAppState, action: TLoaderActions) => {
     switch (action.type) {
-        case 'LOADER_ON': {
+        case LOADER_ON: {
             return {
                 ...state,
                 isLoading: true
             }
         }
-        case 'LOADER_OFF': {
+        case LOADER_OFF: {
             return {
                 ...state,
                 isLoading: false
