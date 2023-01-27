@@ -33,7 +33,7 @@ export const Orders = () => {
             {orderData ? orderData.map((item, i) => <Order
                 key={item._id}
                 {...item}
-            />) : 'пусто'}
+            />).reverse() : 'пусто'}
         </ul>
     )
 };
