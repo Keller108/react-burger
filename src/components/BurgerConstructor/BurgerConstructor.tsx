@@ -28,7 +28,7 @@ export function BurgerConstructor() {
     const [, dropTarget] = useDrop({
         accept: 'ingredients',
         drop(ingredient) {
-            addItem(ingredient as IIngredientItem)
+            addItem(ingredient as IIngredientItem);
         }
     });
 

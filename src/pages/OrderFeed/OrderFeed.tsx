@@ -35,6 +35,7 @@ export const OrderFeed = () => {
     useEffect(() => {
         let currentOrder = localStorage.getItem('currentOrder');
         if (currentOrder) dispatch(openModal('ORDER_VIEW'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

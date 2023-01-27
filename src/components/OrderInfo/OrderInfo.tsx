@@ -30,23 +30,26 @@ export const OrderInfo = () => {
 
         if (currentOrder && currentOrder.ingredients) {
             ingredientsIds = [...currentOrder.ingredients];
-            ingredients = getBurgerIngredients(ingredientsIds, ingredientItems);
+            let uniqueIngredientsIDs = new Set(ingredientsIds);
+            ingredients = getBurgerIngredients(Array.from(uniqueIngredientsIDs), ingredientItems);
             return ingredients;
         }
         return ingredients;
     }, [currentOrder, ingredientItems])
 
     const price = countOrderPrice(orderIngredients);
-    const countQuantity = (item: IIngredientItem) => {
-        let quantity = 0;
-        let array = [...orderIngredients];
-        quantity = array.reduce((acc: IIngredientItem[], curr: IIngredientItem) => {
-            if (!acc.find(() => item.name === curr.name)) {
-                acc.push(curr);
-            }
-            return acc;
-        }, []).length;
-        return quantity;
+
+    const countQuantity = (ingredient: IIngredientItem) => {
+        let ingredients: IIngredientItem[] | [] = [];
+
+        if (currentOrder && currentOrder.ingredients) {
+            let copiedArray = [...currentOrder.ingredients];
+            ingredients = getBurgerIngredients(copiedArray, ingredientItems);
+            let arr = ingredients.filter(item => item.name === ingredient.name);
+            return arr.length
+        }
+
+        return ingredients.length;
     };
 
     switch (orderStatus) {
@@ -96,7 +99,7 @@ export const OrderInfo = () => {
                     </span>
                     <h3 className={`${styles.ingredientTitle} text text_type_main-default`} >{item.name}</h3>
                     <span className={styles.ingredientCost}>
-                        <p className="text text_type_digits-default mt-0 mb-0 mr-2">{countQuantity(item)} x {item.price}</p>
+                        <p className="text text_type_digits-default mt-0 mb-0 mr-2">{`${countQuantity(item)} x ${item.price}`}</p>
                         <CurrencyIcon type="primary" />
                     </span>
                 </li>)}
