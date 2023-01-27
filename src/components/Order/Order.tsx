@@ -107,7 +107,7 @@ export const Order = (item: IOrderDataModel) => {
 
     return (
         <Link
-            to={{ pathname: `/feed/${_id}` }}
+            to={{ pathname: `${location.pathname}/${_id}` }}
             className={styles.link}
             onClick={() => {
                 setCurrentOrder(item as IOrderDataModel);

@@ -82,6 +82,7 @@ export const App = () => {
                     <Route path="/ingredients/:ingredientId" element={<IngredientPage />} />
                     <Route path="/feed" element={<OrderFeed />} />
                     <Route path="/feed/:id" element={<OrderPage />} />
+                    <Route path="/orders/:id" element={<OrderPage />} />
                 </Routes>
                 {state && isActive && <Routes>
                     <Route
@@ -92,6 +93,13 @@ export const App = () => {
                     />
                     <Route
                         path="/feed/:id"
+                        element={<Modal onClose={handleCloseModal}>
+                            {component}
+                        </Modal>}
+                    />
+
+                    <Route
+                        path="/orders/:id"
                         element={<Modal onClose={handleCloseModal}>
                             {component}
                         </Modal>}
