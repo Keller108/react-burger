@@ -36,14 +36,21 @@ export const App = () => {
     const handleCloseModal = () => {
         if (modalType === 'INGREDIENT_VIEW') {
             let currentItem = localStorage.getItem('currentItem');
-            if (currentItem) {
-                localStorage.removeItem('currentItem');
-            }
+            if (currentItem) localStorage.removeItem('currentItem');
         }
+
+        if (modalType === 'ORDER_VIEW') {
+            let currentItem = localStorage.getItem('currentOrder');
+            if (currentItem) localStorage.removeItem('currentOrder');
+        }
+
         dispatch(clearCart());
         dispatch(closeModal());
         navigate(-1);
     };
+
+    console.log('modalType', modalType);
+
 
     useEffect(() => {
         dispatch(getIngredients());
