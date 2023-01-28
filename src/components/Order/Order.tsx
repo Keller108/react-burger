@@ -106,11 +106,12 @@ export const Order = ({ item, onCardClick, status }: Props) => {
 
     return (
         <Link
-            to={{ pathname: `${location.pathname}/${_id}` }}
+            key={_id}
             className={styles.link}
             onClick={() => {
                 onCardClick(item);
             }}
+            to={{ pathname: `${location.pathname}/${_id}` }}
             state={{ background: location }}
         >
             <li className={styles.orderItem}>

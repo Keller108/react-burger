@@ -29,7 +29,7 @@ export const App = () => {
 
     const handleUserCheck = () => dispatch(userCheck());
 
-    const state = location.state && location.state.background;
+    let state = location.state && location.state.background;
 
     const handleCheckData = async () => {
         await handleUserCheck();
@@ -39,6 +39,11 @@ export const App = () => {
         if (modalType === ModalType.INGREDIENT_VIEW) {
             let currentItem = localStorage.getItem('currentItem');
             if (currentItem) localStorage.removeItem('currentItem');
+        }
+
+        if (modalType === ModalType.ORDER_HISTORY_VIEW) {
+            let currentItem = localStorage.getItem('currentOrder');
+            if (currentItem) localStorage.removeItem('currentOrder');
         }
 
         dispatch(deleteCurrentOrder());
@@ -54,8 +59,6 @@ export const App = () => {
     }, [])
 
     let component: JSX.Element | null = useModalType();
-
-    console.log('state', state);
 
     return (
         <div className={appStyles.app}>
@@ -84,18 +87,20 @@ export const App = () => {
                             {component}
                         </Modal>}
                     />
+                </Routes>}
+                {isActive && <Routes>
                     <Route
                         path="/feed/:id"
                         element={<Modal onClose={handleCloseModal}>
                             {component}
                         </Modal>}
                     />
-                    {/* <Route
+                    <Route
                         path="/orders/:id"
                         element={<Modal onClose={handleCloseModal}>
                             {component}
                         </Modal>}
-                    /> */}
+                    />
                 </Routes>}
             </>}
         </div>

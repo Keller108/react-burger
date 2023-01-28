@@ -29,12 +29,13 @@ export function ProfilePage({ handleCloseModal }: Props) {
     };
 
     let component: JSX.Element | null = useModalType();
+    let currentOrder = localStorage.getItem('currentOrder');
 
     useEffect(() => {
-        let currentOrder = localStorage.getItem('currentOrder');
         if (currentOrder && location.pathname === ORDERS_ROUTE) {
             dispatch(openModal(ModalType.ORDER_HISTORY_VIEW));
         } else {
+            localStorage.removeItem('currentOrder');
             dispatch(closeModal());
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +52,7 @@ export function ProfilePage({ handleCloseModal }: Props) {
                     : <ProfileForm />
                 }
             </div>
-            {isActive && <Modal onClose={handleCloseModal}>
+            {currentOrder && isActive && <Modal onClose={handleCloseModal}>
                 {component}
             </Modal>}
         </section>
