@@ -1,11 +1,11 @@
 import { TOrderID } from "./TOrderID";
-import { TORderStatus } from "./TORderStatus";
+import { TOrderStatus } from "./TOrderStatus";
 
 export interface IOrderDataModel {
     _id: string;
     name: string;
     number: number;
-    status: TORderStatus;
+    status: TOrderStatus;
     ingredients: TOrderID[];
     createdAt: string;
     updatedAt: string;

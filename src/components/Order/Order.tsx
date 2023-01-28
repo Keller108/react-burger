@@ -1,11 +1,10 @@
-import { CSSProperties, useEffect, useMemo } from 'react';
+import { CSSProperties, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { countOrderPrice, getBurgerIngredients } from '../../shared/handlers';
-import { useDispatch, useSelector } from '../../shared/hooks';
+import { useSelector } from '../../shared/hooks';
 import { IIngredientItem, IOrderDataModel } from '../../shared/types';
 import styles from './Order.module.css';
-import { openModal } from '../../services/actions/modal';
 import { conversionDateForCard } from '../../shared/handlers';
 
 enum OrderStatus {
@@ -15,13 +14,17 @@ enum OrderStatus {
     PENDING = 'Готовится'
 }
 
-export const Order = (item: IOrderDataModel) => {
+type Props = {
+    item: IOrderDataModel;
+    onCardClick: (order: IOrderDataModel) => void;
+    // status?: TOrderStatus;
+};
+
+export const Order = ({ item, onCardClick }: Props) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
     const { _id, number, name, status = null } = item;
 
     const location = useLocation();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     let statusText;
     let orderClass;
@@ -52,11 +55,6 @@ export const Order = (item: IOrderDataModel) => {
             orderClass = '';
         }
     }
-
-    const setCurrentOrder = (item: IOrderDataModel) => {
-        let data = JSON.stringify(item);
-        localStorage.setItem('currentOrder', data);
-    };
 
     const orderIngredients = useMemo(() => {
         let ingredientsIds: string[] | [] = [];
@@ -106,19 +104,12 @@ export const Order = (item: IOrderDataModel) => {
 
     const ingredientsItems = getIngredientsWithSkip();
 
-    useEffect(() => {
-        let currentOrder = localStorage.getItem('currentOrder');
-        if (currentOrder) dispatch(openModal('ORDER_VIEW'));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
     return (
         <Link
             to={{ pathname: `${location.pathname}/${_id}` }}
             className={styles.link}
             onClick={() => {
-                setCurrentOrder(item as IOrderDataModel);
-                dispatch(openModal('ORDER_VIEW'));
+                onCardClick(item);
             }}
             state={{ background: location }}
         >

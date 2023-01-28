@@ -1,1 +1,1 @@
-export type TORderStatus = 'done' | 'canceled' | 'none' | 'pending' | 'created';
+export type TOrderStatus = 'done' | 'canceled' | 'none' | 'pending' | 'created';

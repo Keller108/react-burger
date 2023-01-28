@@ -11,7 +11,7 @@ import contructorStyles from './BurgerConstructor.module.css';
 import { ConstructorItem } from '../ConstructorItem/ConstructorItem';
 import { addItemToConstructor, handlePlaceAnOrder, orderRequest } from '../../services/actions/burger-constructor';
 import { LOGIN_ROUTE } from '../../shared/routes';
-import { IConstructorItem, IIngredientItem, TOrderID } from '../../shared/types';
+import { IConstructorItem, IIngredientItem, ModalType, TOrderID } from '../../shared/types';
 import { openModal } from '../../services/actions/modal';
 
 export function BurgerConstructor() {
@@ -55,7 +55,7 @@ export function BurgerConstructor() {
 
     useEffect(() => {
         if (store?.order.success) {
-            dispatch(openModal('ORDER_SUCCESS'));
+            dispatch(openModal(ModalType.ORDER_SUCCESS));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [store?.order])

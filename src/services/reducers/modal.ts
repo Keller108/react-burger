@@ -1,10 +1,10 @@
 import { TModalActions } from '../actions/modal';
-import { TModal } from '../../shared/types/TModal';
+import { ModalType } from '../../shared/types/ModalType';
 import { CLOSE_MODAL, OPEN_MODAL } from '../constants/modal';
 
 type TModalStore = {
     isActive: boolean;
-    modalType: TModal | null;
+    modalType: ModalType | null;
 };
 
 const initialModalState: TModalStore = {

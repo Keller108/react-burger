@@ -1,5 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import {
+    TCartActions,
     TConstructorActions, TIngredientsActions, TLoaderActions, TModalActions, TTabActions, TUserActions,
 } from '../../services/actions';
 import { TWSPrivateActions } from '../../services/actions/ws-private';
@@ -28,11 +29,12 @@ export type { TOrderID } from './TOrderID';
 export type { TOrderData } from './TOrderData';
 
 export type { IOrderDataModel } from './IOrderDataModel';
-export type { TORderStatus } from './TORderStatus';
+export type { TOrderStatus } from './TOrderStatus';
 export type { IWSServerResponse } from './IWSServerResponse';
 export { WebSocketStatus } from './WebSocketStatus';
 
 export type { TOrderDetails } from './TORderDetails';
+export { ModalType } from './ModalType';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -44,7 +46,8 @@ export type TApplicationActions =
     | TTabActions
     | TUserActions
     | TWSPublicActions
-    | TWSPrivateActions;
+    | TWSPrivateActions
+    | TCartActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
 

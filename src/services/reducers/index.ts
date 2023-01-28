@@ -8,6 +8,7 @@ import { wsPublicReducer } from './ws-public';
 import { modalReducer } from './modal';
 import { wsPrivateReducer } from './ws-private';
 import { LOADER_OFF, LOADER_ON } from '../constants/loader';
+import { cartReducer } from './cart';
 
 type TInitialTabState = {
     readonly tabs: ReadonlyArray<string>;
@@ -72,5 +73,6 @@ export const rootReducer = combineReducers({
     modal: modalReducer,
     tabs: tabReducer,
     wsPublic: wsPublicReducer,
-    wsPrivate: wsPrivateReducer
+    wsPrivate: wsPrivateReducer,
+    cart: cartReducer
 });

@@ -1,11 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { Order } from '../../components/Order';
+import { setCurrentOrder } from '../../services/actions/cart';
 import { openModal } from '../../services/actions/modal';
 import { wsPrivateDisconnect } from '../../services/actions/ws-private';
 import { wsPublicConnect } from '../../services/actions/ws-public';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { ORDERS_FEED_PATH } from '../../shared/routes';
-import { IOrderDataModel } from '../../shared/types';
+import { IOrderDataModel, ModalType } from '../../shared/types';
 import styles from './OrderFeed.module.css';
 
 export const OrderFeed = () => {
@@ -23,18 +24,22 @@ export const OrderFeed = () => {
         return array.filter(item => item.status === 'pending');
     }, [orderData])
 
+    const renderModal = (order: IOrderDataModel) => {
+        dispatch(openModal(ModalType.ORDER_VIEW));
+        dispatch(setCurrentOrder(order));
+    };
+
+    const renderElement = (order: IOrderDataModel) => {
+        renderModal(order);
+        const data = JSON.stringify(order);
+        localStorage.setItem('currentOrder', data);
+    };
+
     useEffect(() => {
         dispatch(wsPublicConnect({ url: ORDERS_FEED_PATH }));
-
-        return () => {
-            dispatch(wsPrivateDisconnect());
-        };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
         let currentOrder = localStorage.getItem('currentOrder');
-        if (currentOrder) dispatch(openModal('ORDER_VIEW'));
+        if (currentOrder) dispatch(openModal(ModalType.ORDER_VIEW));
+        return () => dispatch(wsPrivateDisconnect());
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -47,8 +52,8 @@ export const OrderFeed = () => {
                 <ul className={styles.orders}>
                     {orderData.map((item: IOrderDataModel) => <Order
                         key={item.number}
-                        {...item}
-                        status="none"
+                        item={item}
+                        onCardClick={() => renderElement(item)}
                     />)}
                 </ul>
             </section>

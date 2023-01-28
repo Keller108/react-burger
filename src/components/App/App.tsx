@@ -16,6 +16,8 @@ import { useModalType } from "../../shared/hooks/useModalType";
 import { closeModal } from "../../services/actions/modal";
 import { clearCart } from "../../services/actions/burger-constructor";
 import { getIngredients } from "../../services/actions/burger-ingredients";
+import { deleteCurrentOrder } from "../../services/actions/cart";
+import { ModalType } from "../../shared/types";
 
 export const App = () => {
     const [isLoading,] = useState(false);
@@ -34,11 +36,12 @@ export const App = () => {
     };
 
     const handleCloseModal = () => {
-        if (modalType === 'INGREDIENT_VIEW') {
+        if (modalType === ModalType.INGREDIENT_VIEW) {
             let currentItem = localStorage.getItem('currentItem');
             if (currentItem) localStorage.removeItem('currentItem');
         }
 
+        dispatch(deleteCurrentOrder());
         dispatch(clearCart());
         dispatch(closeModal());
         navigate(-1);
@@ -52,16 +55,18 @@ export const App = () => {
 
     let component: JSX.Element | null = useModalType();
 
+    console.log('state', state);
+
     return (
         <div className={appStyles.app}>
             <AppHeader />
             {isLoading ? <Preloader /> : <>
                 <Routes location={state || location}>
                     <Route element={<ProtectedRoutes />}>
-                        <Route path="/profile" element={<ProfilePage />} />
-                        <Route path="/orders" element={<ProfilePage />} />
+                        <Route path="/profile" element={<ProfilePage handleCloseModal={handleCloseModal} />} />
+                        <Route path="/orders" element={<ProfilePage handleCloseModal={handleCloseModal} />} />
                     </Route>
-                    <Route path="/" index element={<HomePage handleCloseModal={handleCloseModal}/>} />
+                    <Route path="/" index element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -85,13 +90,12 @@ export const App = () => {
                             {component}
                         </Modal>}
                     />
-
-                    <Route
+                    {/* <Route
                         path="/orders/:id"
                         element={<Modal onClose={handleCloseModal}>
                             {component}
                         </Modal>}
-                    />
+                    /> */}
                 </Routes>}
             </>}
         </div>
