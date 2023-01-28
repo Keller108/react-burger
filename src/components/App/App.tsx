@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "../../shared/hooks";
 import { AppHeader } from '../AppHeader';
 import {
@@ -87,8 +87,6 @@ export const App = () => {
                             {component}
                         </Modal>}
                     />
-                </Routes>}
-                {isActive && <Routes>
                     <Route
                         path="/feed/:id"
                         element={<Modal onClose={handleCloseModal}>

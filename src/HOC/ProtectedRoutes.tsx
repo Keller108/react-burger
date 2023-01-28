@@ -13,11 +13,11 @@ export const ProtectedRoutes = ({ anonymous = false }: TProtectedRoutesProps) =>
     const from = location.state?.from || '/';
 
     if (anonymous && isLoggedIn) {
-      return <Navigate to={ from } />;
+      return <Navigate to={ from } state={{ from: location}} />;
     }
 
     if (!anonymous && !isLoggedIn) {
-      return <Navigate to={LOGIN_ROUTE} state={{ from: location}}/>;
+      return <Navigate to={LOGIN_ROUTE} state={{ from: location}} />;
     }
 
     return <Outlet />;
