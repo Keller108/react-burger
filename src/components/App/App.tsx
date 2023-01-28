@@ -39,25 +39,13 @@ export const App = () => {
             if (currentItem) localStorage.removeItem('currentItem');
         }
 
-        if (modalType === 'ORDER_VIEW') {
-            let currentItem = localStorage.getItem('currentOrder');
-            if (currentItem) localStorage.removeItem('currentOrder');
-        }
-
         dispatch(clearCart());
         dispatch(closeModal());
         navigate(-1);
     };
 
-    console.log('modalType', modalType);
-
-
     useEffect(() => {
         dispatch(getIngredients());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
         handleCheckData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -78,11 +66,11 @@ export const App = () => {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path='*' element={<NotFound />} />
                     <Route path="/ingredients/:ingredientId" element={<IngredientPage />} />
                     <Route path="/feed" element={<OrderFeed />} />
                     <Route path="/feed/:id" element={<OrderPage />} />
                     <Route path="/orders/:id" element={<OrderPage />} />
+                    <Route path='*' element={<NotFound />} />
                 </Routes>
                 {state && isActive && <Routes>
                     <Route

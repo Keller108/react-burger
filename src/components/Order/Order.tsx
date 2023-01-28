@@ -1,6 +1,6 @@
-import { CSSProperties, useMemo } from 'react';
+import { CSSProperties, useEffect, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { countOrderPrice, getBurgerIngredients } from '../../shared/handlers';
 import { useDispatch, useSelector } from '../../shared/hooks';
 import { IIngredientItem, IOrderDataModel } from '../../shared/types';
@@ -21,6 +21,7 @@ export const Order = (item: IOrderDataModel) => {
 
     const location = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     let statusText;
     let orderClass;
@@ -104,6 +105,12 @@ export const Order = (item: IOrderDataModel) => {
     };
 
     const ingredientsItems = getIngredientsWithSkip();
+
+    useEffect(() => {
+        let currentOrder = localStorage.getItem('currentOrder');
+        if (currentOrder) dispatch(openModal('ORDER_VIEW'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Link
