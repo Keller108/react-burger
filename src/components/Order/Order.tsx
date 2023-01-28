@@ -3,7 +3,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Link, useLocation } from 'react-router-dom';
 import { countOrderPrice, getBurgerIngredients } from '../../shared/handlers';
 import { useSelector } from '../../shared/hooks';
-import { IIngredientItem, IOrderDataModel } from '../../shared/types';
+import { IIngredientItem, IOrderDataModel, TOrderStatus } from '../../shared/types';
 import styles from './Order.module.css';
 import { conversionDateForCard } from '../../shared/handlers';
 
@@ -17,12 +17,12 @@ enum OrderStatus {
 type Props = {
     item: IOrderDataModel;
     onCardClick: (order: IOrderDataModel) => void;
-    // status?: TOrderStatus;
+    status?: TOrderStatus;
 };
 
-export const Order = ({ item, onCardClick }: Props) => {
+export const Order = ({ item, onCardClick, status }: Props) => {
     const { ingredientItems } = useSelector(store => store.ingredients);
-    const { _id, number, name, status = null } = item;
+    const { _id, number, name } = item;
 
     const location = useLocation();
 
@@ -119,7 +119,7 @@ export const Order = ({ item, onCardClick }: Props) => {
                     <span className='text text_type_main-small text_color_inactive'>{dateForOrder}</span>
                 </div>
                 <h2 className='text text_type_main-medium mb-2'>{name}</h2>
-                <p className={`text text_type_main-small mb-6 ${orderClass}`}>{status && statusText}</p>
+                <p className={`text text_type_main-small mb-6 ${orderClass}`}>{status !== 'none' && statusText}</p>
                 <div className={styles.description}>
                     <ul className={styles.ingredientsEnumeration}>
                         {ingredientsItems?.map((item, i) => {

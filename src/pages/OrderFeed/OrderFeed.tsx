@@ -53,6 +53,7 @@ export const OrderFeed = () => {
                     {orderData.map((item: IOrderDataModel) => <Order
                         key={item.number}
                         item={item}
+                        status="none"
                         onCardClick={() => renderElement(item)}
                     />)}
                 </ul>

@@ -47,6 +47,7 @@ export const Orders = ({ handleCloseModal }: Props) => {
             {orderData ? orderData.map((item, i) => <Order
                 key={item.number}
                 item={item}
+                status={item.status}
                 onCardClick={() => renderElement(item)}
             />).reverse() : 'пусто'}
         </ul>

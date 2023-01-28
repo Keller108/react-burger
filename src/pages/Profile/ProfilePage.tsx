@@ -18,9 +18,9 @@ type Props = {
 
 export function ProfilePage({ handleCloseModal }: Props) {
     const { isActive } = useSelector(store => store.modal);
+    const location = useLocation();
 
     const navigate = useNavigate();
-    const location = useLocation();
     const dispatch = useDispatch();
 
     const handleLogOut = async () => {
