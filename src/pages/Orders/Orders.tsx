@@ -8,11 +8,7 @@ import { ORDERS_PROFILE_PATH } from '../../shared/routes';
 import { IOrderDataModel, ModalType } from '../../shared/types';
 import styles from './Orders.module.css';
 
-type Props = {
-    handleCloseModal: () => void;
-};
-
-export const Orders = ({ handleCloseModal }: Props) => {
+export const Orders = () => {
     const { orderData } = useSelector(store => store.wsPrivate);
     const dispatch = useDispatch();
 

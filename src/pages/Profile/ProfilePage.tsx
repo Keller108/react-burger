@@ -34,6 +34,7 @@ export function ProfilePage({ handleCloseModal }: Props) {
     useEffect(() => {
         if (currentOrder && location.pathname === ORDERS_ROUTE) {
             dispatch(openModal(ModalType.ORDER_HISTORY_VIEW));
+            localStorage.setItem('lastOrder', currentOrder);
         } else {
             localStorage.removeItem('currentOrder');
             dispatch(closeModal());
@@ -48,7 +49,7 @@ export function ProfilePage({ handleCloseModal }: Props) {
                 {location.pathname === PROFILE_ROUTE
                     ?  <ProfileForm />
                     : location.pathname === ORDERS_ROUTE
-                    ? <Orders handleCloseModal={handleCloseModal} />
+                    ? <Orders />
                     : <ProfileForm />
                 }
             </div>

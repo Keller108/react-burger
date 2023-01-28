@@ -8,9 +8,13 @@ import { conversionDateForCard } from '../../shared/handlers/convertDate';
 
 export const OrderInfo = () => {
     const [currentOrder, ] = useState<IOrderDataModel | null>(() => {
-        let item = localStorage.getItem('currentOrder');
+        const item = localStorage.getItem('currentOrder');
         if (item) return JSON.parse(item);
-        else return null;
+        if (!item) {
+            const lastItem = localStorage.getItem('lastOrder');
+            if (lastItem) return JSON.parse(lastItem);
+        }
+        return null;
     });
     const [orderStatus, setOrderStatus] = useState('');
     const { ingredientItems } = useSelector(store => store.ingredients);
