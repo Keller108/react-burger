@@ -54,11 +54,16 @@ export function BurgerConstructor() {
     };
 
     useEffect(() => {
-        if (store?.order.success) {
+        if (store.order.request === true) {
+            dispatch(openModal(ModalType.PENDING));
+        }
+        if (store.order.success === true) {
             dispatch(openModal(ModalType.ORDER_SUCCESS));
         }
+        console.log('true', store.order);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [store?.order])
+    }, [store.order])
 
     return (
         <section ref={dropTarget}

@@ -69,7 +69,7 @@ export const App = () => {
                         <Route path="/profile" element={<ProfilePage handleCloseModal={handleCloseModal} />} />
                         <Route path="/orders" element={<ProfilePage handleCloseModal={handleCloseModal} />} />
                     </Route>
-                    <Route path="/" index element={<HomePage />} />
+                    <Route path="/" index element={<HomePage handleCloseModal={handleCloseModal} />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />

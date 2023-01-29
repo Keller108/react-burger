@@ -2,6 +2,7 @@ import { useSelector } from ".";
 import { IngredientDetails } from "../../components/IngredientDetails";
 import { OrderDetails } from "../../components/OrderDetails";
 import { OrderInfo } from "../../components/OrderInfo";
+import { Preloader } from "../../components/Preloader";
 import { WithModalPadding } from "../../HOC";
 import { ModalType } from "../types";
 
@@ -24,6 +25,10 @@ export const useModalType = () => {
         }
         case ModalType.ORDER_HISTORY_VIEW: {
             component = <WithModalPadding children={<OrderInfo />} />
+            break
+        }
+        case ModalType.PENDING: {
+            component = <Preloader />
             break
         }
         default: {
