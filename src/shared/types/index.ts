@@ -32,6 +32,8 @@ export type { IOrderDataModel } from './IOrderDataModel';
 export type { TOrderStatus } from './TOrderStatus';
 export type { IWSServerResponse } from './IWSServerResponse';
 export { WebSocketStatus } from './WebSocketStatus';
+
+export type { TOrderDetails } from './TOrderDetails';
 export { ModalType } from './ModalType';
 
 export type RootState = ReturnType<typeof rootReducer>;
