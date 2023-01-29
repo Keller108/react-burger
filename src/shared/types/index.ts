@@ -29,7 +29,6 @@ export type { TOrderID } from './TOrderID';
 export type { TOrderData } from './TOrderData';
 
 export type { IOrderDataModel } from './IOrderDataModel';
-export type { TOrderStatus } from './TOrderStatus';
 export type { IWSServerResponse } from './IWSServerResponse';
 export { WebSocketStatus } from './WebSocketStatus';
 
