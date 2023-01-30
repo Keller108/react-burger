@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../shared/hooks';
 import { useParams } from 'react-router-dom';
 import { IIngredientItem } from '../../shared/types';
 import ingredientsDetailsStyle from './IngredientDetails.module.css';
 
 export function IngredientDetails() {
     const [currentItem, setCurrentItem] = useState<IIngredientItem | null>(null);
-    //@ts-ignore
-    const { currentData } = useSelector(store => store.modal);
+    const { currentIngredient } = useSelector(store => store.ingredients);
     const [items,] = useState(
         () => {
             let item = localStorage.getItem('ingredients');
@@ -22,10 +21,10 @@ export function IngredientDetails() {
 
     let card: IIngredientItem | null;
 
-    if (!currentData) {
+    if (!currentIngredient) {
         card = currentItem;
     } else {
-        card = currentData;
+        card = currentIngredient;
     }
 
     return (

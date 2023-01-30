@@ -1,16 +1,14 @@
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import ingredientsStyle from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsCategory } from '../IngredientsCategory';
-import { SWITCH_TAB } from '../../services/actions';
 import { IIngredientItem } from '../../shared/types';
+import { switchTab } from '../../services/actions/tab';
 
 export function BurgerIngredients() {
     const dispatch = useDispatch();
-    //@ts-ignore
     const ingredients = useSelector(store => store.ingredients.ingredientItems);
-    //@ts-ignore
     const { tabs, activeTab } = useSelector(store => store.tabs);
     const [current, setCurrent] = useState<string>(activeTab);
 
@@ -35,7 +33,7 @@ export function BurgerIngredients() {
     };
 
     const handleSwitchTab = (type: string) => {
-        dispatch({ type: SWITCH_TAB, payload: type });
+        dispatch(switchTab(type));
         setCurrent(type);
     };
 
@@ -47,7 +45,7 @@ export function BurgerIngredients() {
             return Math.abs(parentRef.current.getBoundingClientRect()
                 .top - elementRef.current.getBoundingClientRect().top);
         } else return 0;
-    }
+    };
 
 	const handleScroll = () => {
 		const bunDistance = getDistance(rootRef, bunRef);

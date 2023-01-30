@@ -1,0 +1,1 @@
+export type TOrderStatus = 'done' | 'canceled' | 'none' | 'pending' | 'created';

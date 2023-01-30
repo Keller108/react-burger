@@ -1,16 +1,16 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ForgotPassword.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { forgotPasswordRequest } from '../../services/actions/user';
+import { useDispatch, useSelector } from '../../shared/hooks';
+import { forgotPasswordRequest, setDefault } from '../../services/actions/user';
 import { RESET_ROUTE } from '../../shared/routes';
-import { LOADER_OFF, LOADER_ON } from '../../services/actions';
 import { Preloader } from '../../components/Preloader';
+import { loaderOff, loaderOn } from '../../services/actions/loader';
 
 export function ForgotPassword() {
-    //@ts-ignore
     const { isLoading } = useSelector(store => store.appStore);
+    const { success } = useSelector(store => store.userStore);
     const [emailInput, setEmailInput] = useState({
         value: '',
         error: false,
@@ -20,28 +20,33 @@ export function ForgotPassword() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleCheckIfUserExists = async (data: { email: string }) => dispatch(
-        //@ts-ignore
+    const handleCheckIfUserExists = (data: { email: string }) => dispatch(
         forgotPasswordRequest(data)
     );
 
-    const handleSubmitForgotForm = async (evt: FormEvent) => {
+    const handleSetDefault = () => dispatch(setDefault());
+
+    const handleSubmitForgotForm = (evt: FormEvent) => {
         evt.preventDefault();
-        dispatch({ type: LOADER_ON });
+        dispatch(loaderOn());
 
         if (emailInput.value) {
             setEmailInput(prev => ({...prev, error: false }));
-            let res = await handleCheckIfUserExists({ email: emailInput.value });
-
-            dispatch({ type: LOADER_OFF });
+            handleCheckIfUserExists({ email: emailInput.value });
             setEmailInput(prev => ({ ...prev, value: '' }));
-
-            if (res && res.success) navigate(RESET_ROUTE);
         } else {
             setEmailInput(prev => ({...prev, error: true }));
-            dispatch({ type: LOADER_OFF });
         }
     };
+
+    useEffect(() => {
+        if (success === true) {
+            navigate(RESET_ROUTE);
+            handleSetDefault();
+            dispatch(loaderOff());
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [success]);
 
     return (
         <section className={styles.page}>

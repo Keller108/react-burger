@@ -1,0 +1,73 @@
+.orderFeed {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 1280px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+.ordersWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 50%;
+    max-width: 600px;
+}
+
+.orders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: stretch;
+    padding: 0;
+    padding-right: 16px;
+    list-style-type: none;
+    overflow-y: auto;
+    max-height: calc(100vh - 80px - 88px - 80px);
+}
+
+.info {
+    width: 50%;
+    max-width: 600px;
+    height: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 85px;
+}
+
+.statusWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.statusCol {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.statusList {
+    width: 90%;
+    max-height: 124px;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+}
+
+.statusListDone {
+    color: #00CCCC;
+}
+
+.statistics {
+    padding: 0;
+}

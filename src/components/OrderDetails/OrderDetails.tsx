@@ -1,17 +1,9 @@
 import orderDetailsStyle from './OrderDetails.module.css';
 import IMG_SUCCESS_PATH from './assets/img-done.png';
+import { useSelector } from '../../shared/hooks';
 
-type TOrderDetailsProps = {
-    order: {
-        name: string
-        number: number
-        request: boolean
-        success: boolean
-        error: boolean
-    }
-};
-
-export function OrderDetails({ order }: TOrderDetailsProps) {
+export function OrderDetails() {
+    const { order } = useSelector(store => store.burgerConstructor);
     return (
         <div className={`${orderDetailsStyle.wrapper} pt-30 pb-30 pl-16 pr-16`}>
             <h2 className={`${orderDetailsStyle.title}

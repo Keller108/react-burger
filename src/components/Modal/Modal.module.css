@@ -10,7 +10,7 @@
     border-radius: 40px;
     background-color: #1C1C21;
     color: white;
-    z-index: 2;
+    z-index: 99;
 }
 
 .closeBtn {

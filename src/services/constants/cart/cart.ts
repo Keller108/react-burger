@@ -1,0 +1,2 @@
+export const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER' as const;
+export const DELETE_CURRENT_ORDER = 'DELETE_CURRENT_ORDER' as const;

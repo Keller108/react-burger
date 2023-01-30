@@ -1,20 +1,16 @@
 import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useSelector } from 'react-redux';
 import { ModalOverlay } from '../ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyle from './Modal.module.css';
 
 type TModalProps = {
     onClose: () => void;
+    children: JSX.Element | null;
 };
 
-export function Modal({ onClose }: TModalProps) {
-    //@ts-ignore
-    const { content } = useSelector(store => store.modal);
-
+export function Modal({ onClose, children }: TModalProps) {
     const modalClose = () => onClose();
-
     const closeModalByEsc = (evt: KeyboardEvent) => {
         if (evt.key === 'Escape') return modalClose();
     };
@@ -33,7 +29,7 @@ export function Modal({ onClose }: TModalProps) {
                 <span className={modalStyle.closeBtn}>
                     <CloseIcon onClick={modalClose} type="primary" />
                 </span>
-                {content}
+                {children}
             </div>
             <ModalOverlay closeModal={modalClose}/>
         </>,

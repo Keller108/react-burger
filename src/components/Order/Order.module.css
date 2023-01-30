@@ -1,0 +1,118 @@
+.link {
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 16px;
+}
+
+.orderItem {
+    position: relative;
+    width: 100%;
+    border-radius: 40px;
+    background-color: #1c1c21;
+    padding: 24px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.orderItem:last-of-type {
+    margin-bottom: 0;
+}
+
+.statusDone {
+    color: #00CCCC;
+}
+
+.statusInProgress {
+    color: white;
+}
+
+.statusCanceled {
+    color: #C93C29;
+}
+
+.skipText {
+    position: absolute;
+    line-height: 1;
+    top: 25%;
+    left: 25%;
+    z-index: 3;
+}
+
+.orderItemDescription {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.description {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+}
+
+.ingredientsEnumeration {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    list-style-type: none;
+}
+
+.ingredientItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 128px;
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+}
+
+.ingredientBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 124px;
+    background-color: #131316;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,.6);
+    z-index: 2;
+    border-radius: 100%;
+}
+
+.ingredientImg {
+    width: auto;
+    object-fit: cover;
+    object-position: center;
+    height: 80%;
+    font-size: 0;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}

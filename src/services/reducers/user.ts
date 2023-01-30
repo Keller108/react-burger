@@ -1,3 +1,5 @@
+import { IUserModel } from "../../shared/types";
+import { TUserActions } from "../actions";
 import {
     CHECK_USER_FAILED,
     CHECK_USER_REQUEST,
@@ -5,33 +7,53 @@ import {
     LOGIN_FAILED,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
+    PASS_FORGOT_FAILED,
+    PASS_FORGOT_REQUEST,
+    PASS_FORGOT_SUCCESS,
     PASS_RESET_FAILED,
     PASS_RESET_REQUEST,
     PASS_RESET_SUCCESS,
     REGISTER_FAILED,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
-    PASS_FORGOT_FAILED,
-    PASS_FORGOT_REQUEST,
-    PASS_FORGOT_SUCCESS,
-    USER_LOGOUT_FAILED,
-    USER_LOGOUT_REQUEST,
-    USER_LOGOUT_SUCCESS,
+    SET_DEFAULT,
+    USER_EDIT_FAILED,
     USER_EDIT_REQUEST,
     USER_EDIT_SUCCESS,
-    USER_EDIT_FAILED
-} from "../actions/user";
+    USER_LOGOUT_FAILED,
+    USER_LOGOUT_REQUEST,
+    USER_LOGOUT_SUCCESS
+} from "../constants/user/user";
 
-const initialUserState = {
+type TUserStore = {
+    user: IUserModel | null;
+    isLogined: boolean;
+    request: boolean;
+    success: boolean;
+    error: boolean;
+};
+
+const initialUserState: TUserStore = {
     user: null,
     isLogined: false,
     request: false,
     success: false,
-    error: false
+    error: false,
 };
 
-export const userReducer = (state = initialUserState, action) => {
+export const userReducer = (
+    state: TUserStore = initialUserState,
+    action: TUserActions
+): TUserStore => {
     switch (action.type) {
+        case SET_DEFAULT: {
+            return {
+                ...state,
+                request: false,
+                success: false,
+                error: false
+            }
+        }
         case REGISTER_REQUEST: {
             return {
                 ...state,

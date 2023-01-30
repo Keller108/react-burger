@@ -1,0 +1,123 @@
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 640px;
+    height: 620px;
+}
+
+.orderId {
+    align-self: inherit;
+    margin: 0;
+    margin-bottom: 40px;
+}
+
+.statusDone {
+    color: #00CCCC;
+}
+
+.statusInProgress {
+    color: white;
+}
+
+.statusCanceled {
+    color: #C93C29;
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: 304px;
+    list-style-type: none;
+    padding: 0;
+    padding-right: 24px;
+    margin: 0;
+    margin-bottom: 40px;
+    overflow-y: auto;
+}
+
+.ingredient {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 64px;
+    margin-bottom: 16px;
+}
+
+.ingredient:last-of-type {
+    margin-bottom: 0;
+}
+
+.ingredientFigure{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 128px;
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    margin-right: 16px;
+}
+
+.ingredientBackground {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 124px;
+    background-color: #131316;
+}
+
+.ingredientImg {
+    width: auto;
+    object-fit: cover;
+    object-position: center;
+    height: 80%;
+    font-size: 0;
+}
+
+.ingredientTitle {
+    width: calc(100% - 240px);
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.ingredientCost {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    margin: 0;
+}

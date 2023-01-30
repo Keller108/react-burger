@@ -1,12 +1,14 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './Register.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../shared/hooks';
 import { signUp } from '../../services/actions/user';
+import { IUserModel } from '../../shared/types';
 import { SHOP_ROUTE } from '../../shared/routes';
 
 export function RegisterPage() {
+    const { isLogined } = useSelector(store => store.userStore);
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -14,8 +16,7 @@ export function RegisterPage() {
     const navigate = useNavigate();
 
     const handleRegister = () => dispatch(
-        //@ts-ignore
-        signUp({ email: email, password: password, name: name })
+        signUp({ email: email, password: password, name: name } as IUserModel)
     );
 
     const clearEmail = () => {
@@ -28,14 +29,17 @@ export function RegisterPage() {
 
     const submitRegisterForm = async (evt: FormEvent) => {
         evt.preventDefault();
-        let res = await handleRegister();
+        await handleRegister();
 
         clearEmail();
         clearName();
         setPassword('');
-
-        if (res && res.success) navigate(SHOP_ROUTE);
     };
+
+    useEffect(() => {
+        if (isLogined) navigate(SHOP_ROUTE);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLogined])
 
     return (
         <section className={styles.page}>

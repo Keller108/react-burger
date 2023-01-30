@@ -1,1 +1,5 @@
-export type TOrderData = string[];
+import { TOrderID } from "./TOrderID"
+
+export type TOrderData = {
+    ingredients: TOrderID[];
+};

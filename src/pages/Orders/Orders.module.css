@@ -1,0 +1,12 @@
+.orders {
+    width: 70%;
+    max-height: calc(100vh - 80px - 88px - 30px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    padding-right: 8px;
+    margin: 0;
+    overflow-y: auto;
+}

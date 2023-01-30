@@ -1,47 +1,31 @@
 import { combineReducers } from 'redux';
-import { CLOSE_MODAL, LOADER_OFF, LOADER_ON, OPEN_MODAL, SWITCH_TAB } from '../actions';
 import { constructorReducer } from './burger-constructor';
 import { ingredientsReducer } from './burger-ingredients';
 import { userReducer } from './user';
+import { ITabSwitchAction } from '../actions/tab';
+import { TLoaderActions } from '../actions/loader';
+import { wsPublicReducer } from './ws-public';
+import { modalReducer } from './modal';
+import { wsPrivateReducer } from './ws-private';
+import { LOADER_OFF, LOADER_ON } from '../constants/loader';
+import { cartReducer } from './cart';
 
-const initialModalState = {
-    isActive: false,
-    content: null,
-    currentData: null
+type TInitialTabState = {
+    readonly tabs: ReadonlyArray<string>;
+    readonly activeTab: string;
 };
 
-const modalReducer = (state = initialModalState, action) => {
-    switch (action.type) {
-        case OPEN_MODAL: {
-            return {
-                ...state,
-                isActive: true,
-                content: action.payload,
-                currentData: action.data
-            }
-        }
-        case CLOSE_MODAL: {
-            return {
-                ...state,
-                isActive: false,
-                content: null
-            }
-        }
-        default: {
-            return state;
-        }
-    }
-};
-
-
-const initialTabState = {
+const initialTabState: TInitialTabState = {
     tabs: ['bun', 'sauce', 'main'],
     activeTab: 'bun'
 };
 
-const tabReducer = (state = initialTabState, action) => {
+const tabReducer = (
+    state: TInitialTabState = initialTabState,
+    action: ITabSwitchAction
+) => {
     switch (action.type) {
-        case SWITCH_TAB: {
+        case 'SWITCH_TAB': {
             return {
                 ...state,
                 activeTab: action.payload
@@ -53,11 +37,15 @@ const tabReducer = (state = initialTabState, action) => {
     }
 };
 
-const initialAppState = {
+type TInitialAppState = {
+    isLoading: boolean;
+};
+
+const initialAppState: TInitialAppState = {
     isLoading: false
 };
 
-const appReducer = (state = initialAppState, action) => {
+const appReducer = (state = initialAppState, action: TLoaderActions) => {
     switch (action.type) {
         case LOADER_ON: {
             return {
@@ -83,5 +71,8 @@ export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
     burgerConstructor: constructorReducer,
     modal: modalReducer,
-    tabs: tabReducer
+    tabs: tabReducer,
+    wsPublic: wsPublicReducer,
+    wsPrivate: wsPrivateReducer,
+    cart: cartReducer
 });

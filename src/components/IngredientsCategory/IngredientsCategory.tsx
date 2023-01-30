@@ -1,10 +1,10 @@
 import { forwardRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../shared/hooks';
 import categoryStyle from './IngredientsCategory.module.css';
 import { Card } from '../Card';
-import { IngredientDetails } from '../IngredientDetails';
-import { OPEN_MODAL } from '../../services/actions';
-import { IIngredientItem } from '../../shared/types';
+import { IIngredientItem, ModalType } from '../../shared/types';
+import { openModal } from '../../services/actions/modal';
+import { setCurrentIngredient } from '../../services/actions/burger-ingredients';
 
 type TIngredientsCategoryProps = {
     title: string;
@@ -21,11 +21,10 @@ export const IngredientsCategory = forwardRef<Ref, TIngredientsCategoryProps>(({
 }: TIngredientsCategoryProps, ref ) => {
     const dispatch = useDispatch();
 
-    const renderModal = (cardData: IIngredientItem) => dispatch({
-        type: OPEN_MODAL,
-        payload: <IngredientDetails />,
-        data: cardData
-    });
+    const renderModal = (cardData: IIngredientItem) => {
+        dispatch(openModal(ModalType.INGREDIENT_VIEW));
+        dispatch(setCurrentIngredient(cardData));
+    };
 
     const renderElement = (item: IIngredientItem) => {
         renderModal(item);

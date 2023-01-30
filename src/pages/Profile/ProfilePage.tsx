@@ -1,103 +1,61 @@
-import { FormEvent, useState } from 'react';
-import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './Profile.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { LOGIN_ROUTE } from '../../shared/routes';
-import { editUser, signOut } from '../../services/actions/user';
+import styles from './ProfilePage.module.css';
+import { useDispatch, useSelector } from '../../shared/hooks';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE, ORDERS_ROUTE, PROFILE_ROUTE } from '../../shared/routes';
+import { signOut } from '../../services/actions/user';
+import { Account } from '../../components/Account';
+import { Orders } from '../Orders';
+import { ProfileForm } from '../../components/ProfileForm/ProfileForm';
+import { Modal } from '../../components/Modal';
+import { useModalType } from '../../shared/hooks/useModalType';
+import { ModalType } from '../../shared/types';
+import { useEffect } from 'react';
+import { closeModal, openModal } from '../../services/actions/modal';
 
-export function ProfilePage() {
-    //@ts-ignore
-    const { name, email, password } = useSelector(state => state.userStore.user);
+type Props = {
+    handleCloseModal: () => void;
+};
 
-    const [userName, setUserName] = useState<string>(name ?? '');
-    const [userEmail, setUserEmail] = useState<string>(email ?? '');
-    const [userPassword, setUserPassword] = useState<string>(password ?? '');
+export function ProfilePage({ handleCloseModal }: Props) {
+    const { isActive } = useSelector(store => store.modal);
+    const location = useLocation();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmit = () => dispatch(
-        //@ts-ignore
-        editUser({
-            email: userEmail,
-            name: userName,
-            password: userPassword
-        })
-    );
-
     const handleLogOut = async () => {
-        //@ts-ignore
         await dispatch(signOut());
         navigate(LOGIN_ROUTE);
     };
 
-    const handleFormSubmit = async (evt: FormEvent) => {
-        evt.preventDefault();
-        await handleSubmit();
-    };
+    let component: JSX.Element | null = useModalType();
+    let currentOrder = localStorage.getItem('currentOrder');
+
+    useEffect(() => {
+        if (currentOrder && location.pathname === ORDERS_ROUTE) {
+            dispatch(openModal(ModalType.ORDER_HISTORY_VIEW));
+            localStorage.setItem('lastOrder', currentOrder);
+        } else {
+            localStorage.removeItem('currentOrder');
+            dispatch(closeModal());
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <section className={styles.page}>
             <div className={styles.wrapper}>
-                <div className={`${styles.sideColumn} pr-15`}>
-                    <ul className={`${styles.tabs} mb-20`}>
-                        <li>
-                            <p className="text text_type_main-medium">Профиль</p>
-                        </li>
-                        <li>
-                            <p className="text text_type_main-medium text_color_inactive">История заказов</p>
-                        </li>
-                        <li onClick={handleLogOut}>
-                            <p className="text text_type_main-medium text_color_inactive">Выход</p>
-                        </li>
-                    </ul>
-                    <p className={`${styles.description} text text_type_main-default`}>
-                        В этом разделе вы можете изменить свои персональные данные
-                    </p>
-                </div>
-                <form
-                    onSubmit={handleFormSubmit}
-                    className={styles.form}>
-                    <Input
-                        onChange={e => setUserName(e.target.value)}
-                        error={false}
-                        value={userName}
-                        type='text'
-                        placeholder='Имя'
-                        icon='EditIcon'
-                        name='name'
-                        errorText='Ошибка'
-                        size='default'
-                        extraClass="mb-6"
-                    />
-                    <Input
-                        onChange={e => setUserEmail(e.target.value)}
-                        error={false}
-                        value={userEmail}
-                        type='text'
-                        placeholder='Логин'
-                        icon='EditIcon'
-                        name='email'
-                        errorText='Ошибка'
-                        size='default'
-                        extraClass="mb-6"
-                    />
-                    <PasswordInput
-                        onChange={e => setUserPassword(e.target.value)}
-                        value={userPassword}
-                        placeholder='Пароль'
-                        name='password'
-                    />
-                    <Button
-                        htmlType="submit"
-                        type="primary"
-                        size="medium"
-                        extraClass="mt-8"
-                    >Сохранить</Button>
-                </form>
-                <div className={styles.sideColumn}></div>
+                <Account logout={handleLogOut} />
+                {location.pathname === PROFILE_ROUTE
+                    ?  <ProfileForm />
+                    : location.pathname === ORDERS_ROUTE
+                    ? <Orders />
+                    : <ProfileForm />
+                }
             </div>
+            {currentOrder && isActive && <Modal onClose={handleCloseModal}>
+                {component}
+            </Modal>}
         </section>
     )
 }

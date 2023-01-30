@@ -1,4 +1,4 @@
-import { handleResponse } from "./handlers/handleResponse";
+import { handleResponse } from "./handlers";
 import {
     FORGOT_URL,
     LOGIN_URL,
