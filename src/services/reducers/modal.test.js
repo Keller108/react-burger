@@ -5,8 +5,8 @@ const initialModalState = {
     modalType: null
 };
 
-describe('Modal Reducer', () => {
-    it('should returns the initial state', () => {
+describe('Тестирование Modal Reducer', () => {
+    it('Возвращает начальный стейт', () => {
         expect(modalReducer(undefined, {})).toEqual(initialModalState);
     })
 });
