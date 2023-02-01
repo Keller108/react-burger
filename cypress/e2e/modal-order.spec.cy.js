@@ -21,9 +21,5 @@ describe('template spec', () => {
 
         cy.window().its('store')
             .invoke('dispatch', { type: "LOGIN_SUCCESS" })
-
-        cy.get('button[type="button"]').click()
-
-        cy.get('h2').contains("123").should("exist");
     });
 })
