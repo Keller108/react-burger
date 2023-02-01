@@ -26,7 +26,7 @@ export function Modal({ onClose, children }: TModalProps) {
     return ReactDOM.createPortal(
         <>
             <div className={modalStyle.modal}>
-                <span className={modalStyle.closeBtn}>
+                <span className={modalStyle.closeBtn} data-cy="modal-close-btn">
                     <CloseIcon onClick={modalClose} type="primary" />
                 </span>
                 {children}
