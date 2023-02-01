@@ -6,6 +6,6 @@ describe('template spec', () => {
 
       cy.get('li[draggable="true"]').first().trigger('dragstart');
       cy.get('section[class^=BurgerConstructor_constructor]').first().trigger('drop', { force: true })
-      cy.get('ul li div').should('exist')
+      cy.get('ul li div').should('exist');
     });
 })

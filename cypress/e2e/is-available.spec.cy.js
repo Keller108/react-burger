@@ -1,4 +1,4 @@
-describe('service is available', function() {
+describe('Сервис доступен', function() {
     it('should be available on localhost:3000', function() {
       cy.visit('http://localhost:3000');
     });
