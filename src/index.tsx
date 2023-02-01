@@ -19,6 +19,12 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLDivElement
 );
 
+//@ts-ignore
+if (window.Cypress !== null) {
+    //@ts-ignore
+    window.store = store;
+}
+
 root.render(
     <React.StrictMode>
         <Provider store={store}>
