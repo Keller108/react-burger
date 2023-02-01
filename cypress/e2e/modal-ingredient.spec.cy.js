@@ -11,5 +11,10 @@ describe('Открывается на локал хосте', () => {
       cy.contains('Белки, г');
       cy.contains('Жиры, г');
       cy.contains('Углеводы, г');
+      cy.get("[data-cy=modal-close-btn]")
+        .first()
+        .children()
+        .first()
+        .click({ force: true })
     });
 })

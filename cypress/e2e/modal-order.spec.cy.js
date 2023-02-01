@@ -21,5 +21,13 @@ describe('template spec', () => {
 
         cy.window().its('store')
             .invoke('dispatch', { type: "LOGIN_SUCCESS" })
+
+        cy.get('button').click();
+
+        cy.get("[data-cy=modal-close-btn]")
+        .first()
+        .children()
+        .first()
+        .click({ force: true })
     });
 })
