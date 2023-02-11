@@ -2,6 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://keller108.github.io/react-burger",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -32,7 +33,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +56,10 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.0"
+    "@types/uuid": "^9.0.0",
+    "cypress": "^12.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "gh-pages": "^5.0.0",
+    "jest-watch-typeahead": "^0.6.5"
   }
 }
